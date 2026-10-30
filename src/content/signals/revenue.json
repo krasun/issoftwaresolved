@@ -1,0 +1,7 @@
+{
+	"order": 3,
+	"name": "Revenue",
+	"question": "Is the money still growing?",
+	"metric": "Global software revenue",
+	"solvedIf": "Spend flattens or shrinks"
+}

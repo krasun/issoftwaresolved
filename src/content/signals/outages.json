@@ -1,0 +1,7 @@
+{
+	"order": 6,
+	"name": "Outages",
+	"question": "Does it stay up?",
+	"metric": "Major incidents at large platforms",
+	"solvedIf": "Incidents become rare and short"
+}

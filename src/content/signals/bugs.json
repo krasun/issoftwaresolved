@@ -1,0 +1,7 @@
+{
+	"order": 5,
+	"name": "Bugs",
+	"question": "Does software still break?",
+	"metric": "Defects reported per release",
+	"solvedIf": "Defect rates keep dropping"
+}

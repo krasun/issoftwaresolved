@@ -1,0 +1,47 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { getSources } from '../lib/content';
+
+const sources = await Promise.all(
+	(await getSources()).map(async ({ data }) => ({
+		...data,
+		signalName: (await getEntry(data.signal))?.data.name,
+	})),
+);
+---
+
+<Layout title="Data sources">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">Data sources</h1>
+			<p>Where every number comes from.</p>
+		</div>
+		{
+			sources.length > 0 && (
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Source</th>
+								<th scope="col">Signal</th>
+								<th scope="col">Measures</th>
+								<th scope="col">Last checked</th>
+							</tr>
+						</thead>
+						<tbody>
+							{sources.map((source) => (
+								<tr>
+									<td>{source.url ? <a href={source.url}>{source.name}</a> : source.name}</td>
+									<td>{source.signalName}</td>
+									<td>{source.measures}</td>
+									<td>{source.checked}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			)
+		}
+	</section>
+</Layout>

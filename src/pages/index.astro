@@ -1,16 +1,78 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import { site } from '../content/site';
+import { getSignals, getSources, scoreHistory } from '../lib/content';
+
+const signals = await getSignals();
+const sources = await getSources();
+const verdict = site.score === undefined ? 'Undefined.' : site.verdict;
+
+const stats = [
+	site.score !== undefined && {
+		label: 'Solved score',
+		value: site.score,
+		suffix: '/100',
+		href: scoreHistory && '/score',
+	},
+	signals.length > 0 && { label: 'Signals tracked', value: signals.length, href: '/signals' },
+	sources.length > 0 && { label: 'Data sources', value: sources.length, href: '/sources' },
+	site.updated && {
+		label: 'Last updated',
+		value: site.updated,
+		href: sources.length > 0 ? '/sources' : undefined,
+	},
+].filter((stat) => !!stat);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+	<section class="hero">
+		<div class="hero-copy">
+			<h1>Is software solved?</h1>
+			<p>
+				A public index that tracks whether software is finished. Jobs, SaaS, revenue, security
+				holes and bugs, measured in one place, so the answer comes from data rather than opinions.
+			</p>
+			<div class="hero-actions">
+				{signals.length > 0 && <a class="btn btn-solid" href="/signals">See the signals</a>}
+				<a class="btn btn-outline" href="/how-it-works">How it works</a>
+			</div>
+		</div>
+
+		{
+			verdict && (
+				<div class="horizon">
+					<div class="horizon-grid" aria-hidden="true" />
+					<a class="dial" href="/how-it-works">
+						<strong class="dial-value">{verdict}</strong>
+					</a>
+				</div>
+			)
+		}
+	</section>
+
+	{
+		stats.length > 0 && (
+			<section class="stats" aria-label="Index summary" style={`--stat-count: ${stats.length}`}>
+				{stats.map((stat) => {
+					const Tag = stat.href ? 'a' : 'div';
+					return (
+						<Tag class="stat" href={stat.href}>
+							<span class="eyebrow">{stat.label}</span>
+							<strong>
+								<span data-count={typeof stat.value === 'number' ? true : undefined}>
+									{stat.value}
+								</span>
+								{stat.suffix && <small>{stat.suffix}</small>}
+							</strong>
+							{stat.href && (
+								<svg class="stat-arrow" viewBox="0 0 16 16" aria-hidden="true">
+									<path d="M2 8h11M9 4l4 4-4 4" />
+								</svg>
+							)}
+						</Tag>
+					);
+				})}
+			</section>
+		)
+	}
+</Layout>

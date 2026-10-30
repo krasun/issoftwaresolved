@@ -1,0 +1,106 @@
+---
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+import { getSignals, getSources, scoreHistory } from '../lib/content';
+
+type Props = {
+	title?: string;
+};
+
+const { title } = Astro.props;
+const siteName = 'Is software solved?';
+
+const signals = await getSignals();
+const sources = await getSources();
+
+const links = [
+	scoreHistory && { href: '/score', label: 'Score' },
+	signals.length > 0 && { href: '/signals', label: 'Signals' },
+	sources.length > 0 && { href: '/sources', label: 'Data sources' },
+	{ href: '/how-it-works', label: 'How it works' },
+	{ href: '/why', label: 'Why' },
+].filter((link) => !!link);
+
+const path = Astro.url.pathname.replace(/\/$/, '');
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta
+			name="description"
+			content="A public index tracking whether software is solved, using jobs, SaaS, revenue, security, bugs and outages."
+		/>
+		<Font cssVariable="--font-geist" preload />
+		<Font cssVariable="--font-geist-mono" preload />
+		<title>{title ? `${title} | ${siteName}` : siteName}</title>
+		<script is:inline>
+			// Hides the final numbers until they start counting, so they never flash first.
+			if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				document.documentElement.classList.add('counting');
+				setTimeout(() => document.documentElement.classList.remove('counting'), 1000);
+			}
+		</script>
+	</head>
+	<body>
+		<header class="nav">
+			<div class="nav-inner">
+				<a class="brand" href="/">{siteName}</a>
+				<nav class="nav-links" aria-label="Main">
+					{
+						links.map((link) => (
+							<a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+								{link.label}
+							</a>
+						))
+					}
+				</nav>
+				{
+					signals.length > 0 && (
+						<div class="nav-actions">
+							<a class="btn btn-solid btn-sm" href="/signals">See the data</a>
+						</div>
+					)
+				}
+			</div>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer class="footer">
+			<div class="footer-inner">
+				<nav class="footer-links" aria-label="Footer">
+					{links.map((link) => <a href={link.href}>{link.label}</a>)}
+				</nav>
+			</div>
+		</footer>
+		<script>
+			import { CountUp } from 'countup.js';
+
+			// Speeds up, then settles onto the final value instead of stopping abruptly.
+			const smooth = (t: number, b: number, c: number, d: number) =>
+				(c / 2) * (1 - Math.cos((Math.PI * t) / d)) + b;
+
+			if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+				for (const el of document.querySelectorAll<HTMLElement>('[data-count]')) {
+					const [, prefix, number, suffix] = el.textContent.match(/^(\D*)([\d.]+)(\D*)$/) ?? [];
+					if (!number) continue;
+					new CountUp(el, Number(number), {
+						duration: 0.8,
+						prefix,
+						suffix,
+						decimalPlaces: number.split('.')[1]?.length ?? 0,
+						easingFn: smooth,
+					}).start();
+				}
+			}
+			document.documentElement.classList.replace('counting', 'counted');
+		</script>
+	</body>
+</html>

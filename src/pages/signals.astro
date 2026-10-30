@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSignals, getSources } from '../lib/content';
+
+const signals = await getSignals();
+const sources = await getSources();
+
+const sourcesFor = (id: string) =>
+	sources
+		.filter((source) => source.data.signal.id === id)
+		.map((source) => source.data.name)
+		.join(', ');
+
+const sparkPoints = (values: number[]) => {
+	const min = Math.min(...values);
+	const max = Math.max(...values);
+	const pad = (max - min) * 0.1 || 1;
+	return values
+		.map(
+			(v, i) =>
+				`${(i / (values.length - 1)) * 100},${100 - ((v - min + pad) / (max - min + pad * 2)) * 100}`,
+		)
+		.join(' ');
+};
+---
+
+<Layout title="Signals">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">Signals</h1>
+			<p>If software were solved, each of these numbers would show it.</p>
+		</div>
+		{
+			signals.length > 0 && (
+				<div class="cards">
+					{signals.map(({ id, data }) => (
+						<article class="card">
+							<div class="card-top">
+								<h2 class="card-title">{data.name}</h2>
+							</div>
+							<p class="question">{data.question}</p>
+							<div class="reading">
+								<strong data-count>{data.value}</strong>
+								{data.change && <span>{data.change} YoY</span>}
+							</div>
+							{data.trend && data.trend.length >= 2 && (
+								<svg
+									class="spark"
+									viewBox="0 0 100 100"
+									preserveAspectRatio="none"
+									aria-hidden="true"
+								>
+									<polyline points={sparkPoints(data.trend)} />
+								</svg>
+							)}
+							<dl>
+								<div>
+									<dt>Metric</dt>
+									<dd>{data.metric}</dd>
+								</div>
+								<div>
+									<dt>Solved if</dt>
+									<dd>{data.solvedIf}</dd>
+								</div>
+								{sourcesFor(id) && (
+									<div>
+										<dt>Source</dt>
+										<dd>{sourcesFor(id)}</dd>
+									</div>
+								)}
+							</dl>
+						</article>
+					))}
+				</div>
+			)
+		}
+	</section>
+</Layout>

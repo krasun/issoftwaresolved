@@ -1,0 +1,7 @@
+{
+	"order": 2,
+	"name": "SaaS",
+	"question": "Are people still paying for software?",
+	"metric": "New SaaS companies founded",
+	"solvedIf": "Fewer products are worth building"
+}

@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const reasons = [
+	{
+		title: 'The claim is everywhere',
+		text: 'Every few months someone announces that software is finished and that engineers, products and whole companies are about to stop mattering.',
+	},
+	{
+		title: 'The evidence is scattered',
+		text: 'The numbers that could settle it live in job boards, company filings, vulnerability databases and incident reports. Few people ever see them side by side.',
+	},
+	{
+		title: 'The debate runs on opinions',
+		text: 'Most arguments lean on a demo, a headline or a personal experience. Those are easy to share and hard to check.',
+	},
+];
+
+const principles = [
+	{
+		title: 'Measure, don’t predict',
+		text: 'The index reports what has happened. It doesn’t forecast what will happen next.',
+	},
+	{
+		title: 'Show the work',
+		text: 'Every number names its source, and the formula behind the score is public, so anyone can check it or disagree with it.',
+	},
+	{
+		title: 'Take no side',
+		text: 'The index isn’t built to prove that software is solved or that it isn’t. If the data changes, the verdict changes with it.',
+	},
+];
+---
+
+<Layout title="Why">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">Why this exists</h1>
+			<p>A loud question deserves an answer you can check.</p>
+		</div>
+		<div class="steps">
+			{
+				reasons.map((reason) => (
+					<article class="step">
+						<h2 class="card-title">{reason.title}</h2>
+						<p>{reason.text}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="section-head">
+			<h2>What we’re holding ourselves to</h2>
+			<p>Three rules for keeping the index honest.</p>
+		</div>
+		<div class="steps">
+			{
+				principles.map((principle) => (
+					<article class="step">
+						<h3 class="card-title">{principle.title}</h3>
+						<p>{principle.text}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</Layout>

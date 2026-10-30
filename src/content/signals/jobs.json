@@ -1,0 +1,7 @@
+{
+	"order": 1,
+	"name": "Jobs",
+	"question": "Do we still need people to write software?",
+	"metric": "Open software engineering roles",
+	"solvedIf": "Demand for engineers keeps falling"
+}

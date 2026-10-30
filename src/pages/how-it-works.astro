@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const steps = [
+	{
+		title: 'Collect',
+		text: 'Pull public numbers for every signal: job postings, company filings, vulnerability databases, incident reports.',
+	},
+	{
+		title: 'Score',
+		text: 'Normalize each signal from 0 to 100, where 100 means that part of software no longer needs solving.',
+	},
+	{
+		title: 'Decide',
+		text: 'Combine the signals into a single score and a plain verdict. Every number links back to its source.',
+	},
+];
+---
+
+<Layout title="How it works">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">How it works</h1>
+			<p>Public sources, a published formula and no vibes.</p>
+		</div>
+		<div class="steps">
+			{
+				steps.map((step, i) => (
+					<article class="step">
+						<span class="eyebrow">0{i + 1}</span>
+						<h2 class="card-title">{step.title}</h2>
+						<p>{step.text}</p>
+					</article>
+				))
+			}
+		</div>
+	</section>
+</Layout>

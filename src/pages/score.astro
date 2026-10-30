@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { scoreHistory as history } from '../lib/content';
+
+const scoreLine = history
+	?.map((h, i) => `${(i / (history.length - 1)) * 100},${100 - h.score}`)
+	.join(' ');
+const latest = history?.at(-1);
+---
+
+<Layout title="Score over time">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">The score over time</h1>
+			<p>The combined solved score, year by year.</p>
+		</div>
+		{
+			history && latest && (
+				<div class="chart">
+					<div class="chart-y" aria-hidden="true">
+						{[100, 75, 50, 25, 0].map((tick) => (
+							<span>{tick}</span>
+						))}
+					</div>
+					<div class="chart-plot">
+						<svg
+							viewBox="0 0 100 100"
+							preserveAspectRatio="none"
+							role="img"
+							aria-label={`Solved score from ${history[0].year} to ${latest.year}`}
+						>
+							<polyline points={scoreLine} />
+						</svg>
+						<span class="chart-end" style={`top: ${100 - latest.score}%`} data-count>
+							{latest.score}
+						</span>
+					</div>
+					<div class="chart-x" aria-hidden="true">
+						{history.map((h) => (
+							<span>{h.year}</span>
+						))}
+					</div>
+				</div>
+			)
+		}
+	</section>
+</Layout>

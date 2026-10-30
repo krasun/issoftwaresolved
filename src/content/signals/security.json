@@ -1,0 +1,7 @@
+{
+	"order": 4,
+	"name": "Security",
+	"question": "Are we still getting pwned?",
+	"metric": "Published CVEs and major breaches",
+	"solvedIf": "Vulnerabilities trend toward zero"
+}
