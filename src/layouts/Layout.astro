@@ -22,6 +22,7 @@ const links = [
 ].filter((link) => !!link);
 
 const path = Astro.url.pathname.replace(/\/$/, '');
+const pirschCode = import.meta.env.PUBLIC_PIRSCH_CODE;
 ---
 
 <html lang="en">
@@ -45,6 +46,11 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 				setTimeout(() => document.documentElement.classList.remove('counting'), 1000);
 			}
 		</script>
+		{
+			pirschCode && (
+				<script is:inline defer src="https://api.pirsch.io/pa.js" id="pianjs" data-code={pirschCode} />
+			)
+		}
 	</head>
 	<body>
 		<header class="nav">
