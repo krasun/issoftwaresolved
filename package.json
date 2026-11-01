@@ -14,13 +14,16 @@
     "hn:sample": "node scripts/hacker-news-sample.mjs",
     "models:ask": "node --env-file=.env scripts/model-opinions.mjs",
     "index": "node scripts/build-index.mjs",
-    "check:data": "node scripts/check-data-policy.mjs"
+    "check:data": "node scripts/check-data-policy.mjs",
+    "cache:pull": "node --env-file-if-exists=.env scripts/sync-cache.mjs --pull",
+    "cache:synchronize": "node --env-file-if-exists=.env scripts/sync-cache.mjs"
   },
   "dependencies": {
     "astro": "^7.4.4",
     "countup.js": "^2.10.1"
   },
   "devDependencies": {
+    "aws4fetch": "^1.0.20",
     "stream-json": "^3.8.0"
   }
 }
