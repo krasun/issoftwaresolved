@@ -1,69 +1,100 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { site } from '../content/site';
 
-const reasons = [
-	{
-		title: 'The claim is everywhere',
-		text: 'Every few months someone announces that software is finished and that engineers, products and whole companies are about to stop mattering.',
-	},
-	{
-		title: 'The evidence is scattered',
-		text: 'The numbers that could settle it live in job boards, company filings, vulnerability databases and incident reports. Few people ever see them side by side.',
-	},
-	{
-		title: 'The debate runs on opinions',
-		text: 'Most arguments lean on a demo, a headline or a personal experience. Those are easy to share and hard to check.',
-	},
-];
-
-const principles = [
-	{
-		title: 'Measure, don’t predict',
-		text: 'The index reports what has happened. It doesn’t forecast what will happen next.',
-	},
-	{
-		title: 'Show the work',
-		text: 'Every number names its source, and the formula behind the score is public, so anyone can check it or disagree with it.',
-	},
-	{
-		title: 'Take no side',
-		text: 'The index isn’t built to prove that software is solved or that it isn’t. If the data changes, the verdict changes with it.',
-	},
-];
+const repository = 'https://github.com/krasun/issoftwaresolved';
+// The score is drawn from hand-drawn digits so that it stays real when the data changes.
+const scoreGlyphs = site.score === undefined ? [] : [...String(Math.round(site.score)), 'percent'];
 ---
 
-<Layout title="About">
+<Layout title="Why I built this">
 	<section class="section">
 		<div class="section-head">
-			<h1 class="page-title">About</h1>
-			<p>A loud question deserves an answer you can check.</p>
+			<h1 class="page-title">Why I built this</h1>
+			<p>A good excuse to be curious and have fun.</p>
 		</div>
-		<div class="steps">
-			{
-				reasons.map((reason) => (
-					<article class="step">
-						<h2 class="card-title">{reason.title}</h2>
-						<p>{reason.text}</p>
-					</article>
-				))
-			}
+		<div class="post-body post-body-sketched">
+			<p>Have you heard of the canary in the coal mine?</p>
+			<p>Miners took canaries underground because the birds react to toxic gases before people do, so a canary in distress meant it was time to get out.</p>
+			<div class="post-sketch post-sketch-canary">
+				<img src="/about/mine.png" alt="" width="400" height="355" loading="lazy" />
+				<span class="post-bird" data-bird></span>
+			</div>
+			<p>I wanted to find something like that for software, a signal that shows whether software is solved.</p>
+			<p>Because I run <a class="inline-link" href="https://screenshotone.com/?utm_source=issoftwaresolved.com&utm_medium=referral">ScreenshotOne</a>, a popular screenshot API for developers. And according to social media, every developer and every company is now building their own with agents, replacing tools like mine.</p>
+			<p>But in my business, the results are mixed. I do have customers who build their own solutions, but I had those before agents too.</p>
+			<p>I also have customers who choose ScreenshotOne, and I often ask them why, in the support chat and whenever else we talk: why don’t you build this yourself? The answer is basically always the same. They don’t want to spend time on it. Competition is brutal now, and they want to focus on their own product and its core features.</p>
+			<div class="post-sketch post-sketch-person">
+				<img src="/about/person.png" alt="" width="340" height="302" loading="lazy" />
+				<img class="post-question" src="/about/question.png" alt="" width="84" height="138" loading="lazy" />
+			</div>
+			<p>It’s only what I see from inside one company. Before the day nobody needs my product, I want to know if we’re heading in that direction, or at least where we are now.</p>
+			<p>I searched, but I haven’t found a quantifiable answer. So I built one: <a class="inline-link" href="/">IsSoftwareSolved</a>.</p>
+			<p>By solved, I mean agents can take simple requirements and a conversation with humans, then create the software, deploy it, maintain it and fix its bugs and issues, almost autonomously. In some cases they’d even be proactive, deducing requirements from what people do and building tools on the go.</p>
+			<p>I’m not trying to predict whether software will be solved, and I’m not asking you to take this number on faith. You can <a class="inline-link" href="/how-it-works">check how the score works</a>.</p>
+			<div class="post-sketch post-sketch-score">
+				<a class="post-score" href="/score" aria-label={site.score === undefined ? 'See the solved score' : `See the solved score: ${Math.round(site.score)}%`}>
+					<img src="/about/score-frame.png" alt="" width="560" height="503" loading="lazy" />
+					<span class="post-score-value">
+						{scoreGlyphs.map((glyph) => <img src={`/about/digits/${glyph}.png`} alt="" loading="lazy" />)}
+					</span>
+				</a>
+			</div>
+			<p>I’m tired of the narratives, the opinions and the vibes. I just want a real conversation about all this, and now we have a basis for one.</p>
+			<p>But even if we don’t talk, for me, researching the numbers and thinking all of this through was a way to build an intuition for where we’re going, and I got a lot of joy out of it. I still have mixed feelings. Sometimes I do see software being solved. Sometimes I don’t.</p>
+			<p>I hope you have fun with it and find something to argue about. If you don’t trust a number, think there’s a mistake, or have any ideas to improve the project, please <a class="inline-link" href={`${repository}/issues`}>open an issue</a> or <a class="inline-link" href={`${repository}/pulls`}>send a pull request</a> on GitHub.</p>
 		</div>
 	</section>
 
 	<section class="section">
-		<div class="section-head">
-			<h2>What we’re holding ourselves to</h2>
-			<p>Three rules for keeping the index honest.</p>
-		</div>
-		<div class="steps">
-			{
-				principles.map((principle) => (
-					<article class="step">
-						<h3 class="card-title">{principle.title}</h3>
-						<p>{principle.text}</p>
-					</article>
-				))
-			}
-		</div>
+		<footer class="post-author">
+			<a href="https://dmytrokrasun.com/" tabindex="-1" aria-hidden="true">
+				<img src="/dmytro-krasun.jpg" alt="" width="72" height="72" />
+			</a>
+			<div>
+				<a class="post-author-name" href="https://dmytrokrasun.com/">Dmytro Krasun</a>
+				<p>Software engineer and founder of <a class="inline-link" href="https://screenshotone.com/">ScreenshotOne</a></p>
+			</div>
+		</footer>
 	</section>
 </Layout>
+
+<script>
+	const bird = document.querySelector<HTMLElement>('[data-bird]');
+
+	if (bird) {
+		// Once it's gone, it stays gone.
+		const flyAway = () => bird.classList.add('is-flying');
+		// The bird sits inside the mine's sketch, so hovering either one sets it off.
+		bird.parentElement?.addEventListener('pointerenter', flyAway, { once: true });
+		bird.addEventListener('animationend', ({ animationName }) => {
+			if (animationName.startsWith('bird-fly') || animationName.startsWith('bird-leave')) bird.remove();
+		});
+
+		if (matchMedia('(hover: none)').matches) {
+			// There's no hover on touch screens, so it leaves as you scroll past it.
+			new IntersectionObserver(
+				([entry], observer) => {
+					if (!entry.isIntersecting) return;
+					flyAway();
+					observer.disconnect();
+				},
+				{ rootMargin: '0px 0px -40% 0px', threshold: 1 },
+			).observe(bird);
+		} else if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			// Not everyone hovers, so it also leaves on its own, once it's been seen for a moment or the reader moves on.
+			new IntersectionObserver(
+				([entry], observer) => {
+					if (!entry.isIntersecting) return;
+					observer.disconnect();
+					setTimeout(flyAway, 2500);
+					addEventListener('scroll', flyAway, { once: true, passive: true });
+				},
+				{ threshold: 1 },
+			).observe(bird);
+		}
+	}
+</script>
+
+
+

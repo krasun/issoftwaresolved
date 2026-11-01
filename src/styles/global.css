@@ -1525,6 +1525,297 @@ a.stat:active .stat-arrow,
 		translate 100ms ease-out;
 }
 
+.post-body {
+	display: grid;
+	gap: 20px;
+	max-width: 720px;
+	padding: 40px 24px 56px;
+	font-size: 18px;
+	line-height: 1.6;
+}
+
+.post-body-sketched {
+	grid-template-columns: minmax(0, 672px) minmax(200px, 1fr);
+	column-gap: 24px;
+	max-width: none;
+}
+
+/* Lets the bird leave across the page edge without adding a scrollbar. */
+html:has(.post-body-sketched),
+body:has(.post-body-sketched) {
+	overflow-x: clip;
+}
+
+.post-body-sketched > p {
+	grid-column: 1;
+}
+
+/* All three span the whole text: top, centre and bottom keep the gaps between them even. */
+.post-sketch {
+	display: block;
+	grid-column: 2;
+	grid-row: 1 / span 13;
+	justify-self: center;
+	width: 100%;
+	max-width: 240px;
+	height: auto;
+}
+
+.post-sketch img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.post-sketch-canary {
+	position: relative;
+	align-self: start;
+	max-width: 200px;
+	margin-top: 32px;
+}
+
+.post-sketch-person {
+	position: relative;
+	align-self: center;
+	max-width: 170px;
+}
+
+/* Sits above the head, outside the sketch's box, so it doesn't push the sketches apart. */
+.post-sketch .post-question {
+	position: absolute;
+	bottom: 107.55%;
+	left: 33.7%;
+	width: 24.3%;
+	opacity: 0;
+	scale: 0.5;
+	translate: 0 10px;
+	transform-origin: bottom center;
+	transition:
+		opacity 150ms ease-out,
+		scale 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+		translate 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* There's no hover on touch screens, so it's always there. */
+@media (hover: none) {
+	.post-sketch .post-question {
+		opacity: 1;
+		scale: 1;
+		translate: 0;
+		transition: none;
+	}
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.post-sketch-person:hover .post-question {
+		opacity: 1;
+		scale: 1;
+		translate: 0;
+	}
+}
+
+.post-sketch-score {
+	align-self: end;
+}
+
+.post-bird {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 52%;
+	aspect-ratio: 1;
+	translate: -50% -50%;
+	background: url('/about/bird-sprite.png') 0 0 / 400% 100% no-repeat;
+}
+
+.post-bird.is-flying {
+	pointer-events: none;
+	animation:
+		bird-flap 180ms steps(4) infinite,
+		bird-fly 1300ms linear forwards;
+}
+
+@keyframes bird-flap {
+	to {
+		background-position-x: 133.333%;
+	}
+}
+
+/* Distance grows with the square of time, so it speeds up as it goes, with a small wobble on the way. */
+@keyframes bird-fly {
+	25% {
+		translate: calc(-50% + 38px) calc(-50% - 14px);
+		scale: 0.98;
+	}
+	50% {
+		translate: calc(-50% + 150px) calc(-50% - 38px);
+		scale: 0.9;
+	}
+	75% {
+		translate: calc(-50% + 338px) calc(-50% - 96px);
+		scale: 0.78;
+		opacity: 1;
+	}
+	100% {
+		translate: calc(-50% + 600px) calc(-50% - 170px);
+		scale: 0.6;
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes bird-leave {
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.post-bird.is-flying {
+		animation: bird-leave 200ms forwards;
+	}
+}
+
+.post-score {
+	position: relative;
+	display: block;
+	transition:
+		scale 200ms ease-out,
+		rotate 200ms ease-out;
+}
+
+.post-score > img {
+	display: block;
+	width: 100%;
+}
+
+/* Centred on the empty ring in score-frame.png. */
+.post-score-value {
+	position: absolute;
+	top: 32.21%;
+	left: 50.92%;
+	display: flex;
+	align-items: center;
+	height: 20%;
+	translate: -50% -50%;
+}
+
+.post-score-value img {
+	display: block;
+	width: auto;
+	height: 100%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.post-score:hover {
+		scale: 1.1;
+		rotate: -4deg;
+	}
+}
+
+.post-score:active {
+	scale: 0.98;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.post-score,
+	.post-sketch .post-question {
+		transition: none;
+	}
+}
+
+@media (max-width: 900px) {
+	.post-body-sketched {
+		grid-template-columns: minmax(0, 1fr);
+		max-width: 720px;
+	}
+
+	.post-sketch {
+		grid-column: 1;
+		grid-row: auto;
+		margin-block: 12px;
+	}
+
+	.post-sketch-canary {
+		margin-top: 32px;
+	}
+
+	/* Keeps room above the person for the question mark. */
+	.post-sketch-person {
+		margin-top: 92px;
+	}
+}
+
+.post-author {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 32px 24px;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.post-author img {
+	display: block;
+	border-radius: 50%;
+}
+
+.post-author p {
+	color: var(--muted);
+}
+
+.post-author-name {
+	position: relative;
+	display: inline-block;
+	font-size: 16px;
+	font-weight: 500;
+	transition: color 0.15s;
+}
+
+/* Same draw-in as the dials: in from the left, out to the right. */
+.post-author-name::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 1px;
+	background: currentColor;
+	scale: 0 1;
+	transform-origin: right;
+	transition: scale 0.3s cubic-bezier(0.37, 0, 0.63, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.post-author-name:hover {
+		color: var(--accent);
+	}
+
+	.post-author-name:hover::after {
+		scale: 1 1;
+		transform-origin: left;
+	}
+}
+
+.post-author-name:focus-visible::after {
+	scale: 1 1;
+	transform-origin: left;
+}
+
+/* Nothing to hover on touch, so the line stays and marks the name as a link. */
+@media (hover: none) {
+	.post-author-name::after {
+		scale: 1 1;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.post-author-name::after {
+		transition: none;
+	}
+}
+
 /* Grows the question bars in sync with the chart line and number count. */
 .question-card > .progress i {
 	transform-origin: left;
@@ -1583,27 +1874,4 @@ a.stat:active .stat-arrow,
 		color: var(--text);
 		text-decoration: none;
 	}
-}
-
-.steps {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-}
-
-.step {
-	padding: 32px 24px 48px;
-}
-
-.step + .step {
-	border-left: 1px solid var(--line);
-}
-
-.step .card-title {
-	margin-top: 24px;
-}
-
-.step p {
-	margin-top: 8px;
-	color: var(--muted);
-	font-size: 14px;
 }
