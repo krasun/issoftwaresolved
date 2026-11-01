@@ -46,9 +46,7 @@ const accessControlAllowOrigin = "*";
  * Optional robots.txt file content. If not empty, it'll be available on /robots.txt.
  * The default robots.txt will disallow crawlers from indexing any proxied content.
  */
-const robotsTxt = `User-agent: *
-Disallow: /
-`;
+const robotsTxt = "";
 
 /*
  * To finish the setup, adjust the src, data-hit-endpoint, and data-event-endpoint attributes of your JavaScript snippet.
