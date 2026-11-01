@@ -95,6 +95,7 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 				<nav class="footer-links" aria-label="Footer">
 					{links.map((link) => <a class:list={{ 'in-top-nav': link.href !== '/sources' }} href={link.href}>{link.label}</a>)}
 					<a href="/api">API</a>
+					<a href="/llms.txt">llms.txt</a>
 				</nav>
 			</div>
 		</footer>

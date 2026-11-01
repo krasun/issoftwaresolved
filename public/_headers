@@ -1,2 +1,4 @@
 /api/*
   Access-Control-Allow-Origin: *
+/llms.txt
+  Access-Control-Allow-Origin: *
