@@ -94,6 +94,7 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 				<span>Made by <a class="footer-author" href="/about">Dmytro Krasun</a></span>
 				<nav class="footer-links" aria-label="Footer">
 					{links.map((link) => <a class:list={{ 'in-top-nav': link.href !== '/sources' }} href={link.href}>{link.label}</a>)}
+					<a href="/api">API</a>
 				</nav>
 			</div>
 		</footer>

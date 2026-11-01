@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSignals } from '../lib/content';
+
+const signals = await getSignals();
+
+const endpoints = [
+	{ path: '/api/index.json', text: 'The score, verdict, questions, score history, signals and credits.' },
+	{ path: '/api/signals.json', text: 'Every signal with its value, change, trend and score, plus credits.' },
+	{ path: '/api/signals/{id}.json', text: 'One signal and the sources to credit for it.' },
+	{ path: '/llms.txt', text: 'A plain-text map of the site for LLMs.' },
+];
+---
+
+<Layout title="API">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">API</h1>
+			<p>The score and signals as plain JSON. No key, no sign-up.</p>
+		</div>
+		<div class="table-wrap">
+			<table>
+				<thead>
+					<tr>
+						<th scope="col">Endpoint</th>
+						<th scope="col">Returns</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						endpoints.map(({ path, text }) => (
+							<tr>
+								<td>{path.includes('{') ? <code>{path}</code> : <a href={path}><code>{path}</code></a>}</td>
+								<td>{text}</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="section-head">
+			<h2>What you get</h2>
+		</div>
+		<ul class="findings">
+			<li>Only our own aggregates: scores, signals and trends. Source data is not available here, so for original records, go to each source.</li>
+			<li>Please credit "Is software solved?" and the sources in each response's <code>credits</code> when you reuse these numbers. Each source's license is listed there and on <a href="/sources">its page</a>.</li>
+			<li>Files are regenerated whenever the site is rebuilt, and fields without data are left out.</li>
+			<li>Valid signal ids: {signals.map(({ id }) => id).join(', ')}.</li>
+		</ul>
+	</section>
+</Layout>

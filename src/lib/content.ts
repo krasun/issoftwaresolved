@@ -41,3 +41,48 @@ export const getLastUpdated = async () => {
 	const latest = Object.keys(checks ?? {}).sort().at(-1);
 	return latest && new Date(`${latest}T00:00:00Z`).toLocaleDateString('en-US', { dateStyle: 'long', timeZone: 'UTC' });
 };
+
+export const signalRecord = ({ id, data }: Awaited<ReturnType<typeof getSignals>>[number]) => ({
+	id,
+	name: data.name,
+	question: data.question,
+	metric: data.metric,
+	solvedIf: data.solvedIf,
+	value: data.value,
+	change: data.change,
+	trend: data.trend,
+	trendLabel: data.trendLabel,
+	trendStart: data.trendStart,
+	trendStep: data.trendStep,
+	caution: data.caution,
+	prompt: data.prompt,
+	score: data.score,
+	scoreReason: data.scoreReason,
+	comparison: data.comparison,
+	events: data.events,
+	analysis: data.analysis,
+	fromHigh: data.fromHigh,
+	status: data.status,
+	rule: data.rule,
+	direction: data.direction,
+	checks: getSignalChecks(id),
+	url: `/signals/${id}`,
+	api: `/api/signals/${id}.json`,
+});
+
+// Sources are only credited here. Their data stays with them.
+export const creditRecord = ({ data }: Awaited<ReturnType<typeof getSources>>[number]) => ({
+	name: data.name,
+	url: data.url,
+	signal: data.signal.id,
+	license: data.license,
+	credit: data.attribution,
+});
+
+export const API_NOTICE =
+	'Please credit "Is software solved?" and the sources listed in credits when you reuse these numbers. They are our own aggregates. For original records, go to each source.';
+
+export const json = (data: unknown) =>
+	new Response(JSON.stringify(data, null, 2), {
+		headers: { 'content-type': 'application/json; charset=utf-8' },
+	});
