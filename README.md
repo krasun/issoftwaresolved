@@ -1,43 +1,24 @@
-# Astro Starter Kit: Minimal
+# Is software solved?
 
-```sh
-npm create astro@latest -- --template minimal
-```
+An index of public evidence on whether AI has solved software engineering, built as a static [Astro](https://docs.astro.build) site on Cloudflare Workers.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+| Command | What it does |
+|---|---|
+| `npm install` | Installs dependencies |
+| `npm run dev` | Starts the local dev server at `localhost:4321` |
+| `npm run build` | Builds the site to `./dist/`. It needs no secrets, only committed files |
+| `npm run preview` | Previews the build locally |
+| `npm run cache:pull` | Restores the raw data cache from R2 |
+| `npm run cache:synchronize` | Refreshes the cache once a month and rebuilds the index |
+| `npm run fetch -- <source>` | Fetches sources without uploading them. The next sync uploads the changes |
+| `npm run index` | Rebuilds `data/` and `src/content/signals/` from `data/raw/` |
+| `npm run check:data` | Checks `data/raw/` against the data policy |
+| `npm run models:ask` | Asks newly released AI models, which spends OpenRouter credits |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Data
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Sources are fetched by `scripts/sources/` into `data/raw/`, a private cache and backup of source data, stored in R2 so reports can be rebuilt quickly without fetching every source again. It is ignored by Git and never published. `scripts/build-index.mjs` turns them into the committed numbers the site is built from.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+To work on the data, copy `.env.example` to `.env` and fill it in. See [`data/README.md`](data/README.md) for the data policy and monthly snapshots, and [`data/ATTRIBUTION.md`](data/ATTRIBUTION.md) for source credits.
