@@ -1,0 +1,73 @@
+{
+	"order": 15,
+	"group": "Demand",
+	"name": "AI pull requests",
+	"question": "Are coding agents shipping code in public?",
+	"metric": "Public GitHub pull requests clearly labelled as coming from coding agents, latest full month",
+	"solvedIf": "Coding agents open most pull requests",
+	"trendLabel": "Public GitHub pull requests from identifiable coding agents, per month.",
+	"caution": [
+		"This undercounts AI work. Most agent-written code is opened under a person's account, so it looks human here. Only accounts and branch names that identify an agent are counted.",
+		"It also counts opening, not merging or quality. Codex is matched by its default branch name, so some of those may be people, and a pull request can be automated without any AI."
+	],
+	"value": "1.5M",
+	"change": "+177%",
+	"trend": [
+		1895,
+		2363,
+		2861,
+		3322,
+		4905,
+		70099,
+		400429,
+		300846,
+		434829,
+		450995,
+		559400,
+		473850,
+		474276,
+		537322,
+		676716,
+		817335,
+		735445,
+		779567,
+		646052,
+		798827,
+		906062,
+		1092496,
+		1549090
+	],
+	"recent": [
+		100,
+		84.7,
+		84.8,
+		96.1,
+		121,
+		146.1,
+		131.5,
+		139.4,
+		115.5,
+		142.8,
+		162,
+		195.3,
+		276.9
+	],
+	"status": "More agents",
+	"direction": "toward",
+	"rule": "More agents when more agent pull requests are opened than in the same month a year before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "Which agents",
+		"intro": "These are 4.7% of all public pull requests, against 6.8% a year earlier.",
+		"points": [
+			"Codex: 1,381,684, against 418,960 a year earlier.",
+			"Copilot: 61,241, against 120,409 a year earlier.",
+			"Devin: 53,084, against 4,102 a year earlier.",
+			"Cursor: 29,333, against 35 a year earlier.",
+			"Claude: 12,280, against 148 a year earlier.",
+			"Jules: 11,468, against 15,746 a year earlier."
+		]
+	},
+	"score": 5,
+	"scoreReason": "4.7% of public pull requests clearly come from agents, and most agent work is hidden."
+}

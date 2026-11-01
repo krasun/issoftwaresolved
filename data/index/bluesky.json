@@ -1,0 +1,17 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Say it is getting solved, last 12 months",
+			"value": "7%"
+		},
+		{
+			"label": "Posts taking a side",
+			"value": 189
+		}
+	],
+	"findings": [
+		"In the last 12 months, 13 sampled posts argued software is getting solved and 176 argued it is not."
+	],
+	"tables": []
+}

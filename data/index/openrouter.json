@@ -1,0 +1,57 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Tokens, 2026-10",
+			"value": "787T"
+		},
+		{
+			"label": "Year over year",
+			"value": "+3423%"
+		},
+		{
+			"label": "Since 2025-01",
+			"value": "353x"
+		}
+	],
+	"findings": [
+		"Tokens used through OpenRouter reached 787T in 2026-10, against 22T a year earlier."
+	],
+	"tables": [
+		{
+			"title": "Most used models, 2026-10",
+			"columns": [
+				"Model",
+				"Tokens",
+				"Share"
+			],
+			"rows": [
+				[
+					"deepseek/deepseek-v4.1-flash",
+					"119T",
+					"15%"
+				],
+				[
+					"deepseek/deepseek-v4.1-flash",
+					"79T",
+					"10%"
+				],
+				[
+					"z-ai/glm-5.3-flash",
+					"57T",
+					"7%"
+				],
+				[
+					"tencent/hy4-preview",
+					"36T",
+					"5%"
+				],
+				[
+					"xiaomi/mimo-v2.6-flash",
+					"35T",
+					"5%"
+				]
+			]
+		}
+	]
+}

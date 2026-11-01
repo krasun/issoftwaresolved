@@ -1,0 +1,68 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Agent pull requests, 2026-10",
+			"value": "1.5M"
+		},
+		{
+			"label": "Year over year",
+			"value": "+177%"
+		},
+		{
+			"label": "Share of public pull requests",
+			"value": "4.7%"
+		},
+		{
+			"label": "All public pull requests",
+			"value": "32.9M"
+		}
+	],
+	"findings": [
+		"1,549,090 public pull requests in 2026-10 clearly came from coding agents, +177% on a year earlier.",
+		"That is 4.7% of all public pull requests, against 6.8% a year earlier, because all public pull requests grew from 8.2M to 32.9M.",
+		"Agents working under a person's account look human here, and they may explain part of that wider growth, but this data cannot show it."
+	],
+	"tables": [
+		{
+			"title": "By agent, 2026-10",
+			"columns": [
+				"Agent",
+				"Pull requests",
+				"A year earlier"
+			],
+			"rows": [
+				[
+					"Codex",
+					1381684,
+					418960
+				],
+				[
+					"Copilot",
+					61241,
+					120409
+				],
+				[
+					"Devin",
+					53084,
+					4102
+				],
+				[
+					"Cursor",
+					29333,
+					35
+				],
+				[
+					"Claude",
+					12280,
+					148
+				],
+				[
+					"Jules",
+					11468,
+					15746
+				]
+			]
+		}
+	]
+}

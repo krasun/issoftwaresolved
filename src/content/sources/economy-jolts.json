@@ -1,0 +1,17 @@
+{
+	"name": "BLS job openings and hires",
+	"url": "https://fred.stlouisfed.org/series/JTU5100JOL",
+	"signal": "tech-hiring",
+	"measures": "US information sector openings, hires and layoffs",
+	"about": "The Bureau of Labor Statistics surveys job openings, hires and layoffs by industry. We retrieve them through FRED and average them over 12 months.",
+	"license": "Public domain, citation requested",
+	"licenseUrl": "https://fred.stlouisfed.org/series/JTU5100JOL",
+	"attribution": "U.S. Bureau of Labor Statistics, JOLTS, information sector [JTU5100JOL, JTU5100HIL, JTU5100LDL], retrieved from FRED, Federal Reserve Bank of St. Louis.",
+	"limitations": [
+		"Sector-level survey figures can move a lot from month to month.",
+		"The sector is wider than software."
+	],
+	"dataPolicy": "full-copy",
+	"role": "headline",
+	"checked": "2026-08"
+}

@@ -1,0 +1,13 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Highest estimate",
+			"value": "17 hours"
+		}
+	],
+	"findings": [
+		"METR estimates the longest task a model completes half the time at about 17 hours of human work, with a range of 8 to 55 hours."
+	],
+	"tables": []
+}

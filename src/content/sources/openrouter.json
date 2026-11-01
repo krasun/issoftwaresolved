@@ -1,0 +1,18 @@
+{
+	"name": "OpenRouter",
+	"url": "https://openrouter.ai/rankings",
+	"signal": "token-usage",
+	"measures": "Tokens used per AI model, by month",
+	"about": "OpenRouter lets developers reach many AI models through one service, and publishes tokens per model through its Data API. We show monthly totals and the most used models.",
+	"license": "CC BY 4.0",
+	"licenseUrl": "https://openrouter.ai/docs/cookbook/administration/data-api",
+	"attribution": "Source: OpenRouter (openrouter.ai/rankings), as of 2026-11-01T09:28:31.358Z. Licensed under CC BY 4.0.",
+	"limitations": [
+		"It only covers public traffic through OpenRouter, not all AI usage.",
+		"Tokens are counted by each provider's tokenizer, so they are not directly comparable across providers.",
+		"Published figures can be restated as OpenRouter refreshes its data."
+	],
+	"checked": "2026-10",
+	"dataPolicy": "full-copy",
+	"role": "headline"
+}

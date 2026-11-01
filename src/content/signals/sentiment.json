@@ -1,0 +1,59 @@
+{
+	"order": 9,
+	"group": "Sentiment",
+	"name": "Developer sentiment",
+	"question": "Do developers think software is solved?",
+	"metric": "Sampled Hacker News comments and Bluesky posts taking a side that say it is getting solved, last 12 months",
+	"solvedIf": "Most developers who take a side say it is",
+	"value": "7%",
+	"status": "Skeptical",
+	"direction": "away",
+	"rule": "Skeptical when under half of the sampled comments taking a side say software is getting solved.",
+	"trendLabel": "Share of sampled posts taking a side that say software is getting solved, per month, averaged across Hacker News and Bluesky. Each month rests on few posts, so expect noise.",
+	"trend": [
+		9,
+		17,
+		16,
+		17,
+		10,
+		0,
+		3,
+		11,
+		17,
+		3,
+		7,
+		0,
+		11,
+		4,
+		3,
+		3,
+		11,
+		8,
+		3,
+		6,
+		15,
+		9,
+		9,
+		9,
+		13
+	],
+	"recent": [
+		15,
+		9,
+		9,
+		9,
+		13
+	],
+	"score": 7,
+	"scoreReason": "7% of sampled Hacker News and Bluesky posts taking a side say it is getting solved.",
+	"analysis": {
+		"title": "Two communities",
+		"intro": "Both samples are small, and most posts take no clear side, so read these as rough readings.",
+		"points": [
+			"Hacker News: 7% say it is getting solved, 13 comments against 162.",
+			"Bluesky: 7% say it is getting solved, 13 posts against 176.",
+			"In the 2025 Stack Overflow Developer Survey, 84% use or plan to use AI tools, but more developers distrust their accuracy (46%) than trust it (33%). This does not affect the score."
+		]
+	},
+	"trendStart": "2024-10"
+}

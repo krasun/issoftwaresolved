@@ -1,0 +1,17 @@
+{
+	"name": "SEC filings for Wix and Shopify",
+	"url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+	"signal": "no-code-revenue",
+	"measures": "Annual revenue of Wix and Shopify",
+	"about": "Public companies report revenue to the US Securities and Exchange Commission, which publishes it through a free API. We add up these two companies' annual revenue.",
+	"license": "US government public data",
+	"licenseUrl": "https://www.sec.gov/about/privacy-information#dissemination",
+	"attribution": "Revenue from filings on SEC EDGAR.",
+	"limitations": [
+		"It covers two companies, and private no-code businesses publish no comparable numbers.",
+		"Revenue reflects pricing, payments and shopping as well as how many people build without code."
+	],
+	"checked": "2025",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

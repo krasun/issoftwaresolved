@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 56
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 91
+		},
+		{
+			"label": "Major or critical",
+			"value": 24
+		},
+		{
+			"label": "All time",
+			"value": 403
+		}
+	],
+	"findings": [
+		"MongoDB Cloud reported 56 incidents in the last 12 months against 91 in the 12 months before: down 38%.",
+		"24 of the last 56 were marked major or critical, which is 43%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					47
+				],
+				[
+					"2022",
+					47
+				],
+				[
+					"2023",
+					66
+				],
+				[
+					"2024",
+					70
+				],
+				[
+					"2025",
+					87
+				],
+				[
+					"2026",
+					51
+				]
+			]
+		}
+	]
+}

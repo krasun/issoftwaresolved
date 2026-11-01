@@ -1,0 +1,18 @@
+{
+	"name": "SEC filings for outsourcing companies",
+	"url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces",
+	"signal": "outsourcing",
+	"measures": "Annual revenue and employees at five public outsourcing companies",
+	"about": "Public companies report revenue and employees to the US Securities and Exchange Commission. We add up annual revenue through its free API, and enter employee counts by hand from each annual filing.",
+	"license": "US government public data",
+	"licenseUrl": "https://www.sec.gov/about/privacy-information#dissemination",
+	"attribution": "Revenue and employees from filings on SEC EDGAR.",
+	"limitations": [
+		"Five companies stand in for a whole industry.",
+		"Fiscal years differ, so years do not line up exactly.",
+		"Employee counts are entered by hand, and Globant's 2024 filing says only more than 31,000."
+	],
+	"dataPolicy": "full-copy",
+	"role": "headline",
+	"checked": "2025"
+}

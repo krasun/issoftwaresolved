@@ -1,0 +1,17 @@
+{
+	"name": "Census Business Formation Statistics",
+	"url": "https://www.census.gov/econ/bfs/",
+	"signal": "new-businesses",
+	"measures": "New US business applications in the information sector",
+	"about": "The Census Bureau publishes monthly business applications by sector. We use the seasonally adjusted US figures for the information sector.",
+	"license": "US government public data",
+	"licenseUrl": "https://www.census.gov/data/developers/about/terms-of-service.html",
+	"attribution": "U.S. Census Bureau, Business Formation Statistics. This site is not endorsed or certified by the Census Bureau.",
+	"limitations": [
+		"Applications are not the same as working businesses.",
+		"The sector is wider than software."
+	],
+	"dataPolicy": "full-copy",
+	"role": "headline",
+	"checked": "2026-09"
+}

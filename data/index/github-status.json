@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 277
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 183
+		},
+		{
+			"label": "Major or critical",
+			"value": 86
+		},
+		{
+			"label": "All time",
+			"value": 1875
+		}
+	],
+	"findings": [
+		"GitHub reported 277 incidents in the last 12 months against 183 in the 12 months before: up 51%.",
+		"86 of the last 277 were marked major or critical, which is 31%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					91
+				],
+				[
+					"2022",
+					129
+				],
+				[
+					"2023",
+					160
+				],
+				[
+					"2024",
+					123
+				],
+				[
+					"2025",
+					197
+				],
+				[
+					"2026",
+					248
+				]
+			]
+		}
+	]
+}

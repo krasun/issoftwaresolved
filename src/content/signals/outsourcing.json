@@ -1,0 +1,51 @@
+{
+	"order": 26,
+	"group": "Money",
+	"name": "Software outsourcing revenue",
+	"question": "Are companies still paying others to build software?",
+	"metric": "Combined annual revenue of Accenture, Cognizant, Infosys, EPAM and Globant, latest full year",
+	"solvedIf": "Revenue falls because companies no longer hire people to build software",
+	"trendLabel": "Combined annual revenue of five public outsourcing companies, in billions of dollars.",
+	"caution": [
+		"AI can also help these firms, because companies may pay them to adopt it. Revenue can also hold up while staff numbers fall.",
+		"Accenture is the largest here and is mostly consulting, not software. Acquisitions can add revenue and staff, and fiscal years differ by company."
+	],
+	"value": "$118B",
+	"change": "+7%",
+	"trend": [
+		70,
+		75,
+		77,
+		88,
+		104,
+		108,
+		110,
+		118
+	],
+	"recent": [
+		100,
+		118.2,
+		122.7,
+		125,
+		134.1
+	],
+	"status": "Still growing",
+	"direction": "away",
+	"rule": "Still growing when combined revenue is higher than the year before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "Revenue per employee",
+		"intro": "These firms charge for people, so this shows whether revenue is separating from headcount. From 2023 to 2025, it moved +6%.",
+		"points": [
+			"Revenue per employee went from $72K to $76K.",
+			"Revenue moved +9% and employees +3% over the same period.",
+			"Accenture: $69.7B and 779,000 employees in 2025.",
+			"Cognizant: $21.1B and 351,600 employees in 2025.",
+			"Infosys: $19.3B and 323,578 employees in 2025.",
+			"EPAM: $5.5B and 62,850 employees in 2025.",
+			"Globant: $2.5B and 28,773 employees in 2025."
+		]
+	},
+	"score": 0,
+	"scoreReason": "After inflation: Up 4% since ChatGPT launched."
+}

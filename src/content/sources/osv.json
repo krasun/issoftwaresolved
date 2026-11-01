@@ -1,0 +1,17 @@
+{
+	"name": "OSV",
+	"url": "https://osv.dev/",
+	"signal": "security",
+	"measures": "npm and PyPI advisories, including malicious packages",
+	"about": "OSV is Google’s open database of vulnerabilities in open source packages. It combines several sources, including the GitHub Advisory Database (CC BY 4.0), the PyPI Advisory Database (CC BY 4.0) and OpenSSF Malicious Packages (Apache 2.0). We count npm and PyPI entries by date and publish no advisory text.",
+	"license": "CC BY 4.0 and Apache 2.0, by upstream database",
+	"licenseUrl": "https://google.github.io/osv.dev/data/",
+	"limitations": [
+		"Only npm and PyPI are included so far.",
+		"Malicious package reports arrive in bulk, so yearly swings are not a clean trend."
+	],
+	"checked": "Nov 1, 2026",
+	"attribution": "Data from OSV, including the GitHub Advisory Database, PyPI Advisory Database and OpenSSF Malicious Packages. We count entries and publish the results.",
+	"role": "context",
+	"dataPolicy": "full-copy"
+}

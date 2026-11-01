@@ -1,0 +1,17 @@
+{
+	"name": "OpenCode Data",
+	"url": "https://opencode.ai/data",
+	"signal": "token-prices",
+	"measures": "Average AI usage cost per session, quoted by hand",
+	"about": "OpenCode publishes usage data from its coding agent. We quote one figure by hand with its citation. We do not collect or store its data, because its terms restrict automated collection.",
+	"license": "No data license published",
+	"licenseUrl": "https://opencode.ai/legal/terms-of-service",
+	"attribution": "OpenCode Data (opencode.ai/data), updated Nov 1, 2026, 10:18 AM UTC.",
+	"limitations": [
+		"It only covers people using OpenCode.",
+		"This quote is a snapshot and does not update on its own."
+	],
+	"checked": "Nov 1, 2026",
+	"role": "context",
+	"dataPolicy": "quote-only"
+}

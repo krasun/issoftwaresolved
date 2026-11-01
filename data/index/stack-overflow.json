@@ -1,0 +1,64 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Questions, 2026-10",
+			"value": 1046
+		},
+		{
+			"label": "Year over year",
+			"value": "-80%"
+		},
+		{
+			"label": "November 2022",
+			"value": 109120
+		}
+	],
+	"findings": [
+		"1,046 questions were asked in 2026-10, against 5,263 a year earlier and 109,120 when ChatGPT launched in November 2022.",
+		"Questions were already falling before ChatGPT, so AI is only one possible cause."
+	],
+	"tables": [
+		{
+			"title": "Questions, September of each year",
+			"columns": [
+				"Year",
+				"Questions"
+			],
+			"rows": [
+				[
+					"2019",
+					136849
+				],
+				[
+					"2020",
+					141728
+				],
+				[
+					"2021",
+					119729
+				],
+				[
+					"2022",
+					103417
+				],
+				[
+					"2023",
+					52684
+				],
+				[
+					"2024",
+					24730
+				],
+				[
+					"2025",
+					5072
+				],
+				[
+					"2026",
+					966
+				]
+			]
+		}
+	]
+}

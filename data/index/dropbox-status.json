@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 21
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 24
+		},
+		{
+			"label": "Major or critical",
+			"value": 4
+		},
+		{
+			"label": "All time",
+			"value": 304
+		}
+	],
+	"findings": [
+		"Dropbox reported 21 incidents in the last 12 months against 24 in the 12 months before: down 12%.",
+		"4 of the last 21 were marked major or critical, which is 19%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					32
+				],
+				[
+					"2022",
+					52
+				],
+				[
+					"2023",
+					58
+				],
+				[
+					"2024",
+					53
+				],
+				[
+					"2025",
+					24
+				],
+				[
+					"2026",
+					18
+				]
+			]
+		}
+	]
+}

@@ -1,0 +1,22 @@
+{
+	"name": "Hacker News",
+	"url": "https://news.ycombinator.com/submitted?id=whoishiring",
+	"signal": "sentiment",
+	"measures": "Stance in sampled comments, job posts and topic mentions",
+	"about": "Every month the Hacker News whoishiring account opens a thread where companies post jobs, and we count the top-level comments. We also count how many comments mention a fixed list of phrases each month. A sample of comments is labeled for stance by an AI model, Claude Haiku. We publish only totals, never comment text or usernames.",
+	"license": "No data license published",
+	"licenseUrl": "https://github.com/HackerNews/API",
+	"attribution": "Counts derived from the Hacker News API and the Algolia HN Search API, Y Combinator. Comments belong to their authors and are not stored.",
+	"limitations": [
+		"It reflects a startup-heavy, English-speaking audience.",
+		"Top-level comments are mostly job posts, but not all, and a post can list several roles.",
+		"Deleted comments can still be counted.",
+		"A phrase match is not an opinion: a comment can mention a phrase to disagree with it.",
+		"In a sample check, about 85% of \"vibe coding\" matches contained the exact phrase, so search counts are approximate.",
+		"Stance labels come from an AI model and make mistakes, especially with sarcasm. Every \"getting solved\" label was checked by a second AI reviewer and 11 of 39 were corrected. The much larger \"not solved\" group was not fully checked, so it likely contains errors.",
+		"The sample covers up to 50 comments per month that mention specific phrases, so it does not represent all of Hacker News."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

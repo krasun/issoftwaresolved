@@ -1,0 +1,18 @@
+{
+	"name": "Official MCP Registry",
+	"url": "https://registry.modelcontextprotocol.io/",
+	"signal": "agent-tools",
+	"measures": "Servers published to the registry, by first publish month",
+	"about": "This data comes from the Official MCP Registry, a public list of MCP servers. We count each server name once, in the month it was first published, and do not store its metadata.",
+	"license": "CC0 1.0",
+	"licenseUrl": "https://modelcontextprotocol.io/registry/terms-of-service",
+	"attribution": "This data comes from the Official MCP Registry, dedicated to the public domain under CC0 1.0. We are not affiliated with or endorsed by the registry.",
+	"limitations": [
+		"Publishing is optional, so growth also reflects people adopting the registry.",
+		"The registry launched in September 2025 and is in preview, so its data could be reset.",
+		"Older servers appear when they were first published here, not when they were built."
+	],
+	"checked": "2026-09",
+	"role": "context",
+	"dataPolicy": "full-copy"
+}

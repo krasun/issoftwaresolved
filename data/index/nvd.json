@@ -1,0 +1,99 @@
+{
+	"asOf": "Nov 1, 2026",
+	"stats": [
+		{
+			"label": "CVEs",
+			"value": 398763
+		},
+		{
+			"label": "Last 12 months",
+			"value": 98363
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 46923
+		},
+		{
+			"label": "Critical in 2026",
+			"value": "11%"
+		}
+	],
+	"findings": [
+		"98,363 CVEs were published in the last 12 months against 46,923 in the 12 months before: up 110%.",
+		"89,885 were published in 2026 by Nov 1, 2026, against 48,151 in all of 2025.",
+		"The share rated critical moved from 10% in 2024 to 11% in 2026.",
+		"CWE-79 is the most reported weakness since 2025, with 16,187 CVEs."
+	],
+	"tables": [
+		{
+			"title": "Published per year",
+			"columns": [
+				"Year",
+				"CVEs"
+			],
+			"rows": [
+				[
+					"2019",
+					17305
+				],
+				[
+					"2020",
+					18322
+				],
+				[
+					"2021",
+					20149
+				],
+				[
+					"2022",
+					25073
+				],
+				[
+					"2023",
+					28816
+				],
+				[
+					"2024",
+					39953
+				],
+				[
+					"2025",
+					48151
+				],
+				[
+					"2026 (to Nov 1, 2026)",
+					89885
+				]
+			]
+		},
+		{
+			"title": "Top weaknesses since 2025",
+			"columns": [
+				"Weakness",
+				"CVEs"
+			],
+			"rows": [
+				[
+					"CWE-79",
+					16187
+				],
+				[
+					"CWE-89",
+					8045
+				],
+				[
+					"CWE-862",
+					7233
+				],
+				[
+					"CWE-284",
+					5738
+				],
+				[
+					"CWE-74",
+					4466
+				]
+			]
+		}
+	]
+}

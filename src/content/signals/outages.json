@@ -1,7 +1,72 @@
 {
-	"order": 6,
-	"name": "Outages",
-	"question": "Does it stay up?",
-	"metric": "Major incidents at large platforms",
-	"solvedIf": "Incidents become rare and short"
+	"order": 7,
+	"name": "Major service outages",
+	"question": "Do major software services stay up?",
+	"metric": "Incidents at 12 software services, last 12 months",
+	"solvedIf": "Major outages become rare and short",
+	"group": "Reliability",
+	"trendLabel": "Rolling 12-month total of incidents at 12 software services, one point per month.",
+	"value": "1,679",
+	"change": "+18%",
+	"trend": [
+		1187,
+		1174,
+		1192,
+		1223,
+		1229,
+		1277,
+		1267,
+		1299,
+		1334,
+		1379,
+		1419,
+		1464,
+		1512,
+		1543,
+		1594,
+		1631,
+		1652,
+		1667,
+		1707,
+		1731,
+		1741,
+		1690,
+		1679
+	],
+	"status": "More incidents",
+	"direction": "away",
+	"rule": "More incidents when these services report more than in the previous 12 months.",
+	"fromHigh": "-4% from high",
+	"recent": [
+		100,
+		103.2,
+		106.6,
+		108.7,
+		112.3,
+		114.9,
+		116.4,
+		117.5,
+		120.3,
+		122,
+		122.7,
+		119.1,
+		118.3
+	],
+	"analysis": {
+		"title": "Which services are counted",
+		"intro": "GitHub, Claude, DigitalOcean, Render, Netlify, MongoDB Cloud, Sentry, Discord, Dropbox, Bitbucket, Linode, Zoom.",
+		"points": [
+			"AWS is not counted, because its public feed only covers recent incidents. It currently shows 9, going back to Mar 1, 2026.",
+			"Google Cloud is not counted, because its public feed only covers recent incidents. It currently shows 8, going back to Feb 27, 2026.",
+			"Northflank is not counted, because its public feed only covers recent incidents. It currently shows 25, going back to Jun 12, 2025.",
+			"Twilio is not counted, because its roughly 3,500 yearly notices would swamp the total. Railway is not counted, because we found no machine-readable incident history.",
+			"A service that reports more honestly can look worse, so this shows reported incidents, not true reliability."
+		]
+	},
+	"score": 23,
+	"scoreReason": "Per git push: Down 42% since December 2024, when the data starts.",
+	"caution": [
+		"The data behind this score starts in December 2024, so it misses the first 25 months after ChatGPT launched.",
+		"The score divides this count by git pushes. If AI agents are inflating the number of pushes, it can improve even if software is no more reliable."
+	]
 }

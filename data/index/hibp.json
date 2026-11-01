@@ -1,0 +1,77 @@
+{
+	"asOf": "Oct 27, 2026",
+	"stats": [
+		{
+			"label": "Verified breaches",
+			"value": 989
+		},
+		{
+			"label": "Last 12 months",
+			"value": 131
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 94
+		},
+		{
+			"label": "Billion accounts",
+			"value": "13.2"
+		}
+	],
+	"findings": [
+		"131 verified breaches were added in the last 12 months against 94 in the 12 months before: up 39%.",
+		"Breach counts and accounts move differently: 90 breaches with 2,849,713,686 accounts in 2025, 113 with 541,210,300 so far in 2026."
+	],
+	"tables": [
+		{
+			"title": "Added per year",
+			"columns": [
+				"Year",
+				"Breaches",
+				"Accounts"
+			],
+			"rows": [
+				[
+					"2019",
+					80,
+					"2,827,856,179"
+				],
+				[
+					"2020",
+					76,
+					"934,553,630"
+				],
+				[
+					"2021",
+					73,
+					"1,232,773,564"
+				],
+				[
+					"2022",
+					66,
+					"181,712,602"
+				],
+				[
+					"2023",
+					92,
+					"762,325,896"
+				],
+				[
+					"2024",
+					103,
+					"1,429,539,403"
+				],
+				[
+					"2025",
+					90,
+					"2,849,713,686"
+				],
+				[
+					"2026 (to Oct 27, 2026)",
+					113,
+					"541,210,300"
+				]
+			]
+		}
+	]
+}

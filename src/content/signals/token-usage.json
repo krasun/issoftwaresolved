@@ -1,0 +1,71 @@
+{
+	"order": 19,
+	"group": "Demand",
+	"name": "AI token usage",
+	"question": "Is AI use still growing?",
+	"metric": "Tokens used through OpenRouter, latest full month",
+	"solvedIf": "AI handles a large share of software work",
+	"trendLabel": "Tokens used through OpenRouter per month, in trillions.",
+	"caution": [
+		"This covers one service, not all AI. Part of this growth is OpenRouter itself becoming popular, and big companies mostly buy from AI labs directly.",
+		"Tokens are not all software work, and cheap or free models can raise the count without much more being built. Newer models also use more tokens for the same task."
+	],
+	"value": "787T",
+	"change": "+3423%",
+	"trend": [
+		2,
+		3,
+		6,
+		8,
+		10,
+		9,
+		11,
+		15,
+		21,
+		22,
+		27,
+		26,
+		32,
+		50,
+		84,
+		97,
+		123,
+		188,
+		248,
+		379,
+		576,
+		787
+	],
+	"recent": [
+		100,
+		122.7,
+		118.2,
+		145.5,
+		227.3,
+		381.8,
+		440.9,
+		559.1,
+		854.5,
+		1127.3,
+		1722.7,
+		2618.2,
+		3577.3
+	],
+	"status": "Growing",
+	"direction": "toward",
+	"rule": "Growing when more tokens are used than in the same month a year before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "Most used models",
+		"intro": "No single model dominates. These are the top five of 2026-10.",
+		"points": [
+			"deepseek/deepseek-v4.1-flash: 119T, 15% of all tokens.",
+			"deepseek/deepseek-v4.1-flash: 79T, 10% of all tokens.",
+			"z-ai/glm-5.3-flash: 57T, 7% of all tokens.",
+			"tencent/hy4-preview: 36T, 5% of all tokens.",
+			"xiaomi/mimo-v2.6-flash: 35T, 5% of all tokens."
+		]
+	},
+	"score": 85,
+	"scoreReason": "353 times the tokens of January 2025, against a goal of 1,000 times."
+}

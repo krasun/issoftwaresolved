@@ -1,0 +1,18 @@
+{
+	"name": "CISA Known Exploited Vulnerabilities",
+	"url": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+	"signal": "security",
+	"measures": "Vulnerabilities confirmed as exploited in the wild",
+	"about": "The US Cybersecurity and Infrastructure Security Agency lists software vulnerabilities with evidence of real-world exploitation. It is the only series here counted the same way across every year, so the Security signal uses it for its headline number.",
+	"limitations": [
+		"It counts when CISA added a vulnerability, not when it was first exploited.",
+		"It only covers vulnerabilities CISA knows about and considers actionable, so it undercounts total exploitation.",
+		"Its first years include a bulk load of older vulnerabilities, so the trend starts in 2023."
+	],
+	"checked": "Oct 30, 2026",
+	"license": "CC0 1.0",
+	"licenseUrl": "https://www.cisa.gov/known-exploited-vulnerabilities-catalog",
+	"attribution": "Data from the CISA Known Exploited Vulnerabilities catalog. Use does not imply endorsement by CISA or DHS. We count entries and publish the results.",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

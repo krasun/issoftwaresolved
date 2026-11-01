@@ -1,0 +1,17 @@
+{
+	"name": "BEA software investment",
+	"url": "https://fred.stlouisfed.org/series/B985RX1Q020SBEA",
+	"signal": "software-spending",
+	"measures": "US real private fixed investment in software",
+	"about": "The Bureau of Economic Analysis estimates how much US businesses invest in software. We retrieve it through FRED.",
+	"license": "Public domain, citation requested",
+	"licenseUrl": "https://fred.stlouisfed.org/series/B985RX1Q020SBEA",
+	"attribution": "U.S. Bureau of Economic Analysis, real private fixed investment in software [B985RX1Q020SBEA], retrieved from FRED, Federal Reserve Bank of St. Louis. Not endorsed or certified by BEA.",
+	"limitations": [
+		"Recent quarters can be revised.",
+		"It measures investment, not every software purchase."
+	],
+	"dataPolicy": "full-copy",
+	"role": "headline",
+	"checked": "Q3 2026"
+}

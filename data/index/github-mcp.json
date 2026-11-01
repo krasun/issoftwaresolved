@@ -1,0 +1,80 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "New repos, 2026-10",
+			"value": 7639
+		},
+		{
+			"label": "Year over year",
+			"value": "+1208%"
+		},
+		{
+			"label": "Repos created since 2024-11",
+			"value": 41320
+		}
+	],
+	"findings": [
+		"7,639 repos tagged mcp-server were created in 2026-10, against 584 in 2025-10: +1208%.",
+		"This shows people are still building connections for AI models. It does not show that those servers work or get used."
+	],
+	"tables": [
+		{
+			"title": "New repos, latest months",
+			"columns": [
+				"Month",
+				"Repos"
+			],
+			"rows": [
+				[
+					"2025-11",
+					579
+				],
+				[
+					"2025-12",
+					652
+				],
+				[
+					"2026-01",
+					896
+				],
+				[
+					"2026-02",
+					1660
+				],
+				[
+					"2026-03",
+					3157
+				],
+				[
+					"2026-04",
+					3167
+				],
+				[
+					"2026-05",
+					3000
+				],
+				[
+					"2026-06",
+					3084
+				],
+				[
+					"2026-07",
+					3325
+				],
+				[
+					"2026-08",
+					3717
+				],
+				[
+					"2026-09",
+					5061
+				],
+				[
+					"2026-10",
+					7639
+				]
+			]
+		}
+	]
+}

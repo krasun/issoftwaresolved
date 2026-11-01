@@ -1,0 +1,39 @@
+{
+	"order": 16,
+	"group": "Money",
+	"name": "No-code revenue",
+	"question": "Are people paying for tools that avoid writing code?",
+	"metric": "Combined annual revenue of Wix and Shopify, latest full year",
+	"solvedIf": "Most software gets built without writing code",
+	"trendLabel": "Combined annual revenue of Wix and Shopify, in billions of dollars.",
+	"caution": [
+		"Two public companies stand in for a whole category. Zapier, Webflow and Bubble are private, so they are not counted.",
+		"Most of this revenue is not about avoiding code. Shopify earns much of its money from payments, and it grows with online shopping."
+	],
+	"value": "$13.5B",
+	"change": "+27%",
+	"trend": [
+		1.1,
+		1.7,
+		2.3,
+		3.9,
+		5.9,
+		7,
+		8.6,
+		10.6,
+		13.5
+	],
+	"recent": [
+		100,
+		118.6,
+		145.8,
+		179.7,
+		228.8
+	],
+	"status": "Still growing",
+	"direction": "toward",
+	"rule": "Still growing when combined revenue is higher than the year before.",
+	"fromHigh": "At its high",
+	"score": 29,
+	"scoreReason": "Up 94% since ChatGPT launched."
+}

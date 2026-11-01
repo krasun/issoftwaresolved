@@ -1,0 +1,18 @@
+{
+	"name": "LiteLLM model prices",
+	"url": "https://github.com/BerriAI/litellm",
+	"signal": "token-prices",
+	"measures": "Listed prices for AI models over time",
+	"about": "LiteLLM keeps an open file of AI model prices. We read that file as it stood at the start of each month, from its git history, and compare models sold by the companies that make them. Resellers are left out so a model isn't counted many times.",
+	"license": "MIT",
+	"licenseUrl": "https://github.com/BerriAI/litellm/blob/main/LICENSE",
+	"attribution": "Calculated from the LiteLLM model price file by BerriAI, MIT License.",
+	"limitations": [
+		"The list of models changes, so the median partly reflects which models were added.",
+		"It lists prices, not what people actually use or pay.",
+		"A price per token says nothing about how many tokens a task needs, so tasks can cost more even as tokens get cheaper."
+	],
+	"checked": "2026-11",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

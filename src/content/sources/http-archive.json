@@ -1,0 +1,20 @@
+{
+	"name": "HTTP Archive",
+	"url": "https://httparchive.org/reports/techreport/landing",
+	"signal": "ai-built-sites",
+	"measures": "Sites built on AI builders, and each website platform's share of crawled sites",
+	"about": "HTTP Archive tests millions of sites from the Chrome UX Report each month and detects their technology with Wappalyzer. We count sites on AI builders, calculate each platform's share of the sites crawled, and do not store site data.",
+	"license": "No data license published",
+	"licenseUrl": "https://discuss.httparchive.org/t/what-are-the-rights-licensing-for-data-in-http-archive/1924",
+	"attribution": "Source: HTTP Archive, httparchive.org. Counts derived from its Technology Report API, which detects technologies with Wappalyzer. No formal data license is published. A maintainer has said on its forum that people are free to use the data, and asked for this citation.",
+	"limitations": [
+		"The list of sites changes each month, so we compare shares rather than raw counts.",
+		"It only covers sites with enough Chrome traffic to be listed, so it misses most new or small sites.",
+		"Only each site's landing page is tested, and detection rules change, so a platform can appear or vanish because of a rule.",
+		"A falling share does not show why. Sites can move platform, lose traffic or close.",
+		"Lovable and Emergent are only detected from December 2025, so their earlier sites are not counted."
+	],
+	"checked": "2026-09",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

@@ -1,0 +1,111 @@
+{
+	"asOf": "Oct 30, 2026",
+	"stats": [
+		{
+			"label": "Vulnerabilities",
+			"value": 1766
+		},
+		{
+			"label": "Last 12 months",
+			"value": 313
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 252
+		},
+		{
+			"label": "Linked to ransomware",
+			"value": 361
+		}
+	],
+	"findings": [
+		"313 vulnerabilities were added in the last 12 months, against 252 in the 12 months before: up 24%.",
+		"282 were added in 2026 by Oct 30, 2026, already more than the 245 added in all of 2025.",
+		"Microsoft is the most listed vendor, with 390 entries (22% of the catalog).",
+		"20% of listed vulnerabilities are known to have been used in ransomware campaigns."
+	],
+	"tables": [
+		{
+			"title": "Added per year",
+			"columns": [
+				"Year",
+				"Added"
+			],
+			"rows": [
+				[
+					"2021",
+					311
+				],
+				[
+					"2022",
+					555
+				],
+				[
+					"2023",
+					187
+				],
+				[
+					"2024",
+					186
+				],
+				[
+					"2025",
+					245
+				],
+				[
+					"2026 (to Oct 30, 2026)",
+					282
+				]
+			]
+		},
+		{
+			"title": "Most listed vendors",
+			"columns": [
+				"Vendor",
+				"Vulnerabilities"
+			],
+			"rows": [
+				[
+					"Microsoft",
+					390
+				],
+				[
+					"Cisco",
+					102
+				],
+				[
+					"Apple",
+					95
+				],
+				[
+					"Adobe",
+					83
+				],
+				[
+					"Google",
+					76
+				],
+				[
+					"Oracle",
+					46
+				],
+				[
+					"Apache",
+					41
+				],
+				[
+					"Ivanti",
+					38
+				],
+				[
+					"Linux",
+					32
+				],
+				[
+					"Fortinet",
+					32
+				]
+			]
+		}
+	]
+}

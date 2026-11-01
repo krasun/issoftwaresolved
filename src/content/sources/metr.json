@@ -1,0 +1,17 @@
+{
+	"name": "METR Time Horizons",
+	"url": "https://metr.org/time-horizons/",
+	"signal": "coding-benchmarks",
+	"measures": "Length of task a model completes half the time",
+	"about": "METR measures how long a task, timed in human working hours, an AI model can complete with a 50% success rate. We keep only these estimates, not its files, to calculate a score and quote the highest one.",
+	"license": "No data license found",
+	"licenseUrl": "https://metr.org/time-horizons/",
+	"attribution": "Figure quoted from METR Time Horizons.",
+	"limitations": [
+		"The newest estimates have wide ranges, and METR has said they depend heavily on modelling assumptions.",
+		"METR did not measure every model, and measured some long after release."
+	],
+	"checked": "2026-10",
+	"role": "context",
+	"dataPolicy": "numbers-only"
+}

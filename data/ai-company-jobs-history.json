@@ -1,0 +1,48 @@
+{
+	"2026-11-01": {
+		"OpenAI": {
+			"open": 810,
+			"engineering": 162
+		},
+		"Anthropic": {
+			"open": 675,
+			"engineering": 99
+		},
+		"Mistral": {
+			"open": 229,
+			"engineering": 22
+		},
+		"xAI": {
+			"open": 308,
+			"engineering": 44
+		},
+		"Cohere": {
+			"open": 122,
+			"engineering": 29
+		},
+		"Perplexity": {
+			"open": 138,
+			"engineering": 53
+		},
+		"Cursor": {
+			"open": 125,
+			"engineering": 24
+		},
+		"Cognition": {
+			"open": 106,
+			"engineering": 4
+		},
+		"Replit": {
+			"open": 34,
+			"engineering": 8
+		},
+		"Lovable": {
+			"open": 80,
+			"engineering": 14
+		},
+		"Factory": {
+			"open": 67,
+			"engineering": 5
+		}
+	}
+}

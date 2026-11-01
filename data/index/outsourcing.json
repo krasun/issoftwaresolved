@@ -1,0 +1,61 @@
+{
+	"asOf": "2025",
+	"stats": [
+		{
+			"label": "Combined revenue, 2025",
+			"value": "$118B"
+		},
+		{
+			"label": "Year over year",
+			"value": "+7%"
+		},
+		{
+			"label": "Employees, 2025",
+			"value": 1545801
+		},
+		{
+			"label": "Revenue per employee, 2025",
+			"value": "$76K"
+		}
+	],
+	"findings": [
+		"From 2023 to 2025, combined revenue moved +9%, employees +3%, and revenue per employee +6%."
+	],
+	"tables": [
+		{
+			"title": "Revenue and employees by company, 2025",
+			"columns": [
+				"Company",
+				"Revenue",
+				"Employees"
+			],
+			"rows": [
+				[
+					"Accenture",
+					"$69.7B",
+					779000
+				],
+				[
+					"Cognizant",
+					"$21.1B",
+					351600
+				],
+				[
+					"Infosys",
+					"$19.3B",
+					323578
+				],
+				[
+					"EPAM",
+					"$5.5B",
+					62850
+				],
+				[
+					"Globant",
+					"$2.5B",
+					28773
+				]
+			]
+		}
+	]
+}

@@ -1,0 +1,55 @@
+{
+	"order": 27,
+	"group": "Demand",
+	"name": "AI-built sites",
+	"question": "Are people putting sites built with AI on the web?",
+	"metric": "Crawled sites built on Lovable and Emergent, latest month",
+	"solvedIf": "Most new sites get built by AI",
+	"trendLabel": "Crawled sites built on Lovable and Emergent per month.",
+	"caution": [
+		"Two builders stand in for a whole category, and they are only detected from December 2025, so part of the early growth could be detection improving.",
+		"The crawl only lists sites with enough Chrome traffic, so most new or small sites are missing, and sites built with AI elsewhere look hand-built.",
+		"It counts for a quarter as much as other signals in the score, because its history is short and its base is tiny."
+	],
+	"value": "6,768",
+	"trend": [
+		2137,
+		2367,
+		2788,
+		3210,
+		4056,
+		4746,
+		5361,
+		6215,
+		6630,
+		6768
+	],
+	"trendStart": "2025-12",
+	"recent": [
+		100,
+		110.8,
+		130.5,
+		150.2,
+		189.8,
+		222.1,
+		250.9,
+		290.8,
+		310.2,
+		316.7
+	],
+	"status": "Growing",
+	"direction": "toward",
+	"rule": "Growing when more sites are detected than three months before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "What is happening to WordPress",
+		"intro": "WordPress is losing share of the web, but this data shows the fall, not its cause, and AI builders are far too small to explain it.",
+		"points": [
+			"WordPress ran 14.8% of the top 1 million sites in 2026-09, against 17.9% a year earlier.",
+			"It ran 31.1% of all crawled sites in 2026-09, against 34.2% a year earlier.",
+			"Sites on Lovable and Emergent are 6,768, against 2,714,694 on WordPress."
+		]
+	},
+	"score": 17,
+	"scoreReason": "3.2 times the sites of December 2025, against a goal of 1,000 times. Counts a quarter as much as other signals here."
+}

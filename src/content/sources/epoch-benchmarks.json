@@ -1,0 +1,17 @@
+{
+	"name": "Epoch AI Benchmarking Hub",
+	"url": "https://epoch.ai/benchmarks",
+	"signal": "coding-benchmarks",
+	"measures": "Model scores on coding benchmarks",
+	"about": "Epoch AI runs and collects AI benchmark results. We keep its own SWE-bench Verified and MirrorCode results, and only scores and costs for results it collected from other projects.",
+	"license": "CC BY 4.0",
+	"licenseUrl": "https://epoch.ai/benchmarks/use-this-data",
+	"attribution": "Epoch AI, 'Capabilities & benchmarking'. Published online at epoch.ai. Retrieved from https://epoch.ai/benchmarks. Results collected from other projects keep their original terms, and we quote only top scores from those.",
+	"limitations": [
+		"Benchmarks only cover the tasks they include, and models can be tuned for them.",
+		"Each model is dated by its release, not when it was tested, and not every model is tested on every benchmark."
+	],
+	"checked": "2026-04",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

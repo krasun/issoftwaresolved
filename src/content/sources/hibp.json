@@ -1,0 +1,18 @@
+{
+	"name": "Have I Been Pwned",
+	"url": "https://haveibeenpwned.com/",
+	"signal": "security",
+	"measures": "Verified data breaches and accounts exposed",
+	"about": "Have I Been Pwned collects data breaches and lets people check whether they were affected. We count verified breaches from its public list, without fabricated breaches or spam lists, and publish no account data.",
+	"license": "CC BY 4.0",
+	"licenseUrl": "https://haveibeenpwned.com/API/v3#License",
+	"limitations": [
+		"It only includes breaches that surfaced and were loaded, so it undercounts.",
+		"We count by the date a breach was added, which can be years after it happened.",
+		"A single huge breach can dominate the yearly account total."
+	],
+	"checked": "Oct 27, 2026",
+	"attribution": "Breach data from Have I Been Pwned (haveibeenpwned.com). We count verified breaches and publish the results.",
+	"role": "context",
+	"dataPolicy": "full-copy"
+}

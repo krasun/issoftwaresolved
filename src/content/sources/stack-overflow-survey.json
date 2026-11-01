@@ -1,0 +1,17 @@
+{
+	"name": "Stack Overflow Developer Survey",
+	"url": "https://survey.stackoverflow.co/2025/ai",
+	"signal": "sentiment",
+	"measures": "Developer views on AI tools, 2025",
+	"about": "Stack Overflow surveys developers once a year. We quote published figures by hand with credit, and they do not affect the score.",
+	"license": "ODbL 1.0",
+	"licenseUrl": "https://opendatacommons.org/licenses/odbl/1-0/",
+	"attribution": "Stack Overflow Developer Survey 2025, survey.stackoverflow.co. Survey data licensed under ODbL 1.0.",
+	"limitations": [
+		"It is published once a year.",
+		"Respondents are people who chose to answer."
+	],
+	"checked": "2025 survey",
+	"dataPolicy": "quote-only",
+	"role": "context"
+}

@@ -1,0 +1,73 @@
+{
+	"order": 14,
+	"group": "Demand",
+	"name": "AI coding benchmarks",
+	"question": "Can AI models do real engineering tasks?",
+	"metric": "Best score so far on SWE-bench Verified, the share of real GitHub issues resolved",
+	"solvedIf": "Models resolve nearly every real engineering task",
+	"trendLabel": "Best SWE-bench Verified score so far, in percent, by model release month.",
+	"caution": [
+		"A benchmark is not a job. These tasks are fixed in advance and scored automatically, so a high score does not show that a model can run a real software project.",
+		"Scores differ widely between benchmarks, and models can be tuned for well-known tests. New models are not always tested right away, so the latest result can lag."
+	],
+	"value": "83%",
+	"change": "+12%",
+	"trend": [
+		31,
+		31,
+		31,
+		61,
+		61,
+		62,
+		71,
+		71,
+		71,
+		74,
+		74,
+		74,
+		77,
+		77,
+		77,
+		79,
+		79,
+		83,
+		83,
+		83,
+		83,
+		83,
+		83,
+		83
+	],
+	"recent": [
+		100,
+		104.1,
+		104.1,
+		104.1,
+		106.8,
+		106.8,
+		112.2,
+		112.2,
+		112.2,
+		112.2,
+		112.2,
+		112.2,
+		112.2
+	],
+	"status": "Improving",
+	"direction": "toward",
+	"rule": "Improving when the best score is higher than a year before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "Other public benchmarks",
+		"intro": "The best score depends heavily on the benchmark, so no single number settles this.",
+		"points": [
+			"MirrorCode: 79%, from claude-opus-5-5.",
+			"DeepSWE: 74%, from gpt-6-astra.",
+			"FrontierSWE: 66%, from gpt-6-astra.",
+			"FrontierCode: 55%, from claude-opus-5-5.",
+			"METR estimates the longest task a model completes half the time at about 17 hours of human work, with a range of 8 to 55 hours."
+		]
+	},
+	"score": 83,
+	"scoreReason": "The best model resolves 83% of SWE-bench Verified tasks."
+}

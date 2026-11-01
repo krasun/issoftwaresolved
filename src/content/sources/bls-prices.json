@@ -1,0 +1,18 @@
+{
+	"name": "BLS producer price index",
+	"url": "https://www.bls.gov/ppi/",
+	"signal": "prices",
+	"measures": "Prices software publishers receive in the US",
+	"about": "The US Bureau of Labor Statistics tracks what domestic producers receive for their output. We use its monthly index for software publishers, which adjusts for quality changes.",
+	"license": "US government work",
+	"licenseUrl": "https://www.bls.gov/developers/",
+	"attribution": "Data from the US Bureau of Labor Statistics. BLS has not reviewed or endorsed this site or its results.",
+	"limitations": [
+		"It measures US producers only.",
+		"It is not adjusted for general inflation.",
+		"Prices are hard to measure for software, particularly usage-based products."
+	],
+	"checked": "2026-09",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

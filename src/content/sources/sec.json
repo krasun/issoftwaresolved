@@ -1,0 +1,19 @@
+{
+	"name": "SEC EDGAR",
+	"url": "https://www.sec.gov/edgar/sec-api-documentation",
+	"signal": "revenue",
+	"measures": "Reported annual revenue of 10 public software companies",
+	"about": "US public companies file audited results with the Securities and Exchange Commission. We add up annual revenue for a fixed group: Salesforce, Adobe, ServiceNow, Workday, Intuit, Autodesk, Oracle, HubSpot, Twilio and MongoDB.",
+	"license": "US government data",
+	"licenseUrl": "https://www.sec.gov/edgar/sec-api-documentation",
+	"attribution": "Data from SEC EDGAR filings. The SEC has not reviewed or endorsed this site or its results.",
+	"limitations": [
+		"We chose this group, so it is a sample of large public companies, not the whole software market.",
+		"These companies also sell hardware, cloud and services, especially Oracle.",
+		"Fiscal years differ, so each is credited to the calendar year it mostly falls in.",
+		"Acquisitions add revenue without new demand."
+	],
+	"checked": "2025",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

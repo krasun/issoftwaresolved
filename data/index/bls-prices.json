@@ -1,0 +1,21 @@
+{
+	"asOf": "2026-09",
+	"stats": [
+		{
+			"label": "Latest index",
+			"value": "102.1"
+		},
+		{
+			"label": "Year over year",
+			"value": "+2%"
+		},
+		{
+			"label": "Since 2017",
+			"value": "+18%"
+		}
+	],
+	"findings": [
+		"Software publisher prices are +2% on the year, and +18% since 2017-01."
+	],
+	"tables": []
+}

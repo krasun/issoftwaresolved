@@ -1,0 +1,59 @@
+{
+	"asOf": "2026-09",
+	"stats": [
+		{
+			"label": "Downloads, 2026-09",
+			"value": "892B"
+		},
+		{
+			"label": "Year over year",
+			"value": "+132%"
+		}
+	],
+	"findings": [
+		"npm served 892 billion downloads in 2026-09, +132% on a year earlier. CI systems and AI agents inflate this, so it shows activity rather than human demand."
+	],
+	"tables": [
+		{
+			"title": "Downloads in January of each year",
+			"columns": [
+				"Year",
+				"Downloads"
+			],
+			"rows": [
+				[
+					"2019",
+					"39B"
+				],
+				[
+					"2020",
+					"64B"
+				],
+				[
+					"2021",
+					"106B"
+				],
+				[
+					"2022",
+					"160B"
+				],
+				[
+					"2023",
+					"200B"
+				],
+				[
+					"2024",
+					"236B"
+				],
+				[
+					"2025",
+					"279B"
+				],
+				[
+					"2026",
+					"441B"
+				]
+			]
+		}
+	]
+}

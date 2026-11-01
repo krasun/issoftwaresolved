@@ -1,0 +1,26 @@
+{
+	"asOf": "Q2 2026",
+	"stats": [
+		{
+			"label": "Output per worker, Q4 2022 = 100",
+			"value": 151.2
+		},
+		{
+			"label": "Output since Q4 2022",
+			"value": "+35%"
+		},
+		{
+			"label": "Workers since Q4 2022",
+			"value": "-10%"
+		},
+		{
+			"label": "Above the earlier trend",
+			"value": "+16%"
+		}
+	],
+	"findings": [
+		"Since Q4 2022, US information sector output is +35% and employment is -10%, so output per worker reached 151.2.",
+		"Output per worker already grew about 7% a year from 2015 to 2019. The latest figure is +16% against that trend."
+	],
+	"tables": []
+}

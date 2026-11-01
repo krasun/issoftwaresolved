@@ -1,0 +1,17 @@
+{
+	"name": "npm",
+	"url": "https://www.npmjs.com/",
+	"signal": "code-activity",
+	"measures": "Total monthly package downloads",
+	"about": "The npm registry publishes download counts through a public API. We add up total downloads per month, and do not store package data.",
+	"license": "No data license published",
+	"licenseUrl": "https://docs.npmjs.com/policies/open-source-terms",
+	"attribution": "Counts derived from the npm public downloads API.",
+	"limitations": [
+		"CI systems, mirrors and AI agents inflate downloads.",
+		"It only covers the JavaScript ecosystem."
+	],
+	"checked": "2026-09",
+	"role": "context",
+	"dataPolicy": "numbers-only"
+}

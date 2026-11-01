@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 398
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 282
+		},
+		{
+			"label": "Major or critical",
+			"value": 143
+		},
+		{
+			"label": "All time",
+			"value": 819
+		}
+	],
+	"findings": [
+		"Claude reported 398 incidents in the last 12 months against 282 in the 12 months before: up 41%.",
+		"143 of the last 398 were marked major or critical, which is 36%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					0
+				],
+				[
+					"2022",
+					0
+				],
+				[
+					"2023",
+					15
+				],
+				[
+					"2024",
+					154
+				],
+				[
+					"2025",
+					292
+				],
+				[
+					"2026",
+					358
+				]
+			]
+		}
+	]
+}

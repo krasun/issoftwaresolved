@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 50
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 25
+		},
+		{
+			"label": "Major or critical",
+			"value": 39
+		},
+		{
+			"label": "All time",
+			"value": 421
+		}
+	],
+	"findings": [
+		"Discord reported 50 incidents in the last 12 months against 25 in the 12 months before: up 100%.",
+		"39 of the last 50 were marked major or critical, which is 78%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					53
+				],
+				[
+					"2022",
+					46
+				],
+				[
+					"2023",
+					35
+				],
+				[
+					"2024",
+					37
+				],
+				[
+					"2025",
+					29
+				],
+				[
+					"2026",
+					44
+				]
+			]
+		}
+	]
+}

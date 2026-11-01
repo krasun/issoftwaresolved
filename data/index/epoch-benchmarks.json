@@ -1,0 +1,62 @@
+{
+	"asOf": "2026-04",
+	"stats": [
+		{
+			"label": "SWE-bench Verified, best",
+			"value": "83%"
+		},
+		{
+			"label": "MirrorCode, best",
+			"value": "79%"
+		},
+		{
+			"label": "DeepSWE, best",
+			"value": "74%"
+		},
+		{
+			"label": "FrontierSWE, best",
+			"value": "66%"
+		}
+	],
+	"findings": [
+		"The best SWE-bench Verified score is 83%, from claude-opus-4-7.",
+		"Top scores on the other coding benchmarks here run from 55% to 79%, so one benchmark does not settle the question."
+	],
+	"tables": [
+		{
+			"title": "Best score by benchmark",
+			"columns": [
+				"Benchmark",
+				"Best score",
+				"Model"
+			],
+			"rows": [
+				[
+					"SWE-bench Verified",
+					"83%",
+					"claude-opus-4-7"
+				],
+				[
+					"MirrorCode",
+					"79%",
+					"claude-opus-5-5"
+				],
+				[
+					"DeepSWE",
+					"74%",
+					"gpt-6-astra"
+				],
+				[
+					"FrontierSWE",
+					"66%",
+					"gpt-6-astra"
+				],
+				[
+					"FrontierCode",
+					"55%",
+					"claude-opus-5-5"
+				]
+			]
+		}
+	]
+}

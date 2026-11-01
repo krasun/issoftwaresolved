@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 69
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 59
+		},
+		{
+			"label": "Major or critical",
+			"value": 23
+		},
+		{
+			"label": "All time",
+			"value": 496
+		}
+	],
+	"findings": [
+		"Netlify reported 69 incidents in the last 12 months against 59 in the 12 months before: up 17%.",
+		"23 of the last 69 were marked major or critical, which is 33%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					57
+				],
+				[
+					"2022",
+					104
+				],
+				[
+					"2023",
+					38
+				],
+				[
+					"2024",
+					37
+				],
+				[
+					"2025",
+					62
+				],
+				[
+					"2026",
+					61
+				]
+			]
+		}
+	]
+}

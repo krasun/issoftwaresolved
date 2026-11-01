@@ -1,0 +1,74 @@
+{
+	"asOf": "2025",
+	"stats": [
+		{
+			"label": "Combined revenue, 2025",
+			"value": "$13.5B"
+		},
+		{
+			"label": "Year over year",
+			"value": "+27%"
+		},
+		{
+			"label": "Wix, 2025",
+			"value": "$2B"
+		},
+		{
+			"label": "Shopify, 2025",
+			"value": "$11.6B"
+		}
+	],
+	"findings": [
+		"Wix and Shopify earned $13.5B in 2025, +27% on the year before.",
+		"Most of this is not a direct measure of building without code, especially at Shopify."
+	],
+	"tables": [
+		{
+			"title": "Revenue per year",
+			"columns": [
+				"Year",
+				"Wix",
+				"Shopify",
+				"Combined"
+			],
+			"rows": [
+				[
+					"2020",
+					"$1B",
+					"$2.9B",
+					"$3.9B"
+				],
+				[
+					"2021",
+					"$1.3B",
+					"$4.6B",
+					"$5.9B"
+				],
+				[
+					"2022",
+					"$1.4B",
+					"$5.6B",
+					"$7B"
+				],
+				[
+					"2023",
+					"$1.6B",
+					"$7.1B",
+					"$8.6B"
+				],
+				[
+					"2024",
+					"$1.8B",
+					"$8.9B",
+					"$10.6B"
+				],
+				[
+					"2025",
+					"$2B",
+					"$11.6B",
+					"$13.5B"
+				]
+			]
+		}
+	]
+}

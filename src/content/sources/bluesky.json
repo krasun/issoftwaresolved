@@ -1,0 +1,18 @@
+{
+	"name": "Bluesky",
+	"url": "https://bsky.app/",
+	"signal": "sentiment",
+	"measures": "Stance in a sample of public posts",
+	"about": "We sampled public Bluesky posts mentioning programmer replacement, vibe coding or junior developers through its public API, labelled their stance with AI, and reviewed the labels. We keep only monthly totals, not post text or post IDs.",
+	"license": "No data license published",
+	"licenseUrl": "https://bsky.social/about/support/tos",
+	"attribution": "Totals derived from public posts on Bluesky through its public API. Posts belong to their authors and are not stored.",
+	"limitations": [
+		"Each month samples from the most recent posts for each phrase, so it leans toward the end of the month.",
+		"Its audience may be more skeptical of AI than most developers.",
+		"AI labels make mistakes, and many posts take no clear side."
+	],
+	"checked": "2026-10",
+	"dataPolicy": "numbers-only",
+	"role": "headline"
+}

@@ -1,0 +1,72 @@
+{
+	"asOf": "2026-11",
+	"stats": [
+		{
+			"label": "Median per 1M tokens",
+			"value": "$2.00"
+		},
+		{
+			"label": "Year over year",
+			"value": "-27%"
+		},
+		{
+			"label": "Same models, unchanged",
+			"value": "71 of 79"
+		},
+		{
+			"label": "Models compared",
+			"value": 259
+		}
+	],
+	"findings": [
+		"The median price went from $2.75 to $2.00 per million tokens between 2025-11 and 2026-11: -27%.",
+		"Of 79 models listed in both months, 71 kept their price, 4 got cheaper and 4 got more expensive."
+	],
+	"tables": [
+		{
+			"title": "Median price over time",
+			"columns": [
+				"Month",
+				"Per 1M tokens",
+				"Models"
+			],
+			"rows": [
+				[
+					"2024-01",
+					"$4.10",
+					23
+				],
+				[
+					"2024-07",
+					"$3.75",
+					68
+				],
+				[
+					"2025-01",
+					"$3.75",
+					110
+				],
+				[
+					"2025-07",
+					"$3.00",
+					190
+				],
+				[
+					"2026-01",
+					"$2.75",
+					247
+				],
+				[
+					"2026-07",
+					"$2.00",
+					256
+				],
+				[
+					"2026-11",
+					"$2.00",
+					259
+				]
+			]
+		}
+	]
+}

@@ -1,0 +1,31 @@
+{
+	"order": 11,
+	"group": "Demand",
+	"name": "AI company hiring",
+	"question": "Are the companies building AI still hiring engineers?",
+	"metric": "Open software engineering roles at 11 AI companies, today",
+	"solvedIf": "The companies closest to the tools stop hiring engineers",
+	"value": "464",
+	"status": "Still hiring",
+	"direction": "away",
+	"rule": "Still hiring when any of these companies lists an open software engineering role.",
+	"analysis": {
+		"title": "Who is hiring",
+		"intro": "11 of 11 companies have open software engineering roles. Hiring does not show how much of their code AI writes.",
+		"points": [
+			"OpenAI: 162 engineering roles, out of 810 open roles.",
+			"Anthropic: 99 engineering roles, out of 675 open roles.",
+			"Perplexity: 53 engineering roles, out of 138 open roles.",
+			"xAI: 44 engineering roles, out of 308 open roles.",
+			"Cohere: 29 engineering roles, out of 122 open roles.",
+			"Cursor: 24 engineering roles, out of 125 open roles.",
+			"Mistral: 22 engineering roles, out of 229 open roles.",
+			"Lovable: 14 engineering roles, out of 80 open roles.",
+			"Replit: 8 engineering roles, out of 34 open roles.",
+			"Factory: 5 engineering roles, out of 67 open roles.",
+			"Cognition: 4 engineering roles, out of 106 open roles."
+		]
+	},
+	"score": 0,
+	"scoreReason": "0 of 11 AI companies have stopped hiring engineers."
+}

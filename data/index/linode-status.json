@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 146
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 214
+		},
+		{
+			"label": "Major or critical",
+			"value": 7
+		},
+		{
+			"label": "All time",
+			"value": 1572
+		}
+	],
+	"findings": [
+		"Linode reported 146 incidents in the last 12 months against 214 in the 12 months before: down 32%.",
+		"7 of the last 146 were marked major or critical, which is 5%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					145
+				],
+				[
+					"2022",
+					135
+				],
+				[
+					"2023",
+					195
+				],
+				[
+					"2024",
+					125
+				],
+				[
+					"2025",
+					255
+				],
+				[
+					"2026",
+					86
+				]
+			]
+		}
+	]
+}

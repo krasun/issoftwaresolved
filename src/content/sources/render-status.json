@@ -1,0 +1,17 @@
+{
+	"name": "Render Status",
+	"url": "https://status.render.com/",
+	"licenseUrl": "https://status.render.com/",
+	"measures": "Incidents reported by Render",
+	"about": "Render publishes its own incidents on a public status page. We count incidents, leaving out those marked as having no impact, and do not store or publish incident text.",
+	"attribution": "Counts derived from the public Render status page.",
+	"limitations": [
+		"Incidents are self-reported, so a company that reports more honestly can look worse.",
+		"New products add new ways to have an incident, so counts can rise without reliability getting worse."
+	],
+	"signal": "outages",
+	"role": "headline",
+	"license": "No data license published",
+	"checked": "2026-10",
+	"dataPolicy": "numbers-only"
+}

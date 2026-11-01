@@ -1,7 +1,36 @@
 {
-	"order": 3,
+	"order": 4,
 	"name": "Revenue",
 	"question": "Is the money still growing?",
-	"metric": "Global software revenue",
-	"solvedIf": "Spend flattens or shrinks"
+	"metric": "Annual revenue of 10 public software companies",
+	"solvedIf": "Spend flattens or shrinks",
+	"group": "Money",
+	"trendLabel": "Combined annual revenue of the same 10 companies, in billions of dollars.",
+	"value": "$192B",
+	"change": "+15%",
+	"trend": [
+		62,
+		69,
+		77,
+		87,
+		98,
+		115,
+		137,
+		151,
+		168,
+		192
+	],
+	"status": "Still growing",
+	"direction": "away",
+	"rule": "Still growing when combined revenue rises over the year. Shrinking revenue moves toward solved.",
+	"fromHigh": "At its high",
+	"recent": [
+		100,
+		99.4,
+		107.3,
+		119.1,
+		116.6
+	],
+	"score": 0,
+	"scoreReason": "Against GDP: Up 24% since ChatGPT launched."
 }

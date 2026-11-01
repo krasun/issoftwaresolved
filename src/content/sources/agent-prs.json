@@ -1,0 +1,18 @@
+{
+	"name": "GitHub pull request search",
+	"url": "https://docs.github.com/en/search-github/searching-on-github/searching-issues-and-pull-requests",
+	"signal": "agent-prs",
+	"measures": "Public pull requests by coding agent, by month",
+	"about": "GitHub's search API counts public pull requests by author and branch name. We count those from Codex, Copilot, Devin, Cursor, Claude and Jules against all public pull requests. We store only monthly counts, not pull request data.",
+	"license": "No data license published",
+	"licenseUrl": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+	"attribution": "Counts derived from the GitHub search API.",
+	"limitations": [
+		"It misses agents working under a person's account, and all private repositories.",
+		"Codex is matched by its default branch name, codex/, which anyone can use.",
+		"Accounts and defaults change over time, so one agent's count can move for reasons other than usage."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

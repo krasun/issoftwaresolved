@@ -1,0 +1,17 @@
+{
+	"name": "Discord Status",
+	"url": "https://discordstatus.com/",
+	"licenseUrl": "https://discordstatus.com/",
+	"measures": "Incidents reported by Discord",
+	"about": "Discord publishes its own incidents on a public status page. We count incidents, leaving out those marked as having no impact, and do not store or publish incident text.",
+	"attribution": "Counts derived from the public Discord status page.",
+	"limitations": [
+		"Incidents are self-reported, so a company that reports more honestly can look worse.",
+		"New products add new ways to have an incident, so counts can rise without reliability getting worse."
+	],
+	"signal": "outages",
+	"role": "headline",
+	"license": "No data license published",
+	"checked": "2026-10",
+	"dataPolicy": "numbers-only"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "New York Fed recent graduates data",
+	"url": "https://www.newyorkfed.org/research/college-labor-market",
+	"signal": "jobs",
+	"measures": "Unemployment among recent graduates, by major",
+	"about": "The Federal Reserve Bank of New York publishes job outcomes for recent college graduates by major, updated once a year. We quote computer science and computer engineering against all majors. It does not affect the score.",
+	"license": "New York Fed Terms of Use, with attribution",
+	"licenseUrl": "https://www.newyorkfed.org/privacy/termsofuse",
+	"attribution": "© 2026 Federal Reserve Bank of New York. Content from the New York Fed subject to the Terms of Use at newyorkfed.org.",
+	"limitations": [
+		"It is published once a year, so there is no monthly trend.",
+		"Unemployment among graduates has many causes other than AI."
+	],
+	"checked": "2026 release",
+	"dataPolicy": "full-copy",
+	"role": "headline"
+}

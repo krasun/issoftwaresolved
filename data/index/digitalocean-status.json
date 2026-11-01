@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 129
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 124
+		},
+		{
+			"label": "Major or critical",
+			"value": 11
+		},
+		{
+			"label": "All time",
+			"value": 463
+		}
+	],
+	"findings": [
+		"DigitalOcean reported 129 incidents in the last 12 months against 124 in the 12 months before: up 4%.",
+		"11 of the last 129 were marked major or critical, which is 9%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					0
+				],
+				[
+					"2022",
+					0
+				],
+				[
+					"2023",
+					77
+				],
+				[
+					"2024",
+					159
+				],
+				[
+					"2025",
+					121
+				],
+				[
+					"2026",
+					106
+				]
+			]
+		}
+	]
+}

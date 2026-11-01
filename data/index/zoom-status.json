@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 377
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 251
+		},
+		{
+			"label": "Major or critical",
+			"value": 4
+		},
+		{
+			"label": "All time",
+			"value": 1869
+		}
+	],
+	"findings": [
+		"Zoom reported 377 incidents in the last 12 months against 251 in the 12 months before: up 50%.",
+		"4 of the last 377 were marked major or critical, which is 1%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					194
+				],
+				[
+					"2022",
+					176
+				],
+				[
+					"2023",
+					216
+				],
+				[
+					"2024",
+					242
+				],
+				[
+					"2025",
+					270
+				],
+				[
+					"2026",
+					331
+				]
+			]
+		}
+	]
+}

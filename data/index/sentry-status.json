@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 46
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 65
+		},
+		{
+			"label": "Major or critical",
+			"value": 25
+		},
+		{
+			"label": "All time",
+			"value": 404
+		}
+	],
+	"findings": [
+		"Sentry reported 46 incidents in the last 12 months against 65 in the 12 months before: down 29%.",
+		"25 of the last 46 were marked major or critical, which is 54%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					46
+				],
+				[
+					"2022",
+					37
+				],
+				[
+					"2023",
+					60
+				],
+				[
+					"2024",
+					87
+				],
+				[
+					"2025",
+					60
+				],
+				[
+					"2026",
+					39
+				]
+			]
+		}
+	]
+}

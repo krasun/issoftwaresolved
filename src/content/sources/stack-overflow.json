@@ -1,0 +1,17 @@
+{
+	"name": "Stack Exchange API",
+	"url": "https://stackoverflow.com/",
+	"signal": "stack-overflow",
+	"measures": "Questions asked on Stack Overflow per month",
+	"about": "The Stack Exchange API reports how many questions were asked in a date range. We request only that monthly total, and do not store any questions or answers.",
+	"license": "API Terms of Use, with attribution",
+	"licenseUrl": "https://stackoverflow.com/legal/api-terms-of-use",
+	"attribution": "Source: Stack Exchange Network, Stack Overflow, through the Stack Exchange API.",
+	"limitations": [
+		"Deleted questions are not counted.",
+		"It covers one site, and its decline can have causes unrelated to AI."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

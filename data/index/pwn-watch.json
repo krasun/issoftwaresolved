@@ -1,0 +1,86 @@
+{
+	"asOf": "Nov 1, 2026",
+	"stats": [
+		{
+			"label": "Incidents",
+			"value": 854
+		},
+		{
+			"label": "Still live",
+			"value": 174
+		},
+		{
+			"label": "Unpatched",
+			"value": 14
+		},
+		{
+			"label": "AI tooling",
+			"value": 31
+		}
+	],
+	"findings": [
+		"The archive is two datasets in one. Before October 2026, 87% of incidents come from the CISA list. In October 2026, 142 of 160 do not, so that month’s spike reflects wider coverage, not a surge in attacks.",
+		"Coverage of the CISA list is complete for 2024 and 2025 but not for the other years: 78% of 2023 and 66% of 2026. Counting those incidents would wrongly suggest a fall in 2026.",
+		"Severity labels shifted too: 49% of CISA-listed incidents from 2025 are marked critical, against 7% from 2026.",
+		"12 of the 31 incidents tagged AI started in October 2026. That is too recent, and too affected by the coverage change, to call a trend.",
+		"83% of incidents have a fix. 14 are unpatched and 72 are partly patched."
+	],
+	"tables": [
+		{
+			"title": "Coverage by year",
+			"columns": [
+				"Year",
+				"Incidents",
+				"On the CISA list",
+				"CISA vulnerabilities covered"
+			],
+			"rows": [
+				[
+					"2023",
+					131,
+					116,
+					"145 of 187 (78%)"
+				],
+				[
+					"2024",
+					165,
+					149,
+					"186 of 186 (100%)"
+				],
+				[
+					"2025",
+					230,
+					203,
+					"245 of 245 (100%)"
+				],
+				[
+					"2026",
+					328,
+					151,
+					"185 of 282 (66%)"
+				]
+			]
+		},
+		{
+			"title": "Incidents by category",
+			"columns": [
+				"Category",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"Patch now",
+					697
+				],
+				[
+					"Breaches and attacks",
+					116
+				],
+				[
+					"Supply chain",
+					41
+				]
+			]
+		}
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"name": "National Vulnerability Database",
+	"url": "https://nvd.nist.gov/",
+	"signal": "bugs",
+	"measures": "Every published CVE",
+	"about": "The US National Institute of Standards and Technology publishes the National Vulnerability Database, the broadest public record of disclosed software vulnerabilities. This product uses NVD data but is not endorsed or certified by the NVD.",
+	"license": "US government work",
+	"licenseUrl": "https://nvd.nist.gov/developers/terms-of-use",
+	"limitations": [
+		"It counts disclosed vulnerabilities, not exploited ones.",
+		"More organizations can now issue CVEs, so growth partly reflects more reporting.",
+		"Publication dates can trail discovery by a long time."
+	],
+	"checked": "Nov 1, 2026",
+	"attribution": "This product uses data from the NVD but is not endorsed or certified by the NVD. We count entries and publish the results.",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

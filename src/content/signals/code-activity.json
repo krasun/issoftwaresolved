@@ -1,0 +1,60 @@
+{
+	"order": 2,
+	"group": "Demand",
+	"name": "Code activity",
+	"question": "Are people still building?",
+	"metric": "Git pushes worldwide on GitHub, latest quarter",
+	"solvedIf": "Building gets so easy that code output keeps climbing",
+	"trendLabel": "Worldwide git pushes per quarter, in millions.",
+	"value": "408M",
+	"change": "+95%",
+	"trend": [
+		81,
+		98,
+		90,
+		95,
+		100,
+		106,
+		99,
+		107,
+		117,
+		126,
+		126,
+		135,
+		144,
+		147,
+		141,
+		149,
+		153,
+		158,
+		153,
+		168,
+		178,
+		209,
+		215,
+		247,
+		320,
+		408
+	],
+	"status": "Still building",
+	"direction": "away",
+	"rule": "Still building when git pushes rise over the year.",
+	"fromHigh": "At its high",
+	"recent": [
+		100,
+		102.9,
+		118.2,
+		153.1,
+		195.2
+	],
+	"score": 48,
+	"scoreReason": "Up 201% since ChatGPT launched.",
+	"analysis": {
+		"title": "Repositories and developers",
+		"intro": "GitHub activity in 2026 Q2 and a year earlier.",
+		"points": [
+			"454M repositories saw activity, against 371M.",
+			"209M developers, against 155M."
+		]
+	}
+}

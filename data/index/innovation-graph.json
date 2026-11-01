@@ -1,0 +1,73 @@
+{
+	"asOf": "2026 Q2",
+	"stats": [
+		{
+			"label": "Git pushes, 2026 Q2",
+			"value": "408M"
+		},
+		{
+			"label": "Year over year",
+			"value": "+95%"
+		},
+		{
+			"label": "Developers",
+			"value": "209M"
+		}
+	],
+	"findings": [
+		"Git pushes reached 408 million in 2026 Q2, against 209 million a year earlier: +95%.",
+		"The developer count moved from 155 million to 209 million, so pushes are growing faster than developers. Automation and AI agents could be part of that, but this data cannot show it."
+	],
+	"tables": [
+		{
+			"title": "Latest quarters",
+			"columns": [
+				"Quarter",
+				"Git pushes",
+				"Developers"
+			],
+			"rows": [
+				[
+					"2024 Q3",
+					"153M",
+					"133M"
+				],
+				[
+					"2024 Q4",
+					"168M",
+					"140M"
+				],
+				[
+					"2025 Q1",
+					"178M",
+					"147M"
+				],
+				[
+					"2025 Q2",
+					"209M",
+					"155M"
+				],
+				[
+					"2025 Q3",
+					"215M",
+					"167M"
+				],
+				[
+					"2025 Q4",
+					"247M",
+					"179M"
+				],
+				[
+					"2026 Q1",
+					"320M",
+					"192M"
+				],
+				[
+					"2026 Q2",
+					"408M",
+					"209M"
+				]
+			]
+		}
+	]
+}

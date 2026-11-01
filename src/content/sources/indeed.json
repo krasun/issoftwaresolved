@@ -1,0 +1,19 @@
+{
+	"name": "Indeed Hiring Lab",
+	"url": "https://github.com/hiring-lab/job_postings_tracker",
+	"signal": "jobs",
+	"measures": "Software development job postings by country",
+	"about": "Indeed Hiring Lab publishes daily job posting indexes by country and occupation. Its Software Development category covers titles like software engineer and full stack developer. We use the US series as the Jobs headline and compare it with five other countries.",
+	"license": "CC BY 4.0",
+	"licenseUrl": "https://github.com/hiring-lab/job_postings_tracker/blob/master/LICENSE",
+	"attribution": "Data from the Indeed Hiring Lab Job Postings Index, licensed under CC BY 4.0. We calculate changes and comparisons from the published index.",
+	"limitations": [
+		"It is an index, not a count of open jobs: 100 is the level of February 1, 2020.",
+		"It only covers postings on Indeed, and that mix differs by country.",
+		"Country indexes share a start date, not a job market, so levels are not directly comparable.",
+		"Coverage is six countries, not the whole world."
+	],
+	"checked": "Oct 23, 2026",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

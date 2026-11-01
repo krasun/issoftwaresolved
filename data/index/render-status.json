@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 87
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 71
+		},
+		{
+			"label": "Major or critical",
+			"value": 34
+		},
+		{
+			"label": "All time",
+			"value": 507
+		}
+	],
+	"findings": [
+		"Render reported 87 incidents in the last 12 months against 71 in the 12 months before: up 23%.",
+		"34 of the last 87 were marked major or critical, which is 39%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					66
+				],
+				[
+					"2022",
+					103
+				],
+				[
+					"2023",
+					83
+				],
+				[
+					"2024",
+					71
+				],
+				[
+					"2025",
+					85
+				],
+				[
+					"2026",
+					67
+				]
+			]
+		}
+	]
+}

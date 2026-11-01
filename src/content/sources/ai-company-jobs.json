@@ -1,0 +1,19 @@
+{
+	"name": "AI company job boards",
+	"url": "https://openai.com/careers/",
+	"signal": "ai-company-jobs",
+	"measures": "Open software engineering roles at 11 AI companies",
+	"about": "These companies list open roles through public job board feeds. We count software engineering roles by job title, and do not store or publish the listings.",
+	"license": "No data license published",
+	"licenseUrl": "https://developers.greenhouse.io/job-board.html",
+	"attribution": "Counts derived from public job boards at OpenAI, Anthropic, Mistral, xAI, Cohere, Perplexity, Cursor, Cognition, Replit, Lovable and Factory.",
+	"limitations": [
+		"Roles are matched by title, so some are missed or wrongly included, and titles differ between companies.",
+		"An open listing is not always an active hire, and one role can be listed in several locations.",
+		"Fast-growing, well-funded companies hire for many reasons, so this does not show how much of their code AI writes.",
+		"Job boards only show today, so history starts with our first count."
+	],
+	"checked": "Nov 1, 2026",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

@@ -1,0 +1,61 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Last 12 months",
+			"value": 23
+		},
+		{
+			"label": "Previous 12 months",
+			"value": 30
+		},
+		{
+			"label": "Major or critical",
+			"value": 8
+		},
+		{
+			"label": "All time",
+			"value": 605
+		}
+	],
+	"findings": [
+		"Bitbucket reported 23 incidents in the last 12 months against 30 in the 12 months before: down 23%.",
+		"8 of the last 23 were marked major or critical, which is 35%.",
+		"More reported incidents can mean more failures, more products or more honest reporting. These numbers cannot separate them."
+	],
+	"tables": [
+		{
+			"title": "Incidents per year",
+			"columns": [
+				"Year",
+				"Incidents"
+			],
+			"rows": [
+				[
+					"2021",
+					90
+				],
+				[
+					"2022",
+					43
+				],
+				[
+					"2023",
+					36
+				],
+				[
+					"2024",
+					29
+				],
+				[
+					"2025",
+					30
+				],
+				[
+					"2026",
+					20
+				]
+			]
+		}
+	]
+}

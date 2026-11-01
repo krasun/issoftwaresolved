@@ -1,0 +1,10 @@
+{
+	"note": "Employees at fiscal year end, entered by hand from each company's annual SEC filing. Fiscal years differ: Accenture ends in August, Infosys in March, the others in December.",
+	"companies": {
+		"Accenture": { "2023": 733000, "2024": 774000, "2025": 779000 },
+		"Cognizant": { "2023": 347700, "2024": 336800, "2025": 351600 },
+		"Infosys": { "2023": 343234, "2024": 317240, "2025": 323578 },
+		"EPAM": { "2023": 53150, "2024": 61200, "2025": 62850 },
+		"Globant": { "2023": 29150, "2024": 31000, "2025": 28773 }
+	}
+}

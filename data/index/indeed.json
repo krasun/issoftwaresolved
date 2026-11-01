@@ -1,0 +1,89 @@
+{
+	"asOf": "Oct 23, 2026",
+	"stats": [
+		{
+			"label": "US index",
+			"value": "80.8"
+		},
+		{
+			"label": "US year over year",
+			"value": "+24%"
+		},
+		{
+			"label": "US from peak",
+			"value": "-65%"
+		},
+		{
+			"label": "All US jobs index",
+			"value": "103.7"
+		}
+	],
+	"findings": [
+		"US software postings are at 80.8, where 100 is the level of February 1, 2020. That is +24% over the year, but 65% below the peak of 233.8 on Feb 28, 2022.",
+		"All US job postings stand at 103.7 on the same scale, so software is still behind the overall market.",
+		"4 of 6 countries are lower than a year ago: Canada, Australia, France, Germany."
+	],
+	"tables": [
+		{
+			"title": "Software postings by country",
+			"columns": [
+				"Country",
+				"Latest",
+				"Year ago",
+				"Change",
+				"Peak",
+				"From peak"
+			],
+			"rows": [
+				[
+					"US",
+					"80.8",
+					"65.3",
+					"+24%",
+					"233.8",
+					"-65%"
+				],
+				[
+					"UK",
+					"61.6",
+					"58.8",
+					"+5%",
+					"181.6",
+					"-66%"
+				],
+				[
+					"Canada",
+					"76.1",
+					"79.1",
+					"-4%",
+					"229.4",
+					"-67%"
+				],
+				[
+					"Australia",
+					"103.2",
+					"109.6",
+					"-6%",
+					"273.5",
+					"-62%"
+				],
+				[
+					"France",
+					"51.5",
+					"55.5",
+					"-7%",
+					"141.0",
+					"-63%"
+				],
+				[
+					"Germany",
+					"49.4",
+					"57.0",
+					"-13%",
+					"169.0",
+					"-71%"
+				]
+			]
+		}
+	]
+}

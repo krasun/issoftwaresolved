@@ -1,0 +1,18 @@
+{
+	"name": "Claude Status",
+	"url": "https://status.claude.com/",
+	"licenseUrl": "https://status.claude.com/api/",
+	"measures": "Incidents reported by Claude",
+	"about": "Anthropic publishes incidents for Claude on a public status page. We count incidents, leaving out those marked as having no impact, and do not store or publish incident text.",
+	"attribution": "Counts derived from the public Claude status page.",
+	"limitations": [
+		"Incidents are self-reported, so a company that reports more honestly can look worse.",
+		"New products add new ways to have an incident, so counts can rise without reliability getting worse.",
+		"Claude is much younger than GitHub, so its early years are not comparable."
+	],
+	"signal": "outages",
+	"role": "headline",
+	"license": "No data license published",
+	"checked": "2026-10",
+	"dataPolicy": "numbers-only"
+}

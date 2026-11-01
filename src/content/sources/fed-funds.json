@@ -1,0 +1,17 @@
+{
+	"name": "Federal funds rate",
+	"url": "https://fred.stlouisfed.org/series/FEDFUNDS",
+	"signal": "jobs",
+	"measures": "Federal funds effective rate, monthly",
+	"about": "The Federal Reserve publishes the rate banks charge each other overnight, the main lever of US monetary policy. We chart it next to software job postings to compare their timing.",
+	"license": "Public domain, citation requested",
+	"licenseUrl": "https://fred.stlouisfed.org/series/FEDFUNDS",
+	"attribution": "Board of Governors of the Federal Reserve System (US), Federal Funds Effective Rate [FEDFUNDS], retrieved from FRED, Federal Reserve Bank of St. Louis.",
+	"limitations": [
+		"Rates affect hiring with a delay, and the size of that delay is uncertain.",
+		"Two lines moving together does not show that one causes the other."
+	],
+	"checked": "2026-09",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

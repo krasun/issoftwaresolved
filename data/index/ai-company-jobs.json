@@ -1,0 +1,88 @@
+{
+	"asOf": "Nov 1, 2026",
+	"stats": [
+		{
+			"label": "Engineering roles",
+			"value": 464
+		},
+		{
+			"label": "Companies hiring",
+			"value": "11 of 11"
+		},
+		{
+			"label": "All open roles",
+			"value": 2694
+		}
+	],
+	"findings": [
+		"11 of 11 companies list open software engineering roles, 464 in total.",
+		"OpenAI has the most, with 162."
+	],
+	"tables": [
+		{
+			"title": "Open roles by company",
+			"columns": [
+				"Company",
+				"Software engineering",
+				"All roles"
+			],
+			"rows": [
+				[
+					"OpenAI",
+					162,
+					810
+				],
+				[
+					"Anthropic",
+					99,
+					675
+				],
+				[
+					"Perplexity",
+					53,
+					138
+				],
+				[
+					"xAI",
+					44,
+					308
+				],
+				[
+					"Cohere",
+					29,
+					122
+				],
+				[
+					"Cursor",
+					24,
+					125
+				],
+				[
+					"Mistral",
+					22,
+					229
+				],
+				[
+					"Lovable",
+					14,
+					80
+				],
+				[
+					"Replit",
+					8,
+					34
+				],
+				[
+					"Factory",
+					5,
+					67
+				],
+				[
+					"Cognition",
+					4,
+					106
+				]
+			]
+		}
+	]
+}

@@ -1,0 +1,117 @@
+{
+	"asOf": "2025",
+	"stats": [
+		{
+			"label": "Combined revenue, 2025",
+			"value": "$192B"
+		},
+		{
+			"label": "Year over year",
+			"value": "+15%"
+		},
+		{
+			"label": "Companies",
+			"value": 10
+		},
+		{
+			"label": "Years compared",
+			"value": 11
+		}
+	],
+	"findings": [
+		"These 10 companies earned $192B in 2025, +15% on the year before.",
+		"0 of 10 shrank. MongoDB grew fastest at +23%, and Salesforce grew slowest at +10%."
+	],
+	"tables": [
+		{
+			"title": "Combined revenue per year",
+			"columns": [
+				"Year",
+				"Revenue"
+			],
+			"rows": [
+				[
+					"2018",
+					"$77B"
+				],
+				[
+					"2019",
+					"$87B"
+				],
+				[
+					"2020",
+					"$98B"
+				],
+				[
+					"2021",
+					"$115B"
+				],
+				[
+					"2022",
+					"$137B"
+				],
+				[
+					"2023",
+					"$151B"
+				],
+				[
+					"2024",
+					"$168B"
+				],
+				[
+					"2025",
+					"$192B"
+				]
+			]
+		},
+		{
+			"title": "Growth by company, 2025",
+			"columns": [
+				"Company",
+				"Change"
+			],
+			"rows": [
+				[
+					"MongoDB",
+					"+23%"
+				],
+				[
+					"ServiceNow",
+					"+21%"
+				],
+				[
+					"HubSpot",
+					"+19%"
+				],
+				[
+					"Autodesk",
+					"+18%"
+				],
+				[
+					"Oracle",
+					"+17%"
+				],
+				[
+					"Intuit",
+					"+16%"
+				],
+				[
+					"Twilio",
+					"+14%"
+				],
+				[
+					"Workday",
+					"+13%"
+				],
+				[
+					"Adobe",
+					"+11%"
+				],
+				[
+					"Salesforce",
+					"+10%"
+				]
+			]
+		}
+	]
+}

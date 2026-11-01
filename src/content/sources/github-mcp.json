@@ -1,0 +1,19 @@
+{
+	"name": "GitHub MCP repositories",
+	"url": "https://github.com/topics/mcp-server",
+	"signal": "agent-tools",
+	"measures": "New public repositories tagged mcp-server, by month",
+	"about": "MCP servers give AI models access to tools and data. GitHub's search API counts public repositories by topic and creation date. We store only those monthly counts, not repository data.",
+	"license": "No data license published",
+	"licenseUrl": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+	"attribution": "Counts derived from the GitHub search API.",
+	"limitations": [
+		"A repo counts only if its owner added the tag and still has it, so earlier months can change.",
+		"It counts repos, not working servers: tutorials, duplicates and abandoned projects are included.",
+		"Forks and private repos are not counted, and neither are servers kept outside GitHub.",
+		"AI coding agents make repos cheaper to create, so growth may not mean more demand."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

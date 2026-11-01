@@ -1,0 +1,18 @@
+{
+	"name": "Uneed",
+	"url": "https://www.uneed.best/",
+	"signal": "product-launches",
+	"measures": "Products launched per month",
+	"about": "Uneed is a launch site for tech products. Its public sitemap dates each product page. We count those pages per month and do not store product data. In the days we sampled, these dates matched launch dates.",
+	"license": "No data license published",
+	"licenseUrl": "https://www.uneed.best/mcp",
+	"attribution": "Counts derived from the public Uneed sitemap.",
+	"limitations": [
+		"It is a weak proxy: one site's growth can reflect its own popularity rather than more software being built.",
+		"A sitemap date can change when a page is edited, so some products may be counted in the wrong month.",
+		"AI makes small products cheaper to build, so more launches may not mean more demand."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

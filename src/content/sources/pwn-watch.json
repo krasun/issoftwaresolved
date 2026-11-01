@@ -1,0 +1,18 @@
+{
+	"name": "pwn.watch",
+	"url": "https://pwn.watch/",
+	"signal": "security",
+	"measures": "Security incidents, breaches and supply chain attacks",
+	"about": "pwn.watch is an independent tracker of security incidents. It publishes no license, so we keep only the fields we count, such as severity, patch status, tags and CVE ids, and not its text. We use it for context around the Security signal.",
+	"limitations": [
+		"Its counts are not comparable over time because coverage changed, so they do not feed the headline number.",
+		"Records are written and categorized by the site, and can change after publication.",
+		"Patch dates are only present on a small share of records, so time to patch cannot be measured."
+	],
+	"checked": "Nov 1, 2026",
+	"license": "No license published",
+	"licenseUrl": "https://pwn.watch/",
+	"attribution": "Incident data from pwn.watch by @thekitze. We count records and publish our own analysis.",
+	"role": "context",
+	"dataPolicy": "numbers-only"
+}

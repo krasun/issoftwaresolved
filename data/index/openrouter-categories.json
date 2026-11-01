@@ -1,0 +1,48 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Programming share, 2026-10",
+			"value": "26%"
+		},
+		{
+			"label": "Coding app tokens, 2026-10",
+			"value": "205T"
+		}
+	],
+	"findings": [
+		"About 26% of OpenRouter tokens in 2026-10 were estimated to be programming.",
+		"Ranked coding apps used 205T tokens in 2026-10."
+	],
+	"tables": [
+		{
+			"title": "Most used coding apps, 2026-10",
+			"columns": [
+				"App",
+				"Tokens"
+			],
+			"rows": [
+				[
+					"Hermes Agent",
+					"55T"
+				],
+				[
+					"Claude Code",
+					"46T"
+				],
+				[
+					"Kilo Code",
+					"26T"
+				],
+				[
+					"Codex",
+					"15T"
+				],
+				[
+					"Cline",
+					"14T"
+				]
+			]
+		}
+	]
+}

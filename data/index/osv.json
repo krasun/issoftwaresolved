@@ -1,0 +1,63 @@
+{
+	"asOf": "Nov 1, 2026",
+	"stats": [
+		{
+			"label": "Advisories",
+			"value": 256402
+		},
+		{
+			"label": "Malicious packages",
+			"value": 234540
+		},
+		{
+			"label": "npm malicious",
+			"value": 222591
+		},
+		{
+			"label": "PyPI malicious",
+			"value": 11949
+		}
+	],
+	"findings": [
+		"91% of npm and PyPI advisories are malicious packages rather than bugs in real software.",
+		"192,552 malicious package reports are dated 2025, against 10,962 in 2024 and 14,819 so far in 2026. A swing that large suggests bulk reporting, so it is not a clean trend.",
+		"Ordinary vulnerability advisories reached 10,233 in 2026, against 1,575 in 2025."
+	],
+	"tables": [
+		{
+			"title": "Published per year",
+			"columns": [
+				"Year",
+				"Malicious packages",
+				"Vulnerabilities"
+			],
+			"rows": [
+				[
+					"2022",
+					7444,
+					2432
+				],
+				[
+					"2023",
+					8758,
+					1195
+				],
+				[
+					"2024",
+					10962,
+					1412
+				],
+				[
+					"2025",
+					192552,
+					1575
+				],
+				[
+					"2026 (to Nov 1, 2026)",
+					14819,
+					10233
+				]
+			]
+		}
+	]
+}

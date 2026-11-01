@@ -1,0 +1,21 @@
+{
+	"asOf": "2026-08",
+	"stats": [
+		{
+			"label": "Openings, 12-month average",
+			"value": "94K"
+		},
+		{
+			"label": "Hires, 12-month average",
+			"value": "74K"
+		},
+		{
+			"label": "Layoffs, 12-month average",
+			"value": "46K"
+		}
+	],
+	"findings": [
+		"Over the last 12 months, the US information sector averaged 94K openings, 74K hires and 46K layoffs a month."
+	],
+	"tables": []
+}

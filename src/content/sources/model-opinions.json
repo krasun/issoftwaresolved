@@ -1,0 +1,17 @@
+{
+	"name": "Our survey of AI models",
+	"url": "https://openrouter.ai/models",
+	"signal": "model-opinions",
+	"measures": "Scores from AI models asked the same question",
+	"about": "We asked AI models from several labs and generations one fixed prompt, three times each, through OpenRouter, with no other instructions. New models are added after release, and earlier answers are kept. We publish the prompt and the scores.",
+	"license": "Our own run",
+	"licenseUrl": "https://openrouter.ai/models",
+	"attribution": "Our own survey of AI models, run through OpenRouter.",
+	"limitations": [
+		"Each model is asked once, and it can give a different answer on another day.",
+		"Models only appear if OpenRouter offered them when we asked, so the list is not complete."
+	],
+	"checked": "Nov 1, 2026",
+	"dataPolicy": "full-copy",
+	"role": "headline"
+}
