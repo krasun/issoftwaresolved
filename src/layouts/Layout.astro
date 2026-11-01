@@ -76,9 +76,9 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 					}
 				</nav>
 				{
-					signals.length > 0 && (
+					site.score !== undefined && path !== '/score' && (
 						<div class="nav-actions">
-							<a class="btn btn-solid btn-sm" href="/signals">See the data</a>
+							<a class="btn btn-solid btn-sm" href="/score">{Math.round(site.score)}% solved</a>
 						</div>
 					)
 				}
