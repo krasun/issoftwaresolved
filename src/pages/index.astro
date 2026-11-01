@@ -1,26 +1,37 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { site } from '../content/site';
-import { getSignals, getSources, scoreHistory } from '../lib/content';
+import { getLastUpdated, getSignals, getSources } from '../lib/content';
 
 const signals = await getSignals();
 const sources = await getSources();
+const lastUpdated = await getLastUpdated();
 const verdict = site.score === undefined ? 'Undefined.' : site.verdict;
+
+// The score since 2023. The minimum range keeps small moves looking small.
+const recentScores = site.history?.map(({ score }) => score);
+const scoreLine = (() => {
+	if (!recentScores || recentScores.length < 2) return undefined;
+	const low = Math.min(...recentScores);
+	const high = Math.max(...recentScores);
+	const range = Math.max(high - low, 20);
+	const bottom = low - (range - (high - low)) / 2;
+	return recentScores
+		.map((score, i) => `${(i / (recentScores.length - 1)) * 100},${100 - ((score - bottom) / range) * 100}`)
+		.join(' ');
+})();
 
 const stats = [
 	site.score !== undefined && {
-		label: 'Solved score',
+		label: 'Software solved',
 		value: site.score,
-		suffix: '/100',
-		href: scoreHistory && '/score',
+		suffix: '%',
+		spark: scoreLine,
+		href: '/score',
 	},
 	signals.length > 0 && { label: 'Signals tracked', value: signals.length, href: '/signals' },
 	sources.length > 0 && { label: 'Data sources', value: sources.length, href: '/sources' },
-	site.updated && {
-		label: 'Last updated',
-		value: site.updated,
-		href: sources.length > 0 ? '/sources' : undefined,
-	},
+	lastUpdated && { label: 'Last updated', value: lastUpdated, href: undefined },
 ].filter((stat) => !!stat);
 ---
 
@@ -29,20 +40,16 @@ const stats = [
 		<div class="hero-copy">
 			<h1>Is software solved?</h1>
 			<p>
-				A public index that tracks whether software is finished. Jobs, SaaS, revenue, security
-				holes and bugs, measured in one place, so the answer comes from data rather than opinions.
+				An index to measure when AI can do software work with fewer people or autonomously, at lower
+				cost and more reliably, based on jobs, AI use, revenue and more, instead of opinions and vibes.
 			</p>
-			<div class="hero-actions">
-				{signals.length > 0 && <a class="btn btn-solid" href="/signals">See the signals</a>}
-				<a class="btn btn-outline" href="/how-it-works">How it works</a>
-			</div>
 		</div>
 
 		{
 			verdict && (
 				<div class="horizon">
 					<div class="horizon-grid" aria-hidden="true" />
-					<a class="dial" href="/how-it-works">
+					<a class="dial" href="/score">
 						<strong class="dial-value">{verdict}</strong>
 					</a>
 				</div>
@@ -64,6 +71,11 @@ const stats = [
 								</span>
 								{stat.suffix && <small>{stat.suffix}</small>}
 							</strong>
+							{stat.spark && (
+								<svg class="stat-spark" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+									<polyline points={stat.spark} />
+								</svg>
+							)}
 							{stat.href && (
 								<svg class="stat-arrow" viewBox="0 0 16 16" aria-hidden="true">
 									<path d="M2 8h11M9 4l4 4-4 4" />

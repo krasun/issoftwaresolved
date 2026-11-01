@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "astro": "^7.4.4",
-    "countup.js": "^2.10.1"
+    "countup.js": "^2.10.1",
+    "katex": "^0.19.1"
   },
   "devDependencies": {
     "aws4fetch": "^1.0.20",

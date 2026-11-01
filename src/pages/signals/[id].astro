@@ -1,0 +1,296 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getSignalChecks, getSignals, getSources } from '../../lib/content';
+
+export const getStaticPaths = async () =>
+	(await getSignals()).map((signal) => ({ params: { id: signal.id }, props: { signal } }));
+
+const { signal } = Astro.props;
+const { name, question, metric, solvedIf, value, change, trend, trendLabel, trendStart, prompt, trendName, trendStep = 1, caution, quote, score, scoreReason, comparison, events, analysis, status, rule, direction, fromHigh } = signal.data;
+const statCount = 1 + [change, status, fromHigh].filter(Boolean).length;
+const sources = (await getSources()).filter((source) => source.data.signal.id === signal.id && source.data.role === 'headline');
+
+const checks = getSignalChecks(signal.id);
+
+const chartTrend = trend && trend.length >= 2 ? trend : undefined;
+// Picks a round tick size (1, 2 or 5 times a power of ten) that fits four ticks.
+const tickSize = (max: number) => {
+	const power = 10 ** Math.floor(Math.log10(max / 4));
+	return ([1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find((step) => step * power >= max / 4) ?? 10) * power;
+};
+const step = chartTrend ? tickSize(Math.max(...chartTrend)) : 0;
+const top = step * 4;
+const ticks = [4, 3, 2, 1, 0].map((tick) => tick * step);
+const points = chartTrend
+	?.map((v, i) => `${(i / (chartTrend.length - 1)) * 100},${100 - (v / top) * 100}`)
+	.join(' ');
+const latest = chartTrend?.at(-1);
+
+const monthsSinceStart = (month: string) => {
+	const [startYear, startMonth] = trendStart!.split('-').map(Number);
+	const [year, monthNumber] = month.split('-').map(Number);
+	return (year - startYear) * 12 + monthNumber - startMonth;
+};
+const xOf = (index: number) => (index / (chartTrend!.length - 1)) * 100;
+// A second line needs its own scale, with one tick per gridline.
+const comparisonTop = comparison?.sameAxis ? top : comparison ? Math.ceil(Math.max(...comparison.values) / 2) * 2 : 0;
+const comparisonTicks = [4, 3, 2, 1, 0].map((tick) => (comparisonTop * tick) / 4);
+const comparisonPoints = comparison?.values
+	.map((v, i) => `${xOf(i)},${100 - (v / comparisonTop) * 100}`)
+	.join(' ');
+const eventMarks = trendStart ? events?.map(({ month, label }) => ({ label, left: xOf(monthsSinceStart(month) / trendStep) })) : undefined;
+const startYear = trendStart ? Number(trendStart.slice(0, 4)) : 0;
+const yearMarks = trendStart && chartTrend
+	? [...new Set(chartTrend.map((_, i) => startYear + Math.floor((i * trendStep + Number(trendStart.slice(5)) - 1) / 12)))].slice(1).map((year) => ({ year, left: xOf(monthsSinceStart(`${year}-01`) / trendStep) }))
+	: undefined;
+---
+
+<Layout title={name}>
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">{name}</h1>
+			<p>{question}</p>
+			<p class="source-links">
+				<a href="/signals">All signals</a>
+			</p>
+		</div>
+	</section>
+
+	<section class="stats" aria-label="Signal summary" style={`--stat-count: ${statCount}`}>
+		{
+			status && (
+				<div class="stat">
+					<span class="eyebrow">Status</span>
+					<strong class={`status-text ${direction}`}>{status}</strong>
+				</div>
+			)
+		}
+		<div class="stat">
+			<span class="eyebrow">Latest value</span>
+			<strong><span data-count>{value}</span></strong>
+		</div>
+		{
+			change && (
+				<div class="stat">
+					<span class="eyebrow">Year over year</span>
+					<strong>{change}</strong>
+				</div>
+			)
+		}
+		{
+			fromHigh && (
+				<div class="stat">
+					<span class="eyebrow">Distance from high</span>
+					<strong>{fromHigh.replace(' from high', '')}</strong>
+				</div>
+			)
+		}
+	</section>
+
+	{
+		caution && (
+			<section class="section">
+				<div class="caution">
+					<strong>Caution</strong>
+					{caution.map((line) => (
+						<p>{line}</p>
+					))}
+				</div>
+			</section>
+		)
+	}
+
+	{
+		chartTrend && latest !== undefined && (
+			<section class="section">
+				<div class="section-head">
+					<h2>Trend</h2>
+					{trendLabel && <p>{trendLabel}</p>}
+				</div>
+				{comparison && (
+					<ul class="chart-key">
+						<li><span class="key-line" />{trendName ?? 'Software postings, left axis'}</li>
+						<li><span class="key-line comparison" />{comparison.name}{!comparison.sameAxis && ', right axis'}</li>
+					</ul>
+				)}
+				<div class:list={['chart', { 'chart-dual': comparison && !comparison.sameAxis, 'chart-events': comparison?.sameAxis }]}>
+					<div class="chart-y" aria-hidden="true">
+						{ticks.map((tick) => (
+							<span>{tick}</span>
+						))}
+					</div>
+					<div class="chart-plot">
+						<svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={`${name} trend`}>
+							<polyline points={points} />
+							{comparisonPoints && <polyline class="comparison" points={comparisonPoints} />}
+						</svg>
+						{eventMarks?.map(({ label, left }, i) => (
+							<span class:list={['chart-event', { 'chart-event-before': i === 0 }]} style={`left: ${left}%`}>
+								<span>{label}</span>
+							</span>
+						))}
+						{!comparison && (
+							<span class="chart-end" style={`top: ${100 - (latest / top) * 100}%`} data-count>
+								{latest}
+							</span>
+						)}
+					</div>
+					{comparison && !comparison.sameAxis && (
+						<div class="chart-y chart-y-right" aria-hidden="true">
+							{comparisonTicks.map((tick) => (
+								<span>{tick}%</span>
+							))}
+						</div>
+					)}
+					{yearMarks ? (
+						<div class="chart-x chart-x-years" aria-hidden="true">
+							{yearMarks.map(({ year, left }) => (
+								<span style={`left: ${left}%`}>{year}</span>
+							))}
+						</div>
+					) : (
+						<div class="chart-x" aria-hidden="true">
+							<span>Oldest</span>
+							<span>Latest</span>
+						</div>
+					)}
+				</div>
+			</section>
+		)
+	}
+
+	<section class="section">
+		<div class="section-head">
+			<h2>What it measures</h2>
+		</div>
+		<dl class="signal-details">
+			<div>
+				<dt>Metric</dt>
+				<dd>{metric}</dd>
+			</div>
+			<div>
+				<dt>Solved if</dt>
+				<dd>{solvedIf}</dd>
+			</div>
+			{
+				score !== undefined && (
+					<div>
+						<dt>Score</dt>
+						<dd>{score}%. {scoreReason} <a class="inline-link" href="/score">How it is scored</a></dd>
+					</div>
+				)
+			}
+			{
+				rule && (
+					<div>
+						<dt>Status rule</dt>
+						<dd>{rule}</dd>
+					</div>
+				)
+			}
+		</dl>
+	</section>
+
+	{
+		prompt && (
+			<section class="section">
+				<div class="section-head">
+					<h2>The prompt</h2>
+					<p>Every model got exactly this, three times, with no other instructions.</p>
+				</div>
+				<pre class="prompt-text">{prompt}</pre>
+			</section>
+		)
+	}
+
+	{
+		analysis && (
+			<section class="section">
+				<div class="section-head">
+					<h2>{analysis.title}</h2>
+					<p>{analysis.intro}</p>
+				</div>
+				<ul class="findings">
+					{analysis.points.map((point) => (
+						<li>{point}</li>
+					))}
+				</ul>
+				{quote && (
+					<figure class="quote">
+						<a href={quote.url}>
+							<img src={quote.image} alt={`Post by ${quote.author}: ${quote.text}`} width="1162" height="848" loading="lazy" />
+						</a>
+						<figcaption>
+							<a class="inline-link" href={quote.url}>{quote.author}</a>, {quote.role}. One team's experience, not a measurement.
+						</figcaption>
+					</figure>
+				)}
+			</section>
+		)
+	}
+
+	{
+		checks.length > 0 && (
+			<section class="section">
+				<div class="section-head">
+					<h2>Checks</h2>
+					<p>The reading on each date we checked.</p>
+				</div>
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Date</th>
+								<th scope="col">Value</th>
+								<th scope="col">Year over year</th>
+								<th scope="col">Status</th>
+							</tr>
+						</thead>
+						<tbody>
+							{checks.map((check) => (
+								<tr>
+									<td>{check.date}</td>
+									<td>{check.value}</td>
+									<td>{check.change ?? '—'}</td>
+									<td>{check.status ?? '—'}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		)
+	}
+
+	{
+		sources.length > 0 && (
+			<section class="section">
+				<div class="section-head">
+					<h2>{sources.length > 1 ? 'Sources' : 'Source'}</h2>
+				</div>
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th scope="col">Source</th>
+								<th scope="col">Measures</th>
+								<th scope="col">Latest data</th>
+							</tr>
+						</thead>
+						<tbody>
+							{sources.map(({ id, data }) => (
+								<tr>
+									<td>
+										<a href={`/sources/${id}`}>{data.name}</a>
+									</td>
+									<td>{data.measures}</td>
+									<td>{data.checked}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		)
+	}
+</Layout>

@@ -1,9 +1,13 @@
+import score from '../../data/score.json';
+
 type Site = {
 	verdict?: string;
 	score?: number;
 	updated?: string;
-	history?: { year: number; score: number }[];
+	areas?: { name: string; note?: string; score: number; signals: { href: string; name: string; score: number; reason: string }[] }[];
+	history?: { date: string; score: number }[];
+	checks?: { date: string; score: number }[];
 };
 
-// Anything left out here is not rendered.
-export const site: Site = {};
+// Written by `npm run index`.
+export const site: Site = score;

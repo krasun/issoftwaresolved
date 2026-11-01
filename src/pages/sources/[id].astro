@@ -1,0 +1,100 @@
+---
+import { getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getAnalysis, getSources } from '../../lib/content';
+
+export const getStaticPaths = async () =>
+	(await getSources()).map((source) => ({ params: { id: source.id }, props: { source } }));
+
+const { source } = Astro.props;
+const { name, url, about, limitations, signal, license, licenseUrl, attribution } = source.data;
+const signalName = (await getEntry(signal))?.data.name;
+const analysis = getAnalysis(source.id);
+---
+
+<Layout title={name}>
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">{name}</h1>
+			{about && <p>{about}</p>}
+			{attribution && <p class="source-credit">{attribution}</p>}
+			<p class="source-links">
+				{url && <a href={url}>Visit the source</a>}
+				<a href={`/signals/${signal.id}`}>{source.data.role === 'headline' ? 'Used for' : 'Background for'}: {signalName}</a>
+				{license && <a href={licenseUrl}>License: {license}</a>}
+			</p>
+		</div>
+	</section>
+
+	{
+		analysis && (
+			<>
+				<section class="stats" aria-label="Source summary" style={`--stat-count: ${analysis.stats.length}`}>
+					{analysis.stats.map((stat) => (
+						<div class="stat">
+							<span class="eyebrow">{stat.label}</span>
+							<strong>
+								<span data-count>{stat.value}</span>
+							</strong>
+						</div>
+					))}
+				</section>
+
+				<section class="section">
+					<div class="section-head">
+						<h2>What the data shows</h2>
+						<p>Computed from every record, as of {analysis.asOf}.</p>
+					</div>
+					<ul class="findings">
+						{analysis.findings.map((finding) => (
+							<li>{finding}</li>
+						))}
+					</ul>
+				</section>
+
+				{analysis.tables.map((table) => (
+					<section class="section">
+						<div class="section-head">
+							<h2>{table.title}</h2>
+						</div>
+						<div class="table-wrap">
+							<table>
+								<thead>
+									<tr>
+										{table.columns.map((column) => (
+											<th scope="col">{column}</th>
+										))}
+									</tr>
+								</thead>
+								<tbody>
+									{table.rows.map((row) => (
+										<tr>
+											{row.map((cell) => (
+												<td>{cell}</td>
+											))}
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</section>
+				))}
+			</>
+		)
+	}
+
+	{
+		limitations && (
+			<section class="section">
+				<div class="section-head">
+					<h2>Limitations</h2>
+				</div>
+				<ul class="findings">
+					{limitations.map((limitation) => (
+						<li>{limitation}</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+</Layout>

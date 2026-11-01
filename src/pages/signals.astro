@@ -1,25 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSignals, getSources } from '../lib/content';
+import { getSignals } from '../lib/content';
 
 const signals = await getSignals();
-const sources = await getSources();
 
-const sourcesFor = (id: string) =>
-	sources
-		.filter((source) => source.data.signal.id === id)
-		.map((source) => source.data.name)
-		.join(', ');
-
+// Each card has its own scale. The minimum range keeps small moves looking small.
+const MIN_RANGE = 20;
 const sparkPoints = (values: number[]) => {
-	const min = Math.min(...values);
-	const max = Math.max(...values);
-	const pad = (max - min) * 0.1 || 1;
+	const low = Math.min(...values);
+	const high = Math.max(...values);
+	const range = Math.max(high - low, MIN_RANGE);
+	const pad = range * 0.1;
+	const bottom = low - (range - (high - low)) / 2;
 	return values
-		.map(
-			(v, i) =>
-				`${(i / (values.length - 1)) * 100},${100 - ((v - min + pad) / (max - min + pad * 2)) * 100}`,
-		)
+		.map((v, i) => `${(i / (values.length - 1)) * 100},${100 - ((v - bottom + pad) / (range + pad * 2)) * 100}`)
 		.join(' ');
 };
 ---
@@ -27,52 +21,53 @@ const sparkPoints = (values: number[]) => {
 <Layout title="Signals">
 	<section class="section">
 		<div class="section-head">
-			<h1 class="page-title">Signals</h1>
-			<p>If software were solved, each of these numbers would show it.</p>
-		</div>
-		{
-			signals.length > 0 && (
-				<div class="cards">
-					{signals.map(({ id, data }) => (
-						<article class="card">
-							<div class="card-top">
-								<h2 class="card-title">{data.name}</h2>
-							</div>
-							<p class="question">{data.question}</p>
-							<div class="reading">
-								<strong data-count>{data.value}</strong>
-								{data.change && <span>{data.change} YoY</span>}
-							</div>
-							{data.trend && data.trend.length >= 2 && (
-								<svg
-									class="spark"
-									viewBox="0 0 100 100"
-									preserveAspectRatio="none"
-									aria-hidden="true"
-								>
-									<polyline points={sparkPoints(data.trend)} />
-								</svg>
-							)}
-							<dl>
-								<div>
-									<dt>Metric</dt>
-									<dd>{data.metric}</dd>
-								</div>
-								<div>
-									<dt>Solved if</dt>
-									<dd>{data.solvedIf}</dd>
-								</div>
-								{sourcesFor(id) && (
-									<div>
-										<dt>Source</dt>
-										<dd>{sourcesFor(id)}</dd>
-									</div>
-								)}
-							</dl>
-						</article>
-					))}
+			<div class="head-row">
+				<div>
+					<h1 class="page-title">Signals</h1>
+					<p>If software were solved, each of these numbers would show it.</p>
+					<p>Based on <a class="inline-link" href="/sources">these data sources</a>.</p>
 				</div>
-			)
-		}
+				<span class="period-label">Last 12 months</span>
+			</div>
+		</div>
 	</section>
+
+	{
+		signals.length > 0 && (
+			<section class="section">
+				<div class="cards">
+					{signals.map(({ id, data }) => (<article class="card">
+								<div class="card-top">
+									<h2 class="card-title">
+										<a class="card-link" href={`/signals/${id}`}>
+											{data.name}
+										</a>
+									</h2>
+									<svg class="stat-arrow" viewBox="0 0 16 16" aria-hidden="true">
+										<path d="M2 8h11M9 4l4 4-4 4" />
+									</svg>
+								</div>
+								<p class="question">{data.question}</p>
+								<div class="reading">
+									<strong data-count>{data.value}</strong>
+									<div class="reading-side">
+										{data.status && <span class={`status-text ${data.direction}`}>{data.status}</span>}
+										{data.change ? <span>{data.change} YoY</span> : <span aria-hidden="true">&nbsp;</span>}
+									</div>
+								</div>
+								{data.recent && data.recent.length >= 2 ? (
+								<div class="signal-spark" aria-hidden="true">
+									<svg class="spark" viewBox="0 0 100 100" preserveAspectRatio="none">
+										<polyline points={sparkPoints(data.recent)} />
+									</svg>
+								</div>
+							) : (
+								<div class="spark spark-pending">Trend starts with the next check</div>
+							)}
+							<p class="card-metric">{data.metric}</p>
+							</article>))}
+				</div>
+			</section>
+		)
+	}
 </Layout>

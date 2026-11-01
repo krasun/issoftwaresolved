@@ -1,38 +1,185 @@
 ---
+import 'katex/dist/katex.min.css';
 import Layout from '../layouts/Layout.astro';
+import { site } from '../content/site';
+import { getSignals, getSources } from '../lib/content';
+import { math } from '../lib/math';
 
-const steps = [
-	{
-		title: 'Collect',
-		text: 'Pull public numbers for every signal: job postings, company filings, vulnerability databases, incident reports.',
-	},
-	{
-		title: 'Score',
-		text: 'Normalize each signal from 0 to 100, where 100 means that part of software no longer needs solving.',
-	},
-	{
-		title: 'Decide',
-		text: 'Combine the signals into a single score and a plain verdict. Every number links back to its source.',
-	},
+const signals = await getSignals();
+const sources = await getSources();
+const areas = site.areas ?? [];
+const flow = [
+	{ value: sources.length, label: 'Data sources', href: '#sources' },
+	{ value: signals.length, label: 'Signals', href: '#signals' },
+	{ value: areas.length, label: 'Questions', href: '#formula' },
+	{ value: `${site.score}%`, label: 'Software solved', href: '/score' },
 ];
+
+const main = math(String.raw`\text{Software solved} = \frac{1}{4}\sum_{q=1}^{4} \text{question score}_q \qquad \text{question score}_q = \frac{\sum_{i} w_{q,i}\,\text{signal score}_{q,i}}{\sum_{i} w_{q,i}}`);
+const worked = math(String.raw`\text{Software solved} = \frac{${areas.map(({ score }) => score).join(' + ')}}{4} \approx ${site.score}\%`);
+const rules = [
+	{
+		title: 'Fell since the start',
+		text: 'Prices after inflation, revenue and software spending against GDP, security holes, bugs and incidents per git push, job openings, outsourcing revenue after inflation and Stack Overflow questions. Falling to a tenth scores 100%, and any rise scores 0%. Token prices use 50 in place of 100, so they need to fall to a hundredth.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(-100\,\log_{10}\frac{x_t}{x_0}\right)`,
+	},
+	{
+		title: 'Grew since the start',
+		text: 'Code activity, no-code revenue and new tech businesses. Growing tenfold since November 2022 scores 100%.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\log_{10}\frac{x_t}{x_0}\right)`,
+	},
+	{
+		title: 'Monthly volume',
+		text: 'New MCP repos and product launches. Reaching 10,000 a month scores 100%.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\log_{10} c_t}{\log_{10} 10^{4}}\right)`,
+	},
+	{
+		title: 'A direct share',
+		text: 'Coding benchmarks, AI pull requests, the programming share of AI, developer sentiment and AI company hiring score the share itself.',
+		latex: String.raw`s = 100 \cdot \text{share}_t`,
+	},
+	{
+		title: 'Length of task',
+		text: 'The longest task, in minutes, that the best model completes half the time, up to a working year of 2,000 hours.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\ln m_t}{\ln 120000}\right)`,
+	},
+	{
+		title: 'Cost of a hard task',
+		text: 'The cheapest near-top run on FrontierSWE, from $1,000 a task at 0% to $1 at 100%.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{3 - \log_{10} c_t}{3}\right)`,
+	},
+	{
+		title: 'Growth from a recent start',
+		text: 'AI and coding app tokens, and sites on AI builders, against their first month. Growing 1,000 times scores 100%.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\log_{10}(x_t / x_0)}{3}\right)`,
+	},
+	{
+		title: 'Output above its trend',
+		text: 'Output per tech worker W against its 2015 to 2019 trend T. Doubling that trend scores 100%.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\log_{2}\frac{W_t}{T_t}\right)`,
+	},
+	{
+		title: 'Jobs against the market',
+		text: 'How much software postings J have lost against all US postings M since ChatGPT launched.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\left(1 - \frac{J_t / M_t}{J_0 / M_0}\right)\right)`,
+	},
+].map((rule) => ({ ...rule, html: math(rule.latex) }));
+const clampNote = math(String.raw`\operatorname{clamp}`, false);
 ---
 
 <Layout title="How it works">
 	<section class="section">
 		<div class="section-head">
 			<h1 class="page-title">How it works</h1>
-			<p>Public sources, a published formula and no vibes.</p>
+			<p>How public data becomes one score.</p>
 		</div>
-		<div class="steps">
+		<ol class="flow" aria-label="How data becomes the score">
 			{
-				steps.map((step, i) => (
-					<article class="step">
-						<span class="eyebrow">0{i + 1}</span>
-						<h2 class="card-title">{step.title}</h2>
-						<p>{step.text}</p>
+				flow.map(({ value, label, href }, i) => (
+					<li style={`--step: ${i}`}>
+						<a href={href}>
+							<strong>{value}</strong>
+							<span>{label}</span>
+						</a>
+					</li>
+				))
+			}
+		</ol>
+	</section>
+
+	<section class="section" id="sources">
+		<div class="section-head">
+			<h2>1. Data sources</h2>
+			<p>We collect public numbers, keep only processed counts, and credit every source. <a class="inline-link" href="/sources">See all {sources.length}</a>.</p>
+		</div>
+		<ul class="source-names">
+			{
+				sources
+					.sort((a, b) => a.data.name.localeCompare(b.data.name))
+					.map(({ id, data }) => (
+						<li>
+							<a href={`/sources/${id}`}>{data.name}</a>
+						</li>
+					))
+			}
+		</ul>
+	</section>
+
+	<section class="section" id="signals">
+		<div class="section-head">
+			<h2>2. Signals</h2>
+			<p>Each signal turns its sources into one number, then answers one of four questions. <a class="inline-link" href="/signals">See all {signals.length}</a>.</p>
+		</div>
+		<div class="flow-areas">
+			{
+				areas.map(({ name, signals: rows }) => (
+					<div>
+						<h3 class="card-title">{name}</h3>
+						<ul>
+							{rows.map(({ href, name: signal }) => (
+								<li><a href={href}>{signal}</a></li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="section" id="formula">
+		<div class="section-head">
+			<h2>3. Formula</h2>
+			<p>The score is the average of four questions, and each question is the weighted average of its signals. Every signal has a weight w of 1, except AI-built sites at 0.25, because its history is short. Counting questions equally stops a busy area from outvoting a quiet one.</p>
+		</div>
+		<div class="math" set:html={main} />
+		<div class="section-head subhead">
+			<h3 class="card-title">How each signal scores</h3>
+			<p>Here <span set:html={clampNote} /> limits a score to between 0% and 100%, x₀ is the value in November 2022 or when its data starts, and t is the current month.</p>
+		</div>
+		<div class="rule-grid">
+			{
+				rules.map(({ title, text, html }) => (
+					<article>
+						<h4 class="card-title">{title}</h4>
+						<div class="math" set:html={html} />
+						<p>{text}</p>
 					</article>
 				))
 			}
 		</div>
+	</section>
+
+	<section class="section">
+		<div class="section-head">
+			<h2>4. The score today</h2>
+			<p>With today's data, each question scores this much.</p>
+		</div>
+		<div class="area-bars">
+			{
+				areas.map(({ name, score }, i) => (
+					<div class="area-bar" style={`--step: ${i}; --score: ${score}%`}>
+						<span>{name}</span>
+						<div aria-hidden="true"><i /></div>
+						<strong>{score}%</strong>
+					</div>
+				))
+			}
+		</div>
+		<div class="math" set:html={worked} />
+		<p class="flow-note">Under 50% reads "Not yet.", under 75% "Getting there.", under 90% "Almost.", and 90% or more "Solved." <a class="inline-link" href="/score">See the score</a>.</p>
+	</section>
+
+	<section class="section">
+		<div class="section-head">
+			<h2>Where to disagree</h2>
+			<p>A simple formula we chose, so you can check it or argue with it.</p>
+		</div>
+		<ul class="findings">
+			<li>More building counts toward solved because it suggests software is getting easier to make, but people still build most of it and the data can't separate them. Read the other way, the score would be lower.</li>
+			<li>The goals and groups are our judgment. Different ones would change the number.</li>
+			<li>What AI models say is shown as a signal but left out of the score, because it is opinion, not evidence.</li>
+			<li>Coding benchmarks, task length and token prices only show what AI could do or cost, not that it replaced anyone.</li>
+			<li>AI company hiring has only one reading, so past months assume it was the same. Signals count from when their data starts, so the trend can jump when one joins.</li>
+		</ul>
 	</section>
 </Layout>

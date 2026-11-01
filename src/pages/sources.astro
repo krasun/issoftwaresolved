@@ -1,47 +1,69 @@
 ---
-import { getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import { getSources } from '../lib/content';
+import { getSignals, getSources } from '../lib/content';
 
-const sources = await Promise.all(
-	(await getSources()).map(async ({ data }) => ({
-		...data,
-		signalName: (await getEntry(data.signal))?.data.name,
-	})),
-);
+const published = new Set((await getSignals()).map(({ id }) => id));
+const sources = await getSources();
+
+// Signals in their usual order, leaving out any without sources.
+const groups = (await getCollection('signals'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((signal) => ({
+		signal,
+		sources: sources.filter((source) => source.data.signal.id === signal.id),
+	}))
+	.filter((group) => group.sources.length > 0);
 ---
 
 <Layout title="Data sources">
 	<section class="section">
 		<div class="section-head">
 			<h1 class="page-title">Data sources</h1>
-			<p>Where every number comes from.</p>
+			<p>Where every number comes from, grouped by signal.</p>
 		</div>
-		{
-			sources.length > 0 && (
+	</section>
+
+	{
+		groups.map(({ signal, sources }) => (
+			<section class="section">
+				<div class="section-head">
+					<h2>
+						{published.has(signal.id) ? (
+							<a class="heading-link" href={`/signals/${signal.id}`}>
+								{signal.data.name}
+							</a>
+						) : (
+							signal.data.name
+						)}
+					</h2>
+					<p>{signal.data.question}</p>
+				</div>
 				<div class="table-wrap">
 					<table>
 						<thead>
 							<tr>
 								<th scope="col">Source</th>
-								<th scope="col">Signal</th>
 								<th scope="col">Measures</th>
-								<th scope="col">Last checked</th>
+								<th scope="col">Role</th>
+								<th scope="col">Latest data</th>
 							</tr>
 						</thead>
 						<tbody>
-							{sources.map((source) => (
+							{sources.map(({ id, data }) => (
 								<tr>
-									<td>{source.url ? <a href={source.url}>{source.name}</a> : source.name}</td>
-									<td>{source.signalName}</td>
-									<td>{source.measures}</td>
-									<td>{source.checked}</td>
+									<td>
+										<a href={`/sources/${id}`}>{data.name}</a>
+									</td>
+									<td>{data.measures}</td>
+									<td>{data.role === 'headline' ? 'Headline number' : 'Background only'}</td>
+									<td>{data.checked}</td>
 								</tr>
 							))}
 						</tbody>
 					</table>
 				</div>
-			)
-		}
-	</section>
+			</section>
+		))
+	}
 </Layout>
