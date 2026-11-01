@@ -9,10 +9,14 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "fetch": "node --env-file-if-exists=.env scripts/fetch.mjs"
   },
   "dependencies": {
     "astro": "^7.4.4",
     "countup.js": "^2.10.1"
+  },
+  "devDependencies": {
+    "stream-json": "^3.8.0"
   }
 }
