@@ -100,13 +100,13 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 
 			// Speeds up, then settles onto the final value instead of stopping abruptly.
 			const smooth = (t: number, b: number, c: number, d: number) =>
-				(c / 2) * (1 - Math.cos((Math.PI * t) / d)) + b;
+				(c / 2) * (1 - Math.cos((Math.PI * Math.min(t, d)) / d)) + b;
 
 			if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
 				for (const el of document.querySelectorAll<HTMLElement>('[data-count]')) {
-					const [, prefix, number, suffix] = el.textContent.match(/^(\D*)([\d.]+)(\D*)$/) ?? [];
+					const [, prefix, number, suffix] = el.textContent.match(/^(\D*)([\d.,]+)(\D*)$/) ?? [];
 					if (!number) continue;
-					new CountUp(el, Number(number), {
+					new CountUp(el, Number(number.replaceAll(',', '')), {
 						duration: 0.8,
 						prefix,
 						suffix,
