@@ -13,7 +13,8 @@
     "fetch": "node --env-file-if-exists=.env scripts/fetch.mjs",
     "hn:sample": "node scripts/hacker-news-sample.mjs",
     "models:ask": "node --env-file=.env scripts/model-opinions.mjs",
-    "index": "node scripts/build-index.mjs"
+    "index": "node scripts/build-index.mjs",
+    "check:data": "node scripts/check-data-policy.mjs"
   },
   "dependencies": {
     "astro": "^7.4.4",
