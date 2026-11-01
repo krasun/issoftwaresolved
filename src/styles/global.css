@@ -1312,6 +1312,22 @@ td a {
 	font-size: 12px;
 }
 
+.spark-empty {
+	border-bottom-style: dashed;
+}
+
+/* Without a reading, this keeps the baseline level with the cards beside it. */
+.card-suggest .signal-spark {
+	margin-top: auto;
+}
+
+/* In two columns, it would start a row of its own unless the count is odd. */
+@media (min-width: 641px) and (max-width: 900px) {
+	.card-suggest:not(.card-suggest-odd) {
+		display: none;
+	}
+}
+
 .reading strong {
 	font-size: 40px;
 	font-weight: 600;
