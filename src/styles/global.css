@@ -249,7 +249,7 @@ dt,
 
 .stats {
 	display: grid;
-	grid-template-columns: repeat(var(--stat-count), 1fr);
+	grid-template-columns: repeat(var(--stat-count), minmax(0, 1fr));
 	border-block: 1px solid var(--line);
 }
 
@@ -432,7 +432,7 @@ polyline.comparison {
 
 @media (max-width: 900px) {
 	.stats {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.stat:nth-child(3) {
@@ -731,6 +731,12 @@ td a {
 .stats:has(.stat-spark) .stat strong {
 	font-size: clamp(26px, 2.6vw, 28px);
 	white-space: nowrap;
+}
+
+/* Text values like the date wrap instead of being clipped by the tile. */
+.stats:has(.stat-spark) .stat strong:not(:has([data-count])) {
+	white-space: normal;
+	text-wrap: balance;
 }
 
 .stat-spark {
