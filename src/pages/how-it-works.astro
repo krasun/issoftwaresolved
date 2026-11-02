@@ -20,46 +20,49 @@ const worked = math(String.raw`\text{Software solved} = \frac{${areas.map(({ sco
 const rules = [
 	{
 		title: 'Fell since the start',
+		why: 'A round number and our judgment: a tenfold fall is too big to put down to normal movement. Token prices fall much faster than most prices, so a tenth would be too easy.',
 		text: 'Prices after inflation, revenue and software spending against GDP, security holes, bugs and incidents per git push, job openings, outsourcing revenue after inflation and Stack Overflow questions. Falling to a tenth scores 100%, and any rise scores 0%. Token prices use 50 in place of 100, so they need to fall to a hundredth.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(-100\,\log_{10}\frac{x_t}{x_0}\right)`,
 	},
 	{
 		title: 'Grew since the start',
+		why: 'A round number and our judgment, matching the tenfold fall above.',
 		text: 'Code activity, no-code revenue and new tech businesses. Growing tenfold since November 2022 scores 100%.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\log_{10}\frac{x_t}{x_0}\right)`,
 	},
 	{
-		title: 'Monthly volume',
-		text: 'New MCP repos and product launches. Reaching 10,000 a month scores 100%.',
-		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\log_{10} c_t}{\log_{10} 10^{4}}\right)`,
-	},
-	{
 		title: 'A direct share',
+		why: 'No goal chosen, because a share stops at 100% by itself.',
 		text: 'Coding benchmarks, AI pull requests, the programming share of AI, developer sentiment and AI company hiring score the share itself.',
 		latex: String.raw`s = 100 \cdot \text{share}_t`,
 	},
 	{
 		title: 'Length of task',
+		why: 'Our judgment: a working year is about what one engineer delivers alone. It is not a measured threshold.',
 		text: 'The longest task, in minutes, that the best model completes half the time, up to a working year of 2,000 hours.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\ln m_t}{\ln 120000}\right)`,
 	},
 	{
 		title: 'Cost of a hard task',
+		why: 'Our judgment: $1,000 is roughly a day of an engineer\'s time, and at $1 the cost of a task stops mattering.',
 		text: 'The cheapest near-top run on FrontierSWE, from $1,000 a task at 0% to $1 at 100%.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{3 - \log_{10} c_t}{3}\right)`,
 	},
 	{
 		title: 'Growth from a recent start',
+		why: 'A round number and our judgment: these start from a small base, where tenfold comes quickly.',
 		text: 'AI and coding app tokens, and sites on AI builders, against their first month. Growing 1,000 times scores 100%.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\log_{10}(x_t / x_0)}{3}\right)`,
 	},
 	{
 		title: 'Output above its trend',
+		why: 'Our judgment: doubling means one worker producing what two did on the old trend.',
 		text: 'Output per tech worker W against its 2015 to 2019 trend T. Doubling that trend scores 100%.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\log_{2}\frac{W_t}{T_t}\right)`,
 	},
 	{
 		title: 'Jobs against the market',
+		why: 'No goal chosen: 100% means software postings have disappeared against the market.',
 		text: 'How much software postings J have lost against all US postings M since ChatGPT launched.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\left(1 - \frac{J_t / M_t}{J_0 / M_0}\right)\right)`,
 	},
@@ -138,11 +141,12 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 		</div>
 		<div class="rule-grid">
 			{
-				rules.map(({ title, text, html }) => (
+				rules.map(({ title, text, why, html }) => (
 					<article>
 						<h4 class="card-title">{title}</h4>
 						<div class="math" set:html={html} />
 						<p>{text}</p>
+						<p>Why this goal: {why}</p>
 					</article>
 				))
 			}
@@ -176,7 +180,8 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 		</div>
 		<ul class="findings">
 			<li>More building counts toward solved because it suggests software is getting easier to make, but people still build most of it and the data can't separate them. Read the other way, the score would be lower.</li>
-			<li>The goals and groups are our judgment. Different ones would change the number.</li>
+			<li>The goals and groups are our judgment, and no data sets them. Moving every goal together, a fifth closer or a quarter further on its log scale, takes today's score from {site.score}% to between {site.scoreRange?.low}% and {site.scoreRange?.high}%. A tenfold goal, for example, becomes about 6 or 18 times.</li>
+				<li>New MCP repos and product launches are shown but left out of the score, because we found no defensible number of them that would mean solved.</li>
 			<li>What AI models say is shown as a signal but left out of the score, because it is opinion, not evidence.</li>
 			<li>Coding benchmarks, task length and token prices only show what AI could do or cost, not that it replaced anyone.</li>
 			<li>AI company hiring has only one reading, so past months assume it was the same. Signals count from when their data starts, so the trend can jump when one joins.</li>

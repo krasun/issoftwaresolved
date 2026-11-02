@@ -124,7 +124,5 @@
 	"status": "Expanding",
 	"direction": "away",
 	"rule": "Expanding when more repos are created than in the same month a year before.",
-	"fromHigh": "At its high",
-	"score": 97,
-	"scoreReason": "7,639 new repos a month, against a goal of 10,000."
+	"fromHigh": "At its high"
 }

@@ -1067,7 +1067,7 @@ const taskCostRunAt = (month) => {
 };
 const taskCostAt = (month) => {
 	const run = taskCostRunAt(month);
-	return run && clamp(((3 - Math.log10(run.cost)) / 3) * 100);
+	return run && toGoal(((3 - Math.log10(run.cost)) / 3) * 100);
 };
 const usd = (value) => `$${number(Math.round(value))}`;
 
@@ -1851,6 +1851,9 @@ await updateSignal('outsourcing', {
 // The solved score: how far each signal has moved since ChatGPT launched, from 0 to 100.
 const BASELINE = '2022-11';
 const clamp = (value) => Math.min(100, Math.max(0, value));
+// Every goal is a judgment, so the published range moves them all together on their log scales.
+let goalDistance = 1;
+const toGoal = (value) => clamp(value / goalDistance);
 // The latest reading at or before a month, within a limit so stale data stops counting.
 // The current month is still partial, so it never counts as a reading.
 const readingAt = (series, month, maxAge = 12) => {
@@ -1861,16 +1864,11 @@ const baselineOf = (series) => series[Object.keys(series).sort().find((key) => k
 // Reaching a tenth of the baseline scores 100 on a log scale, and rising scores 0.
 const fallSince = (series, month, tenfold = 100) => {
 	const value = readingAt(series, month);
-	return value === undefined ? undefined : clamp(-Math.log10(value / baselineOf(series)) * tenfold);
+	return value === undefined ? undefined : toGoal(-Math.log10(value / baselineOf(series)) * tenfold);
 };
 const growthSince = (series, month) => {
 	const value = readingAt(series, month);
-	return value === undefined ? undefined : clamp(Math.log10(value / baselineOf(series)) * 100);
-};
-// Reaching 10,000 a month scores 100, on a log scale.
-const countLevel = (series, month, maxAge = 3) => {
-	const value = readingAt(series, month, maxAge);
-	return value === undefined ? undefined : clamp((Math.log10(Math.max(value, 1)) / 4) * 100);
+	return value === undefined ? undefined : toGoal(Math.log10(value / baselineOf(series)) * 100);
 };
 
 const fromQuarters = (keys, value) => Object.fromEntries(keys.map((quarter) => [`${quarter.slice(0, 4)}-${String(Number(quarter.slice(-1)) * 3).padStart(2, '0')}`, value(quarter)]));
@@ -1893,7 +1891,7 @@ const metrBestAt = (month) => {
 	const released = metrResults.filter(({ released }) => released.slice(0, 7) <= month);
 	return released.length > 0 ? Math.max(...released.map(({ estimate }) => estimate)) : undefined;
 };
-const metrLevelAt = (month) => clamp((Math.log(Math.max(metrBestAt(month), 1)) / Math.log(2000 * 60)) * 100);
+const metrLevelAt = (month) => toGoal((Math.log(Math.max(metrBestAt(month), 1)) / Math.log(2000 * 60)) * 100);
 const stanceAt = (month) => {
 	const months = stanceMonths.filter((candidate) => candidate <= month).slice(-12);
 	if (months.length < 12) return undefined;
@@ -1911,8 +1909,6 @@ const pushesByMonth = fromQuarters(quarters, (quarter) => pushes[quarter]);
 const revenueByMonth = fromQuarters(sharedQuarters, (quarter) => quarterlyTotals[sharedQuarters.indexOf(quarter)]);
 const pricesByMonth = Object.fromEntries(priceRows.map(({ month, index }) => [month, index]));
 const tokenByMonth = Object.fromEntries(pricedMonths.map((month) => [month, tokenPriceAt(month)]));
-const mcpByMonth = { ...Object.fromEntries(mcpMonths.map((month) => [month, mcpRepos[month]])) };
-const launchesByMonth = Object.fromEntries(launchMonths.map((month) => [month, launches[month]]));
 const signedMove = (ratio) => `${ratio >= 1 ? 'Up' : 'Down'} ${Math.abs(Math.round((ratio - 1) * 100))}% since ChatGPT launched.`;
 const movedSince = (series, month) => signedMove(readingAt(series, month) / baselineOf(series));
 const firstMonth = (series) => Object.keys(series).sort()[0];
@@ -1962,23 +1958,21 @@ const SCORE_AREAS = [
 		name: 'Is it being used to build?',
 		signals: [
 			{ id: 'code-activity', at: (month) => growthSince(pushesByMonth, month), reason: (month) => movedSince(pushesByMonth, month) },
-			{ id: 'agent-tools', at: (month) => countLevel(mcpByMonth, month) ?? 0, reason: (month) => `${number(readingAt(mcpByMonth, month, 3))} new repos a month, against a goal of 10,000.` },
 			{ id: 'agent-prs', at: (month) => readingAt(agentShare, month, 3) ?? 0, reason: () => `${oneDecimal(agentShareAt(agentLatest))}% of public pull requests clearly come from agents, and most agent work is hidden.` },
 			{ id: 'no-code-revenue', at: (month) => growthSince(noCodeByMonth, month), reason: (month) => movedSince(noCodeByMonth, month) },
 			{ id: 'programming-share', at: (month) => readingAt(shareByMonth, month, 3), reason: () => `About ${Math.round(shareOf(shareLatest))}% of OpenRouter tokens are programming.` },
 			{ id: 'coding-agents', at: (month) => {
 				const value = readingAt(codingByMonth, month, 3);
-				return value === undefined ? undefined : clamp((Math.log10(value / codingTotal(codingMonths[0])) / 3) * 100);
+				return value === undefined ? undefined : toGoal((Math.log10(value / codingTotal(codingMonths[0])) / 3) * 100);
 			}, reason: () => `${codingGrowth} times the tokens of ${monthName(codingMonths[0])}, against a goal of 1,000 times.` },
 			{ id: 'new-businesses', at: (month) => growthSince(applications, month), reason: (month) => movedSince(applications, month) },
 			{ id: 'token-usage', at: (month) => {
 				const value = readingAt(routerByMonth, month, 3);
-				return value === undefined ? undefined : clamp((Math.log10(value / routerTotal(routerMonths[0])) / 3) * 100);
+				return value === undefined ? undefined : toGoal((Math.log10(value / routerTotal(routerMonths[0])) / 3) * 100);
 			}, reason: () => `${routerGrowth} times the tokens of ${monthName(routerMonths[0])}, against a goal of 1,000 times.` },
-			{ id: 'product-launches', at: (month) => countLevel(launchesByMonth, month), reason: (month) => `${number(readingAt(launchesByMonth, month, 3))} launches a month, against a goal of 10,000.` },
 			{ id: 'ai-built-sites', weight: 0.25, at: (month) => {
 				const value = readingAt(builderByMonth, month, 3);
-				return value === undefined ? undefined : clamp((Math.log10(value / builderTrend[0]) / 3) * 100);
+				return value === undefined ? undefined : toGoal((Math.log10(value / builderTrend[0]) / 3) * 100);
 			}, reason: (month) => `${(readingAt(builderByMonth, month, 3) / builderTrend[0]).toFixed(1)} times the sites of ${monthName(builderStart)}, against a goal of 1,000 times. Counts a quarter as much as other signals here.` },
 		],
 	},
@@ -1994,7 +1988,7 @@ const SCORE_AREAS = [
 				const value = readingAt(perWorker, month, 12);
 				if (value === undefined) return undefined;
 				const key = Object.keys(perWorker).filter((candidate) => candidate <= month).sort().at(-1);
-				return clamp(100 * Math.log2(aboveTrend(key)));
+				return toGoal(100 * Math.log2(aboveTrend(key)));
 			}, reason: () => `Output per worker is ${signed(techAbove)} against its 2015 to 2019 trend. Doubling that trend scores 100%.` },
 			{ id: 'sentiment', at: stanceAt, reason: () => `${combinedShare}% of sampled Hacker News and Bluesky posts taking a side say it is getting solved.` },
 		],
@@ -2025,6 +2019,12 @@ const areaScoresAt = (month) =>
 const scoreAt = (month) => Math.round(average(areaScoresAt(month)));
 const currentMonth = today.slice(0, 7);
 const solvedScore = scoreAt(currentMonth);
+const scoreWithGoals = (distance) => {
+	goalDistance = distance;
+	const score = scoreAt(currentMonth);
+	goalDistance = 1;
+	return score;
+};
 const scoreByMonth = scoreMonths.map((month) => ({ date: month, score: scoreAt(month) }));
 const scoreAreas = await Promise.all(SCORE_AREAS.map(async ({ name, note, signals }, i) => {
 	const rows = await Promise.all(signals.map(async ({ id, name: signalName, source, at, reason, weight = 1, question, metric, solvedIf, value }) => {
@@ -2053,6 +2053,7 @@ await writeJson(SCORE_HISTORY, scoreHistory);
 await writeJson('data/score.json', {
 	score: solvedScore,
 	verdict: VERDICTS.find(([floor]) => solvedScore >= floor)[1],
+	scoreRange: { low: scoreWithGoals(1.25), high: scoreWithGoals(0.8) },
 	areas: scoreAreas,
 	history: scoreByMonth,
 	checks: Object.entries(scoreHistory).map(([date, score]) => ({ date, score })),

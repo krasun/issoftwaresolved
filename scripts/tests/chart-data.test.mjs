@@ -24,3 +24,9 @@ test('npm publishes its complete dated series', () => {
  assert.ok(trend.length > 12);
  assert.ok(trend.every(({ label },i) => !i || label > trend[i-1].label));
 });
+test('the score sits inside its goal range and only scored signals carry a score', () => {
+ const { score, scoreRange, areas } = read('data/score.json');
+ assert.ok(scoreRange.low <= score && score <= scoreRange.high);
+ const scored = new Set(areas.flatMap(area => area.signals.map(row => row.id)));
+ for (const [id, signal] of signals) if (signal.score !== undefined) assert.ok(scored.has(id),id);
+});
