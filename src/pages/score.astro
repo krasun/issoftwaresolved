@@ -28,7 +28,7 @@ const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_
 				<span class="score-formula-math" set:html={formula} />
 			</a>
 		</div>
-		{history && latest && <TrendChart maxValue={100} name="Overall score (out of 100)" values={history.map(row => row.score)} labels={history.map(row => row.date)} />}
+		{history && latest && <TrendChart maxValue={100} name="Overall score (out of 100)" trend={history.map(row => ({ label: row.date, value: row.score }))} />}
 
 	</section>
 

@@ -9,16 +9,46 @@
 	"value": "$192B",
 	"change": "+15%",
 	"trend": [
-		62,
-		69,
-		77,
-		87,
-		98,
-		115,
-		137,
-		151,
-		168,
-		192
+		{
+			"label": "2016",
+			"value": 62
+		},
+		{
+			"label": "2017",
+			"value": 69
+		},
+		{
+			"label": "2018",
+			"value": 77
+		},
+		{
+			"label": "2019",
+			"value": 87
+		},
+		{
+			"label": "2020",
+			"value": 98
+		},
+		{
+			"label": "2021",
+			"value": 115
+		},
+		{
+			"label": "2022",
+			"value": 137
+		},
+		{
+			"label": "2023",
+			"value": 151
+		},
+		{
+			"label": "2024",
+			"value": 168
+		},
+		{
+			"label": "2025",
+			"value": 192
+		}
 	],
 	"status": "Still growing",
 	"direction": "away",
@@ -32,17 +62,5 @@
 		116.6
 	],
 	"score": 0,
-	"scoreReason": "Against GDP: Up 24% since ChatGPT launched.",
-	"trendDates": [
-		"2016",
-		"2017",
-		"2018",
-		"2019",
-		"2020",
-		"2021",
-		"2022",
-		"2023",
-		"2024",
-		"2025"
-	]
+	"scoreReason": "Against GDP: Up 24% since ChatGPT launched."
 }

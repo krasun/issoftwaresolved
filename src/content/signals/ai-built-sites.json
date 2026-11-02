@@ -13,16 +13,46 @@
 	],
 	"value": "6,768",
 	"trend": [
-		2137,
-		2367,
-		2788,
-		3210,
-		4056,
-		4746,
-		5361,
-		6215,
-		6630,
-		6768
+		{
+			"label": "2025-12",
+			"value": 2137
+		},
+		{
+			"label": "2026-01",
+			"value": 2367
+		},
+		{
+			"label": "2026-02",
+			"value": 2788
+		},
+		{
+			"label": "2026-03",
+			"value": 3210
+		},
+		{
+			"label": "2026-04",
+			"value": 4056
+		},
+		{
+			"label": "2026-05",
+			"value": 4746
+		},
+		{
+			"label": "2026-06",
+			"value": 5361
+		},
+		{
+			"label": "2026-07",
+			"value": 6215
+		},
+		{
+			"label": "2026-08",
+			"value": 6630
+		},
+		{
+			"label": "2026-09",
+			"value": 6768
+		}
 	],
 	"recent": [
 		100,
@@ -50,17 +80,5 @@
 		]
 	},
 	"score": 17,
-	"scoreReason": "3.2 times the sites of December 2025, against a goal of 1,000 times. Counts a quarter as much as other signals here.",
-	"trendDates": [
-		"2025-12",
-		"2026-01",
-		"2026-02",
-		"2026-03",
-		"2026-04",
-		"2026-05",
-		"2026-06",
-		"2026-07",
-		"2026-08",
-		"2026-09"
-	]
+	"scoreReason": "3.2 times the sites of December 2025, against a goal of 1,000 times. Counts a quarter as much as other signals here."
 }

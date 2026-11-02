@@ -7,11 +7,15 @@ import { parseCsv } from './sources/lib.mjs';
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const writeJson = (path, data) => writeFile(path, `${JSON.stringify(data, null, '\t')}\n`);
 
-// Merges fields into a signal's file. A chart needs one date for every value.
+// Pairs each value with its label, so a chart can't have a value without one.
+const series = (labels, values) => {
+	if (labels.length !== values.length) throw new Error(`${labels.length} labels for ${values.length} values`);
+	return labels.map((label, i) => ({ label: String(label), value: values[i] }));
+};
+// Merges fields into a signal's file.
 const updateSignal = async (id, fields) => {
 	const path = `src/content/signals/${id}.json`;
 	const signal = { ...(await readJson(path)), ...fields };
-	if (signal.trend && signal.trendDates?.length !== signal.trend.length) throw new Error(`${id}: trend and trendDates differ in length`);
 	await writeJson(path, signal);
 	return signal;
 };
@@ -737,7 +741,7 @@ await writeJson('data/index/innovation-graph.json', {
 });
 
 await writeJson('data/index/npm.json', {
-	chart: { name: 'Monthly package downloads', labels: npmList, values: npmList.map(month => npmMonths[month]) },
+	chart: { name: 'Monthly package downloads', trend: series(npmList, npmList.map(month => npmMonths[month])) },
 	asOf: npmLatest,
 	stats: [
 		{ label: `Downloads, ${npmLatest}`, value: `${Math.round(npmMonths[npmLatest] / 1e9)}B` },
@@ -846,16 +850,15 @@ await writeJson('data/index/ai-company-jobs.json', {
 await updateSignal('security', {
 	value: String(last12),
 	change: signed(change),
-	trend,
-	trendDates: securityDates,
+	trend: series(securityDates, trend),
 	chartNote: PER_PUSH_NOTE,
 });
 
+const jobDates = [...us.rows.filter(({ date }) => date.endsWith('-01') && date.slice(0, 7) !== us.latest.date.slice(0, 7)).map(row => row.date), us.latest.date];
 await updateSignal('jobs', {
 	value: us.latest.index.toFixed(1),
 	change: signed(us.change),
-	trend: monthly,
-	trendDates: [...us.rows.filter(({ date }) => date.endsWith('-01') && date.slice(0, 7) !== us.latest.date.slice(0, 7)).map(row => row.date), us.latest.date],
+	trend: series(jobDates, monthly),
 });
 
 // Status rules are deliberately simple: under 2% either way counts as flat.
@@ -911,8 +914,7 @@ await updateSignal('sentiment', {
 	value: `${combinedShare}%`,
 	metric: 'Sampled Hacker News comments and Bluesky posts taking a side that say it is getting solved, last 12 months',
 	trendLabel: 'Share of sampled posts taking a side that say software is getting solved, per month, averaged across Hacker News and Bluesky. Each month rests on few posts, so expect noise.',
-	trend: combinedByMonth,
-	trendDates: stanceMonths.map(String),
+	trend: series(stanceMonths, combinedByMonth),
 	recent: combinedByMonth.slice(-5),
 	analysis: {
 		title: 'Two communities',
@@ -952,7 +954,7 @@ const riseFromLow = Math.round((us.latest.index / softwareLow.index - 1) * 100);
 const allFromLowDate = signed(Math.round((allOn(us.latest.date) / allOn(softwareLow.date) - 1) * 100));
 await updateSignal('jobs', {
 	...reading(us.change, { up: 'Recovering', down: 'Falling' }, 'away'),
-	comparison: { name: 'Federal funds rate', values: rateTrend },
+	comparison: { name: 'Federal funds rate', trend: series(jobDates.slice(0, rateTrend.length), rateTrend) },
 	events: [
 		{ month: '2022-03', label: 'First rate rise' },
 		{ month: '2022-11', label: 'ChatGPT' },
@@ -982,8 +984,7 @@ await updateSignal('security', {
 await updateSignal('outages', {
 	value: number(majorLast),
 	change: signed(majorChange),
-	trend: outageTrend,
-	trendDates: outageTrend.map((_, i) => nextMonth('2024-12', i)),
+	trend: series(outageTrend.map((_, i) => nextMonth('2024-12', i)), outageTrend),
 	chartNote: PER_PUSH_NOTE,
 	recent: recentOf(outageTrend, 13),
 	...reading(majorChange, { up: 'More incidents', down: 'Fewer incidents' }, 'away'),
@@ -1014,8 +1015,7 @@ const quarterlyTotals = sharedQuarters.map((quarter) =>
 await updateSignal('revenue', {
 	value: `$${billions(latestRevenue)}B`,
 	change: signed(revenueChange),
-	trend: revenueTrend,
-	trendDates: revenueYears.slice(-10).map(String),
+	trend: series(revenueYears.slice(-10), revenueTrend),
 	recent: recentOf(quarterlyTotals, 5),
 	...reading(revenueChange, { up: 'Still growing', down: 'Shrinking' }, 'away'),
 	rule: 'Still growing when combined revenue rises over the year. Shrinking revenue moves toward solved.',
@@ -1025,8 +1025,7 @@ const priceTrend = priceRows.map(({ index }) => index);
 await updateSignal('prices', {
 	value: latestPrice.index.toFixed(1),
 	change: signed(priceChange),
-	trend: priceTrend,
-	trendDates: priceRows.map(row => row.month),
+	trend: series(priceRows.map(row => row.month), priceTrend),
 	recent: recentOf(priceTrend, 13),
 	...reading(priceChange, { up: 'Rising', down: 'Getting cheaper' }, 'away'),
 	rule: 'Rising when the price index is higher than a year before. Falling prices move toward solved.',
@@ -1035,8 +1034,7 @@ await updateSignal('prices', {
 await updateSignal('agent-tools', {
 	value: number(mcpRepos[mcpLatest]),
 	change: signed(mcpChange),
-	trend: mcpTrend,
-	trendDates: mcpMonths.map(String),
+	trend: series(mcpMonths, mcpTrend),
 	recent: recentOf(mcpTrend, 13),
 	...reading(mcpChange, { up: 'Expanding', down: 'Slowing' }, 'away'),
 	rule: 'Expanding when more repos are created than in the same month a year before.',
@@ -1049,7 +1047,7 @@ await updateSignal('ai-company-jobs', {
 		: { status: 'Not hiring', direction: 'toward' }),
 	rule: 'Still hiring when any of these companies lists an open software engineering role.',
 	metric: `Open software engineering roles at ${aiJobsRows.length} AI companies, today`,
-	...(aiJobsTrend.length >= 2 ? { trend: aiJobsTrend, trendDates: Object.keys(aiJobsHistory).sort(), trendLabel: 'Open software engineering roles, one point per count.' } : {}),
+	...(aiJobsTrend.length >= 2 ? { trend: series(Object.keys(aiJobsHistory).sort(), aiJobsTrend), trendLabel: 'Open software engineering roles, one point per count.' } : {}),
 	analysis: {
 		title: 'Who is hiring',
 		intro: `${aiJobsHiring.length} of ${aiJobsRows.length} companies have open software engineering roles. Hiring does not show how much of their code AI writes.`,
@@ -1076,8 +1074,7 @@ const usd = (value) => `$${number(Math.round(value))}`;
 await updateSignal('token-prices', {
 	value: dollars(tokenPriceAt(tokenLatest)),
 	change: signed(tokenChange),
-	trend: tokenTrend,
-	trendDates: pricedMonths.map(String),
+	trend: series(pricedMonths, tokenTrend),
 	recent: recentOf(tokenTrend, 13),
 	...reading(tokenChange, { up: 'Rising', down: 'Getting cheaper' }, 'away'),
 	rule: 'Getting cheaper when the median listed price is lower than a year before.',
@@ -1103,8 +1100,7 @@ await updateSignal('token-prices', {
 await updateSignal('product-launches', {
 	value: number(launches[launchLatest]),
 	change: signed(launchChange),
-	trend: launchTrend,
-	trendDates: launchMonths.map(String),
+	trend: series(launchMonths, launchTrend),
 	recent: recentOf(launchTrend, 13),
 	...reading(launchChange, { up: 'More launches', down: 'Fewer launches' }, 'away'),
 	rule: 'More launches when more products launch than in the same month a year before.',
@@ -1114,8 +1110,7 @@ const pushTrend = quarters.map((quarter) => millions(pushes[quarter]));
 await updateSignal('code-activity', {
 	value: `${millions(pushes[latestQuarter])}M`,
 	change: signed(pushChange),
-	trend: pushTrend,
-	trendDates: quarters.map(String),
+	trend: series(quarters, pushTrend),
 	events: CHATGPT_LAUNCH,
 	recent: recentOf(pushTrend, 5),
 	...reading(pushChange, { up: 'Git pushes increased', down: 'Git pushes decreased' }, 'away'),
@@ -1216,8 +1211,7 @@ for (const [id, asOf] of [['epoch-benchmarks', sweBest.month], ['metr', statusAs
 await updateSignal('coding-benchmarks', {
 	value: `${swePercent}%`,
 	change: signed(sweChange),
-	trend: sweTrend,
-	trendDates: sweMonths.map(String),
+	trend: series(sweMonths, sweTrend),
 	recent: recentOf(sweTrend, 13),
 	status: sweChange > 0 ? 'Improving' : 'Flat',
 	direction: sweChange > 0 ? 'toward' : 'flat',
@@ -1276,8 +1270,7 @@ await writeJson('data/index/agent-prs.json', {
 await updateSignal('agent-prs', {
 	value: millionsOne(agentTotal(agentLatest)),
 	change: signed(agentChange),
-	trend: agentTrend,
-	trendDates: agentList.map(String),
+	trend: series(agentList, agentTrend),
 	recent: recentOf(agentTrend, 13),
 	...reading(agentChange, { up: 'More agents', down: 'Fewer agents' }, 'toward'),
 	rule: 'More agents when more agent pull requests are opened than in the same month a year before.',
@@ -1374,8 +1367,7 @@ await updateSignal('ai-built-sites', {
 	value: number(builderSites(siteLatest)),
 	// Cards label this as year over year, so it waits for a year of data.
 	change: builderByMonth[siteYearAgo] ? signed(Math.round((builderSites(siteLatest) / builderByMonth[siteYearAgo] - 1) * 100)) : undefined,
-	trend: builderTrend,
-	trendDates: builderMonths.map(String),
+	trend: series(builderMonths, builderTrend),
 	recent: recentOf(builderTrend, 13),
 	...reading(Math.round((builderSites(siteLatest) / builderTrend.at(-4) - 1) * 100), { up: 'Growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Growing when more sites are detected than three months before.',
@@ -1393,8 +1385,7 @@ await updateSignal('ai-built-sites', {
 await updateSignal('no-code-revenue', {
 	value: billionsOne(noCodeTotal(noCodeLatest)),
 	change: signed(noCodeChange),
-	trend: noCodeTrend,
-	trendDates: noCodeYears.slice(-10).map(String),
+	trend: series(noCodeYears.slice(-10), noCodeTrend),
 	recent: noCodeTrend.slice(-5).map((value, i, list) => Math.round((value / list[0]) * 1000) / 10),
 	...reading(noCodeChange, { up: 'Still growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Still growing when combined revenue is higher than the year before.',
@@ -1436,8 +1427,7 @@ await writeJson('data/index/stack-overflow.json', {
 await updateSignal('stack-overflow', {
 	value: number(soMonths[soLatest]),
 	change: signed(soChange),
-	trend: soTrend,
-	trendDates: soList.map(String),
+	trend: series(soList, soTrend),
 	events: CHATGPT_LAUNCH,
 	recent: recentOf(soTrend, 13),
 	...reading(soChange, { up: 'Asking more', down: 'Asking less' }, 'away'),
@@ -1493,10 +1483,9 @@ await writeJson('data/index/tech-output.json', {
 await updateSignal('tech-output', {
 	value: String(techIndex),
 	change: signed(techChange),
-	trend: techChart.map((month) => indexOf(tech.output[month], tech.output[TECH_BASE])),
-	trendDates: techChart,
+	trend: series(techChart, techChart.map((month) => indexOf(tech.output[month], tech.output[TECH_BASE]))),
 	trendName: 'Real output',
-	comparison: { name: 'Employment', sameAxis: true, values: techChart.map((month) => indexOf(quarterEmployment(month), quarterEmployment(TECH_BASE))) },
+	comparison: { name: 'Employment', sameAxis: true, trend: series(techChart, techChart.map((month) => indexOf(quarterEmployment(month), quarterEmployment(TECH_BASE)))) },
 	events: [{ month: '2022-11', label: 'ChatGPT' }],
 	recent: recentOf(techPerWorkerTrend, 5),
 	...reading(techChange, { up: 'More per worker', down: 'Less per worker' }, 'toward'),
@@ -1553,8 +1542,7 @@ await writeJson('data/index/openrouter.json', {
 await updateSignal('token-usage', {
 	value: trillions(routerTotal(routerLatest)),
 	change: signed(routerChange),
-	trend: routerTrend,
-	trendDates: routerMonths.map(String),
+	trend: series(routerMonths, routerTrend),
 	recent: recentOf(routerTrend, 13),
 	...reading(routerChange, { up: 'Growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Growing when more tokens are used than in the same month a year before.',
@@ -1596,8 +1584,7 @@ await writeJson('data/index/openrouter-categories.json', {
 await updateSignal('programming-share', {
 	value: `${Math.round(shareOf(shareLatest))}%`,
 	change: signed(shareChange),
-	trend: shareTrend,
-	trendDates: shareMonths.map(String),
+	trend: series(shareMonths, shareTrend),
 	recent: shareTrend.slice(-13),
 	...reading(shareChange, { up: 'Rising', down: 'Falling' }, 'toward'),
 	rule: 'Rising when programming takes a larger share of tokens than a year before.',
@@ -1606,8 +1593,7 @@ await updateSignal('programming-share', {
 await updateSignal('coding-agents', {
 	value: trillions(codingTotal(codingLatest)),
 	change: signed(codingChange),
-	trend: codingTrend,
-	trendDates: codingMonths.map(String),
+	trend: series(codingMonths, codingTrend),
 	recent: recentOf(codingTrend, 13),
 	...reading(codingChange, { up: 'Growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Growing when ranked coding apps use more tokens than in the same month a year before.',
@@ -1635,8 +1621,7 @@ const bugTrend = bugMonths.map(cveRolling);
 await updateSignal('bugs', {
 	value: number(cveRolling(bugLatest)),
 	change: signed(bugChange),
-	trend: bugTrend,
-	trendDates: bugMonths.map(String),
+	trend: series(bugMonths, bugTrend),
 	chartNote: PER_PUSH_NOTE,
 	recent: recentOf(bugTrend, 13),
 	...reading(bugChange, { up: 'More reported', down: 'Fewer reported' }, 'away'),
@@ -1662,8 +1647,7 @@ await writeJson('data/index/economy-spending.json', {
 await updateSignal('software-spending', {
 	value: `$${Math.round(economy.softwareInvestment[spendLatest])}B`,
 	change: signed(spendChange),
-	trend: spendTrend,
-	trendDates: spendMonths.filter(month => month >= '2016').map(String),
+	trend: series(spendMonths.filter(month => month >= '2016'), spendTrend),
 	recent: recentOf(spendTrend, 5),
 	...reading(spendChange, { up: 'Still rising', down: 'Falling' }, 'away'),
 	rule: 'Still rising when real investment is higher than a year before.',
@@ -1697,8 +1681,7 @@ await writeJson('data/index/economy-jolts.json', {
 await updateSignal('tech-hiring', {
 	value: `${Math.round(openingsByMonth[joltsLatest])}K`,
 	change: signed(joltsChange),
-	trend: openingsTrend,
-	trendDates: joltsMonths.filter(month => month >= '2019-12').map(String),
+	trend: series(joltsMonths.filter(month => month >= '2019-12'), openingsTrend),
 	recent: recentOf(openingsTrend, 13),
 	...reading(joltsChange, { up: 'Hiring more', down: 'Hiring less' }, 'away'),
 	rule: 'Hiring more when average openings are higher than a year before.',
@@ -1732,8 +1715,7 @@ await writeJson('data/index/census-bfs.json', {
 await updateSignal('new-businesses', {
 	value: number(applications[applicationLatest]),
 	change: signed(applicationChange),
-	trend: applicationTrend,
-	trendDates: applicationMonths.map(String),
+	trend: series(applicationMonths, applicationTrend),
 	recent: recentOf(applicationTrend, 13),
 	...reading(applicationChange, { up: 'More applications', down: 'Fewer applications' }, 'toward'),
 	rule: 'More applications when more are filed than in the same month a year before.',
@@ -1795,8 +1777,8 @@ await writeJson('data/index/model-opinions.json', {
 }
 await updateSignal('model-opinions', {
 	value: `${modelMedian}%`,
-	trend: modelTrend,
-	trendDates: modelScores.map(model => model.name),
+	trend: series(modelScores.map(model => model.name), modelTrend),
+	trendScale: 'category',
 	recent: modelTrend.slice(-13),
 	status: modelMedian >= 50 ? 'Say it is close' : 'Say not yet',
 	direction: modelMedian >= 50 ? 'toward' : 'away',
@@ -1850,8 +1832,7 @@ await writeJson('data/index/outsourcing.json', {
 await updateSignal('outsourcing', {
 	value: `$${Math.round(outsourcingTotal(outsourcingLatest) / 1e9)}B`,
 	change: signed(outsourcingChange),
-	trend: outsourcingTrend,
-	trendDates: outsourcingYears.map(String),
+	trend: series(outsourcingYears, outsourcingTrend),
 	recent: outsourcingTrend.slice(-5).map((value, i, list) => Math.round((value / list[0]) * 1000) / 10),
 	...reading(outsourcingChange, { up: 'Still growing', down: 'Shrinking' }, 'away'),
 	rule: 'Still growing when combined revenue is higher than the year before.',

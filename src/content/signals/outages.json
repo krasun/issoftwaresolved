@@ -9,29 +9,98 @@
 	"value": "1,679",
 	"change": "+18%",
 	"trend": [
-		1187,
-		1174,
-		1192,
-		1223,
-		1229,
-		1277,
-		1267,
-		1299,
-		1334,
-		1379,
-		1419,
-		1464,
-		1512,
-		1543,
-		1594,
-		1631,
-		1652,
-		1667,
-		1707,
-		1731,
-		1741,
-		1690,
-		1679
+		{
+			"label": "2024-12",
+			"value": 1187
+		},
+		{
+			"label": "2025-01",
+			"value": 1174
+		},
+		{
+			"label": "2025-02",
+			"value": 1192
+		},
+		{
+			"label": "2025-03",
+			"value": 1223
+		},
+		{
+			"label": "2025-04",
+			"value": 1229
+		},
+		{
+			"label": "2025-05",
+			"value": 1277
+		},
+		{
+			"label": "2025-06",
+			"value": 1267
+		},
+		{
+			"label": "2025-07",
+			"value": 1299
+		},
+		{
+			"label": "2025-08",
+			"value": 1334
+		},
+		{
+			"label": "2025-09",
+			"value": 1379
+		},
+		{
+			"label": "2025-10",
+			"value": 1419
+		},
+		{
+			"label": "2025-11",
+			"value": 1464
+		},
+		{
+			"label": "2025-12",
+			"value": 1512
+		},
+		{
+			"label": "2026-01",
+			"value": 1543
+		},
+		{
+			"label": "2026-02",
+			"value": 1594
+		},
+		{
+			"label": "2026-03",
+			"value": 1631
+		},
+		{
+			"label": "2026-04",
+			"value": 1652
+		},
+		{
+			"label": "2026-05",
+			"value": 1667
+		},
+		{
+			"label": "2026-06",
+			"value": 1707
+		},
+		{
+			"label": "2026-07",
+			"value": 1731
+		},
+		{
+			"label": "2026-08",
+			"value": 1741
+		},
+		{
+			"label": "2026-09",
+			"value": 1690
+		},
+		{
+			"label": "2026-10",
+			"value": 1679
+		}
 	],
 	"status": "More incidents",
 	"direction": "away",
@@ -68,31 +137,6 @@
 	"caution": [
 		"The data behind this score starts in December 2024, so it misses the first 25 months after ChatGPT launched.",
 		"The score divides this count by git pushes. If AI agents are inflating the number of pushes, it can improve even if software is no more reliable."
-	],
-	"trendDates": [
-		"2024-12",
-		"2025-01",
-		"2025-02",
-		"2025-03",
-		"2025-04",
-		"2025-05",
-		"2025-06",
-		"2025-07",
-		"2025-08",
-		"2025-09",
-		"2025-10",
-		"2025-11",
-		"2025-12",
-		"2026-01",
-		"2026-02",
-		"2026-03",
-		"2026-04",
-		"2026-05",
-		"2026-06",
-		"2026-07",
-		"2026-08",
-		"2026-09",
-		"2026-10"
 	],
 	"chartNote": "This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions."
 }

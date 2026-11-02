@@ -9,44 +9,158 @@
 	"value": "$2.00",
 	"change": "-27%",
 	"trend": [
-		16.44,
-		16.44,
-		12,
-		4.1,
-		12,
-		4.1,
-		4.05,
-		4.05,
-		3.25,
-		3.75,
-		3,
-		3.25,
-		3.75,
-		3.25,
-		3.25,
-		3.75,
-		3.25,
-		3.75,
-		3.25,
-		3.25,
-		3,
-		3,
-		3,
-		3,
-		2.89,
-		2.75,
-		2.75,
-		2.75,
-		2.75,
-		2.75,
-		1.93,
-		2,
-		2,
-		2,
-		2.75,
-		1.56,
-		1.93,
-		2
+		{
+			"label": "2023-10",
+			"value": 16.44
+		},
+		{
+			"label": "2023-11",
+			"value": 16.44
+		},
+		{
+			"label": "2023-12",
+			"value": 12
+		},
+		{
+			"label": "2024-01",
+			"value": 4.1
+		},
+		{
+			"label": "2024-02",
+			"value": 12
+		},
+		{
+			"label": "2024-03",
+			"value": 4.1
+		},
+		{
+			"label": "2024-04",
+			"value": 4.05
+		},
+		{
+			"label": "2024-05",
+			"value": 4.05
+		},
+		{
+			"label": "2024-06",
+			"value": 3.25
+		},
+		{
+			"label": "2024-07",
+			"value": 3.75
+		},
+		{
+			"label": "2024-08",
+			"value": 3
+		},
+		{
+			"label": "2024-09",
+			"value": 3.25
+		},
+		{
+			"label": "2024-10",
+			"value": 3.75
+		},
+		{
+			"label": "2024-11",
+			"value": 3.25
+		},
+		{
+			"label": "2024-12",
+			"value": 3.25
+		},
+		{
+			"label": "2025-01",
+			"value": 3.75
+		},
+		{
+			"label": "2025-02",
+			"value": 3.25
+		},
+		{
+			"label": "2025-03",
+			"value": 3.75
+		},
+		{
+			"label": "2025-04",
+			"value": 3.25
+		},
+		{
+			"label": "2025-05",
+			"value": 3.25
+		},
+		{
+			"label": "2025-06",
+			"value": 3
+		},
+		{
+			"label": "2025-07",
+			"value": 3
+		},
+		{
+			"label": "2025-08",
+			"value": 3
+		},
+		{
+			"label": "2025-09",
+			"value": 3
+		},
+		{
+			"label": "2025-10",
+			"value": 2.89
+		},
+		{
+			"label": "2025-11",
+			"value": 2.75
+		},
+		{
+			"label": "2025-12",
+			"value": 2.75
+		},
+		{
+			"label": "2026-01",
+			"value": 2.75
+		},
+		{
+			"label": "2026-02",
+			"value": 2.75
+		},
+		{
+			"label": "2026-03",
+			"value": 2.75
+		},
+		{
+			"label": "2026-04",
+			"value": 1.93
+		},
+		{
+			"label": "2026-05",
+			"value": 2
+		},
+		{
+			"label": "2026-06",
+			"value": 2
+		},
+		{
+			"label": "2026-07",
+			"value": 2
+		},
+		{
+			"label": "2026-08",
+			"value": 2.75
+		},
+		{
+			"label": "2026-09",
+			"value": 1.56
+		},
+		{
+			"label": "2026-10",
+			"value": 1.93
+		},
+		{
+			"label": "2026-11",
+			"value": 2
+		}
 	],
 	"recent": [
 		100,
@@ -85,45 +199,5 @@
 		"url": "https://x.com/thdxr/status/2116527005801873662",
 		"image": "/quotes/dax-token-costs.png",
 		"text": "with current token prices i wouldn't really say \"cost of software is going to zero\". our token cost is double our payroll which means even though we're 25 it's like we're 75. and i feel like our output is similar to a team of 75 pre-ai. we're just able to do it without all the downsides of a larger team. this is still a good thing. we couldn't hire 50 more people. so much overhead and impossible to retain a high bar"
-	},
-	"trendDates": [
-		"2023-10",
-		"2023-11",
-		"2023-12",
-		"2024-01",
-		"2024-02",
-		"2024-03",
-		"2024-04",
-		"2024-05",
-		"2024-06",
-		"2024-07",
-		"2024-08",
-		"2024-09",
-		"2024-10",
-		"2024-11",
-		"2024-12",
-		"2025-01",
-		"2025-02",
-		"2025-03",
-		"2025-04",
-		"2025-05",
-		"2025-06",
-		"2025-07",
-		"2025-08",
-		"2025-09",
-		"2025-10",
-		"2025-11",
-		"2025-12",
-		"2026-01",
-		"2026-02",
-		"2026-03",
-		"2026-04",
-		"2026-05",
-		"2026-06",
-		"2026-07",
-		"2026-08",
-		"2026-09",
-		"2026-10",
-		"2026-11"
-	]
+	}
 }

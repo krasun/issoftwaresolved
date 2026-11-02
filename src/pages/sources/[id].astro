@@ -33,7 +33,7 @@ const scoredUses = site.areas?.flatMap(area => area.signals).filter(row => row.s
 		</div>
 	</section>
 
-	{analysis?.chart && <section class="section"><TrendChart name={analysis.chart.name} labels={analysis.chart.labels} values={analysis.chart.values} /></section>}
+	{analysis?.chart && <section class="section"><TrendChart name={analysis.chart.name} trend={analysis.chart.trend} /></section>}
 	{
 		analysis && (
 			<>

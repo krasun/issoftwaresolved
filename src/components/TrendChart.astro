@@ -1,19 +1,24 @@
 ---
-type Props = { maxValue?: number; name: string; values: number[]; labels: string[]; comparison?: { name: string; values: number[]; sameAxis?: boolean }; events?: { month: string; label: string }[] };
-const { maxValue, name, values, labels, comparison, events = [] } = Astro.props;
-if (values.length !== labels.length) throw new Error(`Chart dates do not match values: ${name}`);
-const max = Math.max(maxValue ?? 1, ...values, ...(comparison?.sameAxis ? comparison.values : []));
+type Props = { maxValue?: number; name: string; trend: { label: string; value: number }[]; scale?: 'time' | 'category'; comparison?: { name: string; trend: { label: string; value: number }[]; sameAxis?: boolean }; events?: { month: string; label: string }[] };
+const { maxValue, name, trend, scale = 'time', comparison, events = [] } = Astro.props;
+const labels = trend.map(point => point.label);
+const values = trend.map(point => point.value);
+const compared = new Map((comparison?.trend ?? []).map(point => [point.label, point.value]));
+if (comparison && comparison.trend.some(point => !labels.includes(point.label))) throw new Error(`Chart comparison has points the chart does not: ${name}`);
+const otherValues = labels.map(label => compared.get(label));
+const otherKnown = otherValues.filter((v): v is number => v !== undefined);
+const max = Math.max(maxValue ?? 1, ...values, ...(comparison?.sameAxis ? otherKnown : []));
 const power = 10 ** Math.floor(Math.log10(max / 4));
 const step = ([1, 2, 2.5, 5, 10].find(n => n * power >= max / 4) ?? 10) * power;
 const top = step * 4;
-const otherTop = comparison?.sameAxis ? top : Math.max(1, ...(comparison?.values ?? []));
+const otherTop = comparison?.sameAxis ? top : Math.max(1, ...otherKnown);
 const stamp = (label: string) => /^\d{4}[ -]Q[1-4]$/.test(label) ? Date.parse(`${label.slice(0,4)}-${String((Number(label.at(-1))-1)*3+1).padStart(2,'0')}-01`) : /^\d{4}(-\d{2})?(-\d{2})?$/.test(label) ? Date.parse(label) : NaN;
 const times = labels.map(stamp);
-if (times.some(Number.isFinite) && !times.every(Number.isFinite)) throw new Error(`Chart labels mix dates and text: ${name}`);
-const dated = times.every(Number.isFinite) && times.every((t,i) => !i || t > times[i-1]);
+const dated = scale === 'time';
+if (dated && !times.every((t,i) => Number.isFinite(t) && (!i || t > times[i-1]))) throw new Error(`Chart labels are not increasing dates: ${name}`);
 const pct = (t: number) => (t-times[0])/(times.at(-1)!-times[0])*100;
 const x = (i: number) => +(dated ? pct(times[i]) : i/(values.length-1)*100).toFixed(2);
-const points = (data: number[], scale: number) => data.map((v,i) => `${x(i)},${+(100-v/scale*100).toFixed(2)}`).join(' ');
+const points = (data: (number | undefined)[], scale: number) => data.flatMap((v,i) => v === undefined ? [] : [`${x(i)},${+(100-v/scale*100).toFixed(2)}`]).join(' ');
 const compactFormat = new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 });
 const exactFormat = new Intl.NumberFormat('en', { maximumFractionDigits: 4 });
 const compact = (v: number) => compactFormat.format(v);
@@ -22,7 +27,7 @@ const exacts = values.map(exact);
 const tickIndexes = [...new Set([0, Math.floor((values.length-1)/2), values.length-1])];
 const marks = events.filter(e => dated && stamp(e.month) >= times[0] && stamp(e.month) <= times.at(-1)!);
 ---
-<div class="interactive-chart" data-values={JSON.stringify(values.map((v,i) => `${labels[i]} — ${name}: ${exacts[i]}${comparison ? `; ${comparison.name}: ${exact(comparison.values[i])}` : ''}`))} data-positions={JSON.stringify(values.map((_,i) => x(i)))}>
+<div class="interactive-chart" data-values={JSON.stringify(values.map((v,i) => `${labels[i]} — ${name}: ${exacts[i]}${comparison ? `; ${comparison.name}: ${exact(otherValues[i])}` : ''}`))} data-positions={JSON.stringify(values.map((_,i) => x(i)))}>
  <p class="chart-caption">{name} · {labels[0]} – {labels.at(-1)}</p>
  {comparison && <p class="chart-caption">Solid: {name}. Dashed: {comparison.name}{comparison.sameAxis ? ' (same scale).' : ' (%, right scale).'}</p>}
  <div class:list={['chart', { 'chart-dual': comparison && !comparison.sameAxis }]}>
@@ -30,7 +35,7 @@ const marks = events.filter(e => dated && stamp(e.month) >= times[0] && stamp(e.
   <div class="chart-plot" data-inspect>
    <svg viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label={`${name}, ${labels[0]} to ${labels.at(-1)}. Exact values in the data table below.`}>
     <polyline points={points(values,top)} />
-    {comparison && <polyline class="comparison" points={points(comparison.values,otherTop)} />}
+    {comparison && <polyline class="comparison" points={points(otherValues,otherTop)} />}
    </svg>
    <span class="inspection-line" hidden />
    {marks.map(e => <span class="chart-event" style={`left:${pct(stamp(e.month))}%`}><span>{e.label}</span></span>)}
@@ -40,7 +45,7 @@ const marks = events.filter(e => dated && stamp(e.month) >= times[0] && stamp(e.
  </div>
  <div class="chart-controls"><label>Inspect a point <input type="range" min="0" max={values.length-1} value={values.length-1} aria-label={`Inspect ${name}`} /></label><output aria-live="polite">{labels.at(-1)} — {name}: {exacts.at(-1)}</output></div>
  {marks.length > 0 && <p class="chart-caption">Milestones provide timing context, not evidence of causation.</p>}
- <details class="chart-data"><summary>View data table</summary><div class="table-wrap"><table><thead><tr><th scope="col">Period / observation</th><th scope="col">{name}</th>{comparison && <th scope="col">{comparison.name}</th>}</tr></thead><tbody>{values.map((v,i) => <tr><th scope="row">{labels[i]}</th><td>{exacts[i]}</td>{comparison && <td>{exact(comparison.values[i])}</td>}</tr>)}</tbody></table></div></details>
+ <details class="chart-data"><summary>View data table</summary><div class="table-wrap"><table><thead><tr><th scope="col">Period / observation</th><th scope="col">{name}</th>{comparison && <th scope="col">{comparison.name}</th>}</tr></thead><tbody>{values.map((v,i) => <tr><th scope="row">{labels[i]}</th><td>{exacts[i]}</td>{comparison && <td>{exact(otherValues[i])}</td>}</tr>)}</tbody></table></div></details>
 </div>
 <script>
  for (const chart of document.querySelectorAll<HTMLElement>('.interactive-chart')) {

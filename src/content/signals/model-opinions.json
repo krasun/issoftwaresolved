@@ -12,27 +12,88 @@
 	],
 	"value": "20%",
 	"trend": [
-		35,
-		15,
-		40,
-		20,
-		20,
-		20,
-		20,
-		5,
-		20,
-		18,
-		30,
-		15,
-		20,
-		20,
-		25,
-		35,
-		30,
-		22,
-		25,
-		25
+		{
+			"label": "GPT-4",
+			"value": 35
+		},
+		{
+			"label": "Mistral Large",
+			"value": 15
+		},
+		{
+			"label": "GPT-4o",
+			"value": 40
+		},
+		{
+			"label": "Llama 3.1 8B Instruct",
+			"value": 20
+		},
+		{
+			"label": "Llama 3.3 70B Instruct",
+			"value": 20
+		},
+		{
+			"label": "DeepSeek V3",
+			"value": 20
+		},
+		{
+			"label": "Llama 4 Maverick",
+			"value": 20
+		},
+		{
+			"label": "Gemini 2.5 Flash",
+			"value": 5
+		},
+		{
+			"label": "GPT-5",
+			"value": 20
+		},
+		{
+			"label": "Claude Sonnet 4.6",
+			"value": 18
+		},
+		{
+			"label": "GPT-5.5",
+			"value": 30
+		},
+		{
+			"label": "Claude Opus 4.8",
+			"value": 15
+		},
+		{
+			"label": "Gemini 3.8 Flash",
+			"value": 20
+		},
+		{
+			"label": "DeepSeek V4.1 Flash",
+			"value": 20
+		},
+		{
+			"label": "Grok 4.7",
+			"value": 25
+		},
+		{
+			"label": "Claude Opus 5.5",
+			"value": 35
+		},
+		{
+			"label": "GPT-6 Sol",
+			"value": 30
+		},
+		{
+			"label": "Claude Sonnet 5.5",
+			"value": 22
+		},
+		{
+			"label": "GPT-6.1 Sol",
+			"value": 25
+		},
+		{
+			"label": "Gemini 4 Argon",
+			"value": 25
+		}
 	],
+	"trendScale": "category",
 	"recent": [
 		5,
 		20,
@@ -77,27 +138,5 @@
 			"GPT-6.1 Sol (2026-09-29): 25%.",
 			"Gemini 4 Argon (2026-10-13): 25%."
 		]
-	},
-	"trendDates": [
-		"GPT-4",
-		"Mistral Large",
-		"GPT-4o",
-		"Llama 3.1 8B Instruct",
-		"Llama 3.3 70B Instruct",
-		"DeepSeek V3",
-		"Llama 4 Maverick",
-		"Gemini 2.5 Flash",
-		"GPT-5",
-		"Claude Sonnet 4.6",
-		"GPT-5.5",
-		"Claude Opus 4.8",
-		"Gemini 3.8 Flash",
-		"DeepSeek V4.1 Flash",
-		"Grok 4.7",
-		"Claude Opus 5.5",
-		"GPT-6 Sol",
-		"Claude Sonnet 5.5",
-		"GPT-6.1 Sol",
-		"Gemini 4 Argon"
-	]
+	}
 }

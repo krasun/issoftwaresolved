@@ -52,7 +52,7 @@ export const signalRecord = ({ id, data }: Awaited<ReturnType<typeof getSignals>
 	value: data.value,
 	change: data.change,
 	trend: data.trend,
-	trendDates: data.trendDates,
+	trendScale: data.trendScale,
 	trendLabel: data.trendLabel,
 	chartNote: data.chartNote,
 	caution: data.caution,

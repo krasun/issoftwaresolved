@@ -13,15 +13,42 @@
 	"value": "$13.5B",
 	"change": "+27%",
 	"trend": [
-		1.1,
-		1.7,
-		2.3,
-		3.9,
-		5.9,
-		7,
-		8.6,
-		10.6,
-		13.5
+		{
+			"label": "2017",
+			"value": 1.1
+		},
+		{
+			"label": "2018",
+			"value": 1.7
+		},
+		{
+			"label": "2019",
+			"value": 2.3
+		},
+		{
+			"label": "2020",
+			"value": 3.9
+		},
+		{
+			"label": "2021",
+			"value": 5.9
+		},
+		{
+			"label": "2022",
+			"value": 7
+		},
+		{
+			"label": "2023",
+			"value": 8.6
+		},
+		{
+			"label": "2024",
+			"value": 10.6
+		},
+		{
+			"label": "2025",
+			"value": 13.5
+		}
 	],
 	"recent": [
 		100,
@@ -35,16 +62,5 @@
 	"rule": "Still growing when combined revenue is higher than the year before.",
 	"fromHigh": "At its high",
 	"score": 29,
-	"scoreReason": "Up 94% since ChatGPT launched.",
-	"trendDates": [
-		"2017",
-		"2018",
-		"2019",
-		"2020",
-		"2021",
-		"2022",
-		"2023",
-		"2024",
-		"2025"
-	]
+	"scoreReason": "Up 94% since ChatGPT launched."
 }
