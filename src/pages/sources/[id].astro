@@ -1,5 +1,7 @@
 ---
 import { getEntry } from 'astro:content';
+import TrendChart from '../../components/TrendChart.astro';
+import { site } from '../../content/site';
 import Layout from '../../layouts/Layout.astro';
 import { getAnalysis, getSources } from '../../lib/content';
 
@@ -10,13 +12,18 @@ const { source } = Astro.props;
 const { name, url, about, limitations, signal, license, licenseUrl, attribution } = source.data;
 const signalName = (await getEntry(signal))?.data.name;
 const analysis = getAnalysis(source.id);
+const scoredUses = site.areas?.flatMap(area => area.signals).filter(row => row.source === source.id) ?? [];
 ---
 
 <Layout title={name}>
 	<section class="section">
 		<div class="section-head">
+			<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/sources">Data sources</a> / <span aria-current="page">{name}</span></nav>
+			<p class="eyebrow">Data source</p>
 			<h1 class="page-title">{name}</h1>
 			{about && <p>{about}</p>}
+			{scoredUses.map(row => <p>Used to score: <a class="inline-link" href={row.href}>{row.name}</a>.</p>)}
+			<p>{scoredUses.length ? "Provides measurements for the scored signals linked below." : source.data.role === "context" ? "Supporting context; these measurements do not directly affect the score." : "Provides measurements used by the linked signal."}</p>
 			{attribution && <p class="source-credit">{attribution}</p>}
 			<p class="source-links">
 				{url && <a href={url}>Visit the source</a>}
@@ -26,6 +33,7 @@ const analysis = getAnalysis(source.id);
 		</div>
 	</section>
 
+	{analysis?.chart && <section class="section"><TrendChart name={analysis.chart.name} labels={analysis.chart.labels} values={analysis.chart.values} /></section>}
 	{
 		analysis && (
 			<>

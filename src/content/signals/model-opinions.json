@@ -77,5 +77,27 @@
 			"GPT-6.1 Sol (2026-09-29): 25%.",
 			"Gemini 4 Argon (2026-10-13): 25%."
 		]
-	}
+	},
+	"trendDates": [
+		"GPT-4",
+		"Mistral Large",
+		"GPT-4o",
+		"Llama 3.1 8B Instruct",
+		"Llama 3.3 70B Instruct",
+		"DeepSeek V3",
+		"Llama 4 Maverick",
+		"Gemini 2.5 Flash",
+		"GPT-5",
+		"Claude Sonnet 4.6",
+		"GPT-5.5",
+		"Claude Opus 4.8",
+		"Gemini 3.8 Flash",
+		"DeepSeek V4.1 Flash",
+		"Grok 4.7",
+		"Claude Opus 5.5",
+		"GPT-6 Sol",
+		"Claude Sonnet 5.5",
+		"GPT-6.1 Sol",
+		"Gemini 4 Argon"
+	]
 }

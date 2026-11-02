@@ -35,5 +35,16 @@
 	"rule": "Still growing when combined revenue is higher than the year before.",
 	"fromHigh": "At its high",
 	"score": 29,
-	"scoreReason": "Up 94% since ChatGPT launched."
+	"scoreReason": "Up 94% since ChatGPT launched.",
+	"trendDates": [
+		"2017",
+		"2018",
+		"2019",
+		"2020",
+		"2021",
+		"2022",
+		"2023",
+		"2024",
+		"2025"
+	]
 }

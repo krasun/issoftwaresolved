@@ -15,6 +15,7 @@ const signals = defineCollection({
 		value: z.string().optional(),
 		change: z.string().optional(),
 		trend: z.array(z.number()).optional(),
+		trendDates: z.array(z.string()).optional(),
 		trendLabel: z.string().optional(),
 		trendStart: z.string().optional(),
 		caution: z.array(z.string()).optional(),

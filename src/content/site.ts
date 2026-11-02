@@ -4,7 +4,7 @@ type Site = {
 	verdict?: string;
 	score?: number;
 	updated?: string;
-	areas?: { name: string; note?: string; score: number; signals: { href: string; name: string; score: number; reason: string }[] }[];
+	areas?: { name: string; note?: string; score: number; signals: { id?: string; weight?: number; source?: string; href: string; name: string; score: number; reason: string }[] }[];
 	history?: { date: string; score: number }[];
 	checks?: { date: string; score: number }[];
 };

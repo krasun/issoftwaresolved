@@ -69,8 +69,10 @@ const change = Math.round(((last12 - previous12) / previous12) * 100);
 
 // Rolling 12-month totals, one per month. 2023 is the first year after the catalog's initial load.
 const trend = [];
+const securityDates = [];
 for (let end = kevAsOf; end - 365 * DAY >= dayOf('2023-01-01'); end -= 30 * DAY) {
 	trend.unshift(addedIn(end - 365 * DAY, end));
+	securityDates.unshift(new Date(end).toISOString().slice(0, 10));
 }
 
 const kevByYear = countBy(kev, ({ dateAdded }) => dateAdded.slice(0, 4));
@@ -722,6 +724,7 @@ await writeJson('data/index/innovation-graph.json', {
 });
 
 await writeJson('data/index/npm.json', {
+	chart: { name: 'Monthly package downloads', labels: npmList, values: npmList.map(month => npmMonths[month]) },
 	asOf: npmLatest,
 	stats: [
 		{ label: `Downloads, ${npmLatest}`, value: `${Math.round(npmMonths[npmLatest] / 1e9)}B` },
@@ -833,6 +836,7 @@ await writeJson(signalPath, {
 	value: String(last12),
 	change: `${change >= 0 ? '+' : ''}${change}%`,
 	trend,
+	trendDates: securityDates,
 });
 
 const jobsPath = 'src/content/signals/jobs.json';
@@ -841,6 +845,7 @@ await writeJson(jobsPath, {
 	value: us.latest.index.toFixed(1),
 	change: signed(us.change),
 	trend: monthly,
+	trendDates: [...us.rows.filter(({ date }) => date.endsWith('-01') && date.slice(0, 7) !== us.latest.date.slice(0, 7)).map(row => row.date), us.latest.date],
 });
 
 // Status rules are deliberately simple: under 2% either way counts as flat.
@@ -903,6 +908,7 @@ await updateSignal('sentiment', {
 	trendLabel: 'Share of sampled posts taking a side that say software is getting solved, per month, averaged across Hacker News and Bluesky. Each month rests on few posts, so expect noise.',
 	trendStart: stanceMonths[0],
 	trend: combinedByMonth,
+	trendDates: stanceMonths.map(String),
 	recent: combinedByMonth.slice(-5),
 	analysis: {
 		title: 'Two communities',
@@ -974,6 +980,7 @@ await updateSignal('outages', {
 	value: number(majorLast),
 	change: signed(majorChange),
 	trend: outageTrend,
+	trendDates: outageTrend.map((_, i) => nextMonth('2024-12', i)).map(String),
 	recent: recentOf(outageTrend, 13),
 	...reading(majorChange, { up: 'More incidents', down: 'Fewer incidents' }, 'away'),
 	rule: 'More incidents when these services report more than in the previous 12 months.',
@@ -1004,6 +1011,7 @@ await updateSignal('revenue', {
 	value: `$${billions(latestRevenue)}B`,
 	change: signed(revenueChange),
 	trend: revenueTrend,
+	trendDates: revenueYears.slice(-10).map(String),
 	recent: recentOf(quarterlyTotals, 5),
 	...reading(revenueChange, { up: 'Still growing', down: 'Shrinking' }, 'away'),
 	rule: 'Still growing when combined revenue rises over the year. Shrinking revenue moves toward solved.',
@@ -1014,6 +1022,7 @@ await updateSignal('prices', {
 	value: latestPrice.index.toFixed(1),
 	change: signed(priceChange),
 	trend: priceTrend,
+	trendDates: priceRows.map(row => row.month).map(String),
 	recent: recentOf(priceTrend, 13),
 	...reading(priceChange, { up: 'Rising', down: 'Getting cheaper' }, 'away'),
 	rule: 'Rising when the price index is higher than a year before. Falling prices move toward solved.',
@@ -1023,6 +1032,7 @@ await updateSignal('agent-tools', {
 	value: number(mcpRepos[mcpLatest]),
 	change: signed(mcpChange),
 	trend: mcpTrend,
+	trendDates: mcpMonths.map(String),
 	recent: recentOf(mcpTrend, 13),
 	...reading(mcpChange, { up: 'Expanding', down: 'Slowing' }, 'away'),
 	rule: 'Expanding when more repos are created than in the same month a year before.',
@@ -1035,7 +1045,7 @@ await updateSignal('ai-company-jobs', {
 		: { status: 'Not hiring', direction: 'toward' }),
 	rule: 'Still hiring when any of these companies lists an open software engineering role.',
 	metric: `Open software engineering roles at ${aiJobsRows.length} AI companies, today`,
-	...(aiJobsTrend.length >= 2 ? { trend: aiJobsTrend, trendLabel: 'Open software engineering roles, one point per count.' } : {}),
+	...(aiJobsTrend.length >= 2 ? { trend: aiJobsTrend, trendDates: Object.keys(aiJobsHistory).sort(), trendLabel: 'Open software engineering roles, one point per count.' } : {}),
 	analysis: {
 		title: 'Who is hiring',
 		intro: `${aiJobsHiring.length} of ${aiJobsRows.length} companies have open software engineering roles. Hiring does not show how much of their code AI writes.`,
@@ -1063,6 +1073,7 @@ await updateSignal('token-prices', {
 	value: dollars(tokenPriceAt(tokenLatest)),
 	change: signed(tokenChange),
 	trend: tokenTrend,
+	trendDates: pricedMonths.map(String),
 	recent: recentOf(tokenTrend, 13),
 	...reading(tokenChange, { up: 'Rising', down: 'Getting cheaper' }, 'away'),
 	rule: 'Getting cheaper when the median listed price is lower than a year before.',
@@ -1089,6 +1100,7 @@ await updateSignal('product-launches', {
 	value: number(launches[launchLatest]),
 	change: signed(launchChange),
 	trend: launchTrend,
+	trendDates: launchMonths.map(String),
 	recent: recentOf(launchTrend, 13),
 	...reading(launchChange, { up: 'More launches', down: 'Fewer launches' }, 'away'),
 	rule: 'More launches when more products launch than in the same month a year before.',
@@ -1099,9 +1111,10 @@ await updateSignal('code-activity', {
 	value: `${millions(pushes[latestQuarter])}M`,
 	change: signed(pushChange),
 	trend: pushTrend,
+	trendDates: quarters.map(String),
 	recent: recentOf(pushTrend, 5),
-	...reading(pushChange, { up: 'Still building', down: 'Slowing' }, 'away'),
-	rule: 'Still building when git pushes rise over the year.',
+	...reading(pushChange, { up: 'Git pushes increased', down: 'Git pushes decreased' }, 'away'),
+	rule: 'Git pushes increased when pushes rise by at least 2% over the year.',
 	fromHigh: fromHighOf(pushTrend),
 });
 
@@ -1199,6 +1212,7 @@ await updateSignal('coding-benchmarks', {
 	value: `${swePercent}%`,
 	change: signed(sweChange),
 	trend: sweTrend,
+	trendDates: sweMonths.map(String),
 	recent: recentOf(sweTrend, 13),
 	status: sweChange > 0 ? 'Improving' : 'Flat',
 	direction: sweChange > 0 ? 'toward' : 'flat',
@@ -1258,6 +1272,7 @@ await updateSignal('agent-prs', {
 	value: millionsOne(agentTotal(agentLatest)),
 	change: signed(agentChange),
 	trend: agentTrend,
+	trendDates: agentList.map(String),
 	recent: recentOf(agentTrend, 13),
 	...reading(agentChange, { up: 'More agents', down: 'Fewer agents' }, 'toward'),
 	rule: 'More agents when more agent pull requests are opened than in the same month a year before.',
@@ -1355,6 +1370,7 @@ await updateSignal('ai-built-sites', {
 	// Cards label this as year over year, so it waits for a year of data.
 	change: builderByMonth[siteYearAgo] ? signed(Math.round((builderSites(siteLatest) / builderByMonth[siteYearAgo] - 1) * 100)) : undefined,
 	trend: builderTrend,
+	trendDates: builderMonths.map(String),
 	trendStart: builderStart,
 	recent: recentOf(builderTrend, 13),
 	...reading(Math.round((builderSites(siteLatest) / builderTrend.at(-4) - 1) * 100), { up: 'Growing', down: 'Shrinking' }, 'toward'),
@@ -1374,6 +1390,7 @@ await updateSignal('no-code-revenue', {
 	value: billionsOne(noCodeTotal(noCodeLatest)),
 	change: signed(noCodeChange),
 	trend: noCodeTrend,
+	trendDates: noCodeYears.slice(-10).map(String),
 	recent: noCodeTrend.slice(-5).map((value, i, list) => Math.round((value / list[0]) * 1000) / 10),
 	...reading(noCodeChange, { up: 'Still growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Still growing when combined revenue is higher than the year before.',
@@ -1416,6 +1433,7 @@ await updateSignal('stack-overflow', {
 	value: number(soMonths[soLatest]),
 	change: signed(soChange),
 	trend: soTrend,
+	trendDates: soList.map(String),
 	recent: recentOf(soTrend, 13),
 	...reading(soChange, { up: 'Asking more', down: 'Asking less' }, 'away'),
 	rule: 'Asking less when fewer questions are asked than in the same month a year before.',
@@ -1471,6 +1489,7 @@ await updateSignal('tech-output', {
 	value: String(techIndex),
 	change: signed(techChange),
 	trend: techChart.map((month) => indexOf(tech.output[month], tech.output[TECH_BASE])),
+	trendDates: techChart,
 	trendName: 'Real output',
 	trendStart: techChart[0],
 	trendStep: 3,
@@ -1532,6 +1551,7 @@ await updateSignal('token-usage', {
 	value: trillions(routerTotal(routerLatest)),
 	change: signed(routerChange),
 	trend: routerTrend,
+	trendDates: routerMonths.map(String),
 	recent: recentOf(routerTrend, 13),
 	...reading(routerChange, { up: 'Growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Growing when more tokens are used than in the same month a year before.',
@@ -1574,6 +1594,7 @@ await updateSignal('programming-share', {
 	value: `${Math.round(shareOf(shareLatest))}%`,
 	change: signed(shareChange),
 	trend: shareTrend,
+	trendDates: shareMonths.map(String),
 	recent: shareTrend.slice(-13),
 	...reading(shareChange, { up: 'Rising', down: 'Falling' }, 'toward'),
 	rule: 'Rising when programming takes a larger share of tokens than a year before.',
@@ -1583,6 +1604,7 @@ await updateSignal('coding-agents', {
 	value: trillions(codingTotal(codingLatest)),
 	change: signed(codingChange),
 	trend: codingTrend,
+	trendDates: codingMonths.map(String),
 	recent: recentOf(codingTrend, 13),
 	...reading(codingChange, { up: 'Growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Growing when ranked coding apps use more tokens than in the same month a year before.',
@@ -1611,6 +1633,7 @@ await updateSignal('bugs', {
 	value: number(cveRolling(bugLatest)),
 	change: signed(bugChange),
 	trend: bugTrend,
+	trendDates: bugMonths.map(String),
 	recent: recentOf(bugTrend, 13),
 	...reading(bugChange, { up: 'More reported', down: 'Fewer reported' }, 'away'),
 	rule: 'More reported when more vulnerabilities are published than in the 12 months before.',
@@ -1636,6 +1659,7 @@ await updateSignal('software-spending', {
 	value: `$${Math.round(economy.softwareInvestment[spendLatest])}B`,
 	change: signed(spendChange),
 	trend: spendTrend,
+	trendDates: spendMonths.filter(month => month >= '2016').map(String),
 	recent: recentOf(spendTrend, 5),
 	...reading(spendChange, { up: 'Still rising', down: 'Falling' }, 'away'),
 	rule: 'Still rising when real investment is higher than a year before.',
@@ -1670,6 +1694,7 @@ await updateSignal('tech-hiring', {
 	value: `${Math.round(openingsByMonth[joltsLatest])}K`,
 	change: signed(joltsChange),
 	trend: openingsTrend,
+	trendDates: joltsMonths.filter(month => month >= '2019-12').map(String),
 	recent: recentOf(openingsTrend, 13),
 	...reading(joltsChange, { up: 'Hiring more', down: 'Hiring less' }, 'away'),
 	rule: 'Hiring more when average openings are higher than a year before.',
@@ -1704,6 +1729,7 @@ await updateSignal('new-businesses', {
 	value: number(applications[applicationLatest]),
 	change: signed(applicationChange),
 	trend: applicationTrend,
+	trendDates: applicationMonths.map(String),
 	recent: recentOf(applicationTrend, 13),
 	...reading(applicationChange, { up: 'More applications', down: 'Fewer applications' }, 'toward'),
 	rule: 'More applications when more are filed than in the same month a year before.',
@@ -1766,6 +1792,7 @@ await writeJson('data/index/model-opinions.json', {
 await updateSignal('model-opinions', {
 	value: `${modelMedian}%`,
 	trend: modelTrend,
+	trendDates: modelScores.map(model => model.name).map(String),
 	recent: modelTrend.slice(-13),
 	status: modelMedian >= 50 ? 'Say it is close' : 'Say not yet',
 	direction: modelMedian >= 50 ? 'toward' : 'away',
@@ -1820,6 +1847,7 @@ await updateSignal('outsourcing', {
 	value: `$${Math.round(outsourcingTotal(outsourcingLatest) / 1e9)}B`,
 	change: signed(outsourcingChange),
 	trend: outsourcingTrend,
+	trendDates: outsourcingYears.map(String),
 	recent: outsourcingTrend.slice(-5).map((value, i, list) => Math.round((value / list[0]) * 1000) / 10),
 	...reading(outsourcingChange, { up: 'Still growing', down: 'Shrinking' }, 'away'),
 	rule: 'Still growing when combined revenue is higher than the year before.',
@@ -2018,11 +2046,22 @@ for (const file of await readdir('src/content/signals')) signalNames[file.replac
 const scoreAreas = [];
 for (const [i, { name, note, signals }] of SCORE_AREAS.entries()) {
 	const rows = [];
-	for (const { id, name: signalName, source, at, reason } of signals) {
+	for (const { id, name: signalName, source, at, reason, weight = 1 } of signals) {
 		const score = Math.round(at(currentMonth) ?? 0);
 		const why = reason(currentMonth);
 		if (!signalName) await updateSignal(id, { score, scoreReason: why });
-		rows.push({ href: source ? `/sources/${source}` : `/signals/${id}`, name: signalName ?? signalNames[id], score, reason: why });
+		else await writeJson(`src/content/signals/${id}.json`, {
+			order: 100 + i,
+			group: 'Capability',
+			name: signalName,
+			question: id === 'task-length' ? 'How long a task can AI complete?' : 'How much does a hard coding task cost?',
+			metric: id === 'task-length' ? 'Human working hours of tasks completed with 50% success' : 'AI usage cost per FrontierSWE task for a near-top score',
+			solvedIf: id === 'task-length' ? 'AI completes tasks lasting a working year (2,000 hours)' : 'A hard coding task costs $1 in AI usage',
+			value: id === 'task-length' ? `${hours(metrBest.estimate)} hours` : usd(taskCostRunAt(currentMonth).cost),
+			score,
+			scoreReason: why,
+		});
+		rows.push({ id, weight, source, href: `/signals/${id}`, name: signalName ?? signalNames[id], score, reason: why });
 	}
 	rows.sort((a, b) => b.score - a.score);
 	scoreAreas.push({ name, note, score: Math.round(areaScoresAt(currentMonth)[i]), signals: rows });

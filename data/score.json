@@ -7,25 +7,35 @@
 			"score": 56,
 			"signals": [
 				{
+					"id": "coding-benchmarks",
+					"weight": 1,
 					"href": "/signals/coding-benchmarks",
 					"name": "AI coding benchmarks",
 					"score": 83,
 					"reason": "The best model resolves 83% of SWE-bench Verified tasks."
 				},
 				{
-					"href": "/sources/metr",
+					"id": "task-length",
+					"weight": 1,
+					"source": "metr",
+					"href": "/signals/task-length",
 					"name": "AI task length",
 					"score": 59,
 					"reason": "Best model: tasks of about 17 hours half the time, against a goal of a working year."
 				},
 				{
+					"id": "token-prices",
+					"weight": 1,
 					"href": "/signals/token-prices",
 					"name": "AI token prices",
 					"score": 47,
 					"reason": "Down 88% since October 2023, when the data starts."
 				},
 				{
-					"href": "/sources/epoch-benchmarks",
+					"id": "task-cost",
+					"weight": 1,
+					"source": "epoch-benchmarks",
+					"href": "/signals/task-cost",
 					"name": "Cost of a hard task",
 					"score": 33,
 					"reason": "About $99 of AI usage per FrontierSWE task for a near-top score, against a goal of $1."
@@ -37,60 +47,80 @@
 			"score": 51,
 			"signals": [
 				{
+					"id": "agent-tools",
+					"weight": 1,
 					"href": "/signals/agent-tools",
 					"name": "Agent tools",
 					"score": 97,
 					"reason": "7,639 new repos a month, against a goal of 10,000."
 				},
 				{
+					"id": "token-usage",
+					"weight": 1,
 					"href": "/signals/token-usage",
 					"name": "AI token usage",
 					"score": 85,
 					"reason": "353 times the tokens of January 2025, against a goal of 1,000 times."
 				},
 				{
+					"id": "coding-agents",
+					"weight": 1,
 					"href": "/signals/coding-agents",
 					"name": "Coding agent tokens",
 					"score": 79,
 					"reason": "227 times the tokens of January 2025, against a goal of 1,000 times."
 				},
 				{
+					"id": "product-launches",
+					"weight": 1,
 					"href": "/signals/product-launches",
 					"name": "Product launches",
 					"score": 73,
 					"reason": "837 launches a month, against a goal of 10,000."
 				},
 				{
+					"id": "code-activity",
+					"weight": 1,
 					"href": "/signals/code-activity",
 					"name": "Code activity",
 					"score": 48,
 					"reason": "Up 201% since ChatGPT launched."
 				},
 				{
+					"id": "no-code-revenue",
+					"weight": 1,
 					"href": "/signals/no-code-revenue",
 					"name": "No-code revenue",
 					"score": 29,
 					"reason": "Up 94% since ChatGPT launched."
 				},
 				{
+					"id": "programming-share",
+					"weight": 1,
 					"href": "/signals/programming-share",
 					"name": "Programming share of AI",
 					"score": 26,
 					"reason": "About 26% of OpenRouter tokens are programming."
 				},
 				{
+					"id": "new-businesses",
+					"weight": 1,
 					"href": "/signals/new-businesses",
 					"name": "New tech businesses",
 					"score": 24,
 					"reason": "Up 74% since ChatGPT launched."
 				},
 				{
+					"id": "ai-built-sites",
+					"weight": 0.25,
 					"href": "/signals/ai-built-sites",
 					"name": "AI-built sites",
 					"score": 17,
 					"reason": "3.2 times the sites of December 2025, against a goal of 1,000 times. Counts a quarter as much as other signals here."
 				},
 				{
+					"id": "agent-prs",
+					"weight": 1,
 					"href": "/signals/agent-prs",
 					"name": "AI pull requests",
 					"score": 5,
@@ -103,42 +133,56 @@
 			"score": 28,
 			"signals": [
 				{
+					"id": "stack-overflow",
+					"weight": 1,
 					"href": "/signals/stack-overflow",
 					"name": "Stack Overflow questions",
 					"score": 100,
 					"reason": "Down 99% since ChatGPT launched. Falling to a tenth scores 100%."
 				},
 				{
+					"id": "tech-hiring",
+					"weight": 1,
 					"href": "/signals/tech-hiring",
 					"name": "Information sector openings",
 					"score": 40,
 					"reason": "Down 61% since ChatGPT launched."
 				},
 				{
+					"id": "jobs",
+					"weight": 1,
 					"href": "/signals/jobs",
 					"name": "Jobs",
 					"score": 26,
 					"reason": "Software postings have lost 26% against all US postings since ChatGPT launched."
 				},
 				{
+					"id": "tech-output",
+					"weight": 1,
 					"href": "/signals/tech-output",
 					"name": "Output per tech worker",
 					"score": 21,
 					"reason": "Output per worker is +16% against its 2015 to 2019 trend. Doubling that trend scores 100%."
 				},
 				{
+					"id": "sentiment",
+					"weight": 1,
 					"href": "/signals/sentiment",
 					"name": "Developer sentiment",
 					"score": 7,
 					"reason": "7% of sampled Hacker News and Bluesky posts taking a side say it is getting solved."
 				},
 				{
+					"id": "ai-company-jobs",
+					"weight": 1,
 					"href": "/signals/ai-company-jobs",
 					"name": "AI company hiring",
 					"score": 0,
 					"reason": "0 of 11 AI companies have stopped hiring engineers."
 				},
 				{
+					"id": "outsourcing",
+					"weight": 1,
 					"href": "/signals/outsourcing",
 					"name": "Software outsourcing revenue",
 					"score": 0,
@@ -152,36 +196,48 @@
 			"score": 8,
 			"signals": [
 				{
+					"id": "security",
+					"weight": 1,
 					"href": "/signals/security",
 					"name": "Security",
 					"score": 25,
 					"reason": "Per git push: Down 44% since January 2024, when the data starts."
 				},
 				{
+					"id": "outages",
+					"weight": 1,
 					"href": "/signals/outages",
 					"name": "Major service outages",
 					"score": 23,
 					"reason": "Per git push: Down 42% since December 2024, when the data starts."
 				},
 				{
+					"id": "revenue",
+					"weight": 1,
 					"href": "/signals/revenue",
 					"name": "Revenue",
 					"score": 0,
 					"reason": "Against GDP: Up 24% since ChatGPT launched."
 				},
 				{
+					"id": "prices",
+					"weight": 1,
 					"href": "/signals/prices",
 					"name": "Prices",
 					"score": 0,
 					"reason": "After inflation: Up 5% since ChatGPT launched."
 				},
 				{
+					"id": "bugs",
+					"weight": 1,
 					"href": "/signals/bugs",
 					"name": "Bugs",
 					"score": 0,
 					"reason": "Per git push: Up 23% since ChatGPT launched."
 				},
 				{
+					"id": "software-spending",
+					"weight": 1,
 					"href": "/signals/software-spending",
 					"name": "Business software spending",
 					"score": 0,

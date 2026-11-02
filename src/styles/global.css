@@ -513,7 +513,8 @@ polyline.comparison {
 	}
 }
 
-.nav-links a[aria-current='page'] {
+.nav-links a[aria-current='page'],
+.nav-links a[aria-current='location'] {
 	color: var(--accent);
 }
 
@@ -1916,3 +1917,7 @@ body:has(.post-body-sketched) {
 		text-decoration: none;
 	}
 }
+
+.breadcrumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; font-size: 13px; color: var(--muted); }
+.breadcrumbs a { text-decoration: underline; text-underline-offset: 3px; }
+.question-card[id] { scroll-margin-top: 100px; }

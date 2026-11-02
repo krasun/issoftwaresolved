@@ -1,0 +1,11 @@
+{
+	"order": 100,
+	"group": "Capability",
+	"name": "Cost of a hard task",
+	"question": "How much does a hard coding task cost?",
+	"metric": "AI usage cost per FrontierSWE task for a near-top score",
+	"solvedIf": "A hard coding task costs $1 in AI usage",
+	"value": "$99",
+	"score": 33,
+	"scoreReason": "About $99 of AI usage per FrontierSWE task for a near-top score, against a goal of $1."
+}

@@ -1,0 +1,11 @@
+{
+	"order": 100,
+	"group": "Capability",
+	"name": "AI task length",
+	"question": "How long a task can AI complete?",
+	"metric": "Human working hours of tasks completed with 50% success",
+	"solvedIf": "AI completes tasks lasting a working year (2,000 hours)",
+	"value": "17 hours",
+	"score": 59,
+	"scoreReason": "Best model: tasks of about 17 hours half the time, against a goal of a working year."
+}

@@ -1,15 +1,14 @@
 ---
+import TrendChart from '../components/TrendChart.astro';
+import { areaAnchor } from '../lib/content';
 import 'katex/dist/katex.min.css';
 import Layout from '../layouts/Layout.astro';
 import { site } from '../content/site';
 import { scoreHistory as history } from '../lib/content';
 import { math } from '../lib/math';
 
-const scoreLine = history
-	?.map((h, i) => `${(i / (history.length - 1)) * 100},${100 - h.score}`)
-	.join(' ');
 const latest = history?.at(-1);
-const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_{i=1}^{n} \text{Question}_i \\[6pt] \text{Question}_i &= \frac{1}{m}\sum_{j=1}^{m} \text{Signal}_j \end{aligned}`);
+const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_{i=1}^{n} \text{Question}_i \\[6pt] \text{Question}_i &= \frac{\sum_{j=1}^{m} w_j\,\text{Signal}_j}{\sum_{j=1}^{m} w_j} \end{aligned}`);
 ---
 
 <Layout title="Solved score">
@@ -30,41 +29,15 @@ const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_
 				<span class="score-formula-math" set:html={formula} />
 			</a>
 		</div>
-		{
-			history && latest && (
-				<div class="chart">
-					<div class="chart-y" aria-hidden="true">
-						{[100, 75, 50, 25, 0].map((tick) => (
-							<span>{tick}</span>
-						))}
-					</div>
-					<div class="chart-plot">
-						<svg
-							viewBox="0 0 100 100"
-							preserveAspectRatio="none"
-							role="img"
-							aria-label={`Solved score from ${history[0].date} to ${latest.date}`}
-						>
-							<polyline points={scoreLine} />
-						</svg>
-						<span class="chart-end" style={`top: ${100 - latest.score}%`} data-count>
-							{latest.score}%
-						</span>
-					</div>
-					<div class="chart-x" aria-hidden="true">
-						<span>{history[0].date}</span>
-						<span>{latest.date}</span>
-					</div>
-				</div>
-			)
-		}
+		{history && latest && <TrendChart maxValue={100} name="Overall score (out of 100)" values={history.map(row => row.score)} labels={history.map(row => row.date)} />}
+
 	</section>
 
 	<section class="section">
 		<div class="question-cards">
 			{
 				site.areas?.map((area) => (
-					<article class="question-card">
+					<article class="question-card" id={areaAnchor(area.name)}>
 						<div class="question-top">
 							<h2 class="card-title">{area.name}</h2>
 							<strong>{area.score}%</strong>
@@ -72,7 +45,7 @@ const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_
 						<div class="progress" aria-hidden="true"><i style={`width: ${area.score}%`} /></div>
 						{area.note && <p class="question-note">{area.note}</p>}
 							<ul class="question-signals">
-							{area.signals.map(({ href, name, score, reason }) => (
+							{area.signals.map(({ href, name, score, reason, weight }) => (
 								<li>
 									<a href={href}>
 										<div>
@@ -85,7 +58,7 @@ const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_
 											</span>
 										</div>
 										<div class="progress progress-small" aria-hidden="true"><i style={`width: ${score}%`} /></div>
-										<p>{reason}</p>
+										<p>{reason} Relative weight: {weight ?? 1}.</p>
 									</a>
 								</li>
 							))}

@@ -15,6 +15,7 @@ const analyses = import.meta.glob<{ default: Analysis }>('/data/index/*.json', {
 
 export type Analysis = {
 	asOf: string;
+	chart?: { name: string; labels: string[]; values: number[] };
 	stats: { label: string; value: number | string }[];
 	findings: string[];
 	tables: { title: string; columns: string[]; rows: (number | string)[][] }[];
@@ -51,6 +52,7 @@ export const signalRecord = ({ id, data }: Awaited<ReturnType<typeof getSignals>
 	value: data.value,
 	change: data.change,
 	trend: data.trend,
+	trendDates: data.trendDates,
 	trendLabel: data.trendLabel,
 	trendStart: data.trendStart,
 	trendStep: data.trendStep,
@@ -86,3 +88,6 @@ export const json = (data: unknown) =>
 	new Response(JSON.stringify(data, null, 2), {
 		headers: { 'content-type': 'application/json; charset=utf-8' },
 	});
+
+export const areaAnchor = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "");
+export const signalArea = (id: string) => site.areas?.find(area => area.signals.some(signal => signal.href === `/signals/${id}`));

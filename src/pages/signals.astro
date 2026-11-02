@@ -1,8 +1,11 @@
 ---
+import { site } from '../content/site';
+import { areaAnchor } from '../lib/content';
 import Layout from '../layouts/Layout.astro';
 import { getSignals } from '../lib/content';
 
 const signals = await getSignals();
+const groups = [...(site.areas ?? []).map(area => ({ name: area.name, href: `/score#${areaAnchor(area.name)}`, signals: signals.filter(signal => area.signals.some(row => row.href === `/signals/${signal.id}`)) })), { name: "Supporting context", href: undefined, signals: signals.filter(signal => !site.areas?.some(area => area.signals.some(row => row.href === `/signals/${signal.id}`))) }].filter(group => group.signals.length);
 const suggestUrl = 'https://github.com/krasun/issoftwaresolved/issues/new?title=Signal%20suggestion%3A%20';
 // The card only fills a gap in the last row of three, and never starts a row of its own.
 const showSuggestCard = signals.length % 3 !== 0;
@@ -30,7 +33,7 @@ const sparkPoints = (values: number[]) => {
 					<p>If software were solved, each of these numbers would show it.</p>
 					<p>Based on <a class="inline-link" href="/sources">these data sources</a>. <a class="inline-link" href={suggestUrl}>Suggest a signal</a>.</p>
 				</div>
-				<span class="period-label">Last 12 months</span>
+
 			</div>
 		</div>
 	</section>
@@ -38,8 +41,8 @@ const sparkPoints = (values: number[]) => {
 	{
 		signals.length > 0 && (
 			<section class="section">
-				<div class="cards">
-					{signals.map(({ id, data }) => (<article class="card">
+				{groups.map(group => <><div class="section-head"><h2>{group.href ? <a href={group.href}>{group.name}</a> : group.name}</h2>{!group.href && <p>These signals do not contribute to the overall score.</p>}</div><div class="cards">
+					{group.signals.map(({ id, data }) => (<article class="card">
 								<div class="card-top">
 									<h2 class="card-title">
 										<a class="card-link" href={`/signals/${id}`}>
@@ -69,7 +72,7 @@ const sparkPoints = (values: number[]) => {
 							)}
 							<p class="card-metric">{data.metric}</p>
 							</article>))}
-					{showSuggestCard && (
+					{false && showSuggestCard && (
 						<article class:list={['card card-suggest', { 'card-suggest-odd': signals.length % 2 === 1 }]}>
 							<div class="card-top">
 								<h2 class="card-title">
@@ -88,7 +91,7 @@ const sparkPoints = (values: number[]) => {
 							<p class="card-metric">Open an issue on GitHub with the number and where its data comes from</p>
 						</article>
 					)}
-				</div>
+				</div></>)}
 			</section>
 		)
 	}

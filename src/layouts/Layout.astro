@@ -69,7 +69,7 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 				<nav class="nav-links" aria-label="Main">
 					{
 						links.filter(({ href }) => href !== '/sources').map((link) => (
-							<a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+							<a href={link.href} aria-current={path === link.href ? 'page' : path.startsWith(`${link.href}/`) ? 'location' : undefined}>
 								{link.label}
 							</a>
 						))

@@ -47,5 +47,15 @@
 		]
 	},
 	"score": 0,
-	"scoreReason": "After inflation: Up 4% since ChatGPT launched."
+	"scoreReason": "After inflation: Up 4% since ChatGPT launched.",
+	"trendDates": [
+		"2018",
+		"2019",
+		"2020",
+		"2021",
+		"2022",
+		"2023",
+		"2024",
+		"2025"
+	]
 }
