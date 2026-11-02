@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://issoftwaresolved.com/sitemap-index.xml
