@@ -2,6 +2,10 @@
 
 An index of public evidence on whether AI has solved software engineering, built as a static [Astro](https://docs.astro.build) site on Cloudflare Workers.
 
+[![Watch the launch video](video/launch.png)](video/launch.mp4)
+
+[Watch the launch video](video/launch.mp4)
+
 ## Commands
 
 | Command | What it does |
