@@ -697,10 +697,27 @@ tbody tr {
 }
 
 @media (max-width: 640px) {
-	.footer-inner,
-	.footer-links {
+	.footer-inner {
 		flex-direction: column;
-		align-items: flex-start;
+		align-items: stretch;
+		gap: 16px;
+		padding-block: 20px;
+	}
+
+	.footer-inner > span {
+		order: 1;
+	}
+
+	.footer-links {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0 20px;
+	}
+
+	.footer-links a {
+		display: flex;
+		align-items: center;
+		min-height: 44px;
 	}
 }
 
