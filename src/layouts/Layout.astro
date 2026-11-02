@@ -28,8 +28,8 @@ const path = Astro.url.pathname.replace(/\/$/, '');
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/png" sizes="256x256" href={`/favicon.png?v=${site.score ?? "unknown"}`} />
+		<link rel="icon" type="image/svg+xml" sizes="any" href={`/favicon.svg?v=${site.score ?? "unknown"}`} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="theme-color" content="#fffef9" />
 		<meta name="color-scheme" content="light" />

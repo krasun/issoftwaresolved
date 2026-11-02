@@ -22,7 +22,8 @@
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.4.4",
     "countup.js": "^2.10.1",
-    "katex": "^0.19.1"
+    "katex": "^0.19.1",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "aws4fetch": "^1.0.20",
