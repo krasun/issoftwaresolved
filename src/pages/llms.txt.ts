@@ -38,7 +38,7 @@ export const GET: APIRoute = async ({ site }) => {
 		'',
 		'## Pages',
 		`- [Solved score](${link('/score')}): how the score is calculated\n- [How it works](${link('/how-it-works')})`,
-		`- [About](${link('/about')})`,
+		`- [About](${link('/about')})\n- [Terms](${link('/terms')})`,
 		'',
 	];
 	return new Response(lines.join('\n'), { headers: { 'content-type': 'text/plain; charset=utf-8' } });

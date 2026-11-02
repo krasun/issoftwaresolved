@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const repository = 'https://github.com/krasun/issoftwaresolved';
+---
+
+<Layout title="Terms">
+	<section class="section">
+		<div class="section-head">
+			<h1 class="page-title">Terms</h1>
+			<p>The short version: share it, credit it, and don’t bet anything on it.</p>
+		</div>
+		<div class="post-body">
+			<p>Is software solved? is a personal project I run for curiosity and fun. By using the site or its API, you agree to what’s written here.</p>
+			<p>The score is one number that I put together from public data, using my own choices about what to count and how much it matters. It isn’t a real evaluation of the software industry, a forecast or professional advice. Please don’t treat it as one.</p>
+			<p>The numbers can be late or wrong, and they can change when a source or <a class="inline-link" href="/how-it-works">the method</a> changes. If you use them for anything that matters, like production systems, investing or hiring, you do so at your own risk. The site and the API come as they are, with no guarantees, and I’m not responsible for any loss that comes from using them. The API can also change or go away at any time.</p>
+			<p>The data isn’t all mine to give away. Each number follows the license and terms of the source it came from, and those apply to you when you reuse it. Some sources publish no license at all, so don’t assume you’re free to reuse their data. You’ll find each source, its license and the credit it asks for on <a class="inline-link" href="/sources">the data sources page</a>. These sources don’t endorse this site or its results.</p>
+			<p>Feel free to share the project, quote the score and link to it. If you reuse the numbers, please credit “Is software solved?” along with the original sources. Just don’t present the score as more than it is, or suggest that I or any source stands behind what you’re saying with it.</p>
+			<p>If you’re thinking about building something similar or competing with this project on top of its data, please <a class="inline-link" href={`${repository}/issues`}>open an issue</a> first and let’s talk. Maybe what you have in mind could make this one better.</p>
+			<p>The site uses <a class="inline-link" href="https://pirsch.io/">Pirsch</a> to count visits, without cookies. There are no accounts here, and I don’t ask you for any personal data. If you open an issue, GitHub’s terms apply, and whatever you write there is public.</p>
+			<p>I may change these terms as the project changes, and the latest version is always on this page.</p>
+			<p>If you’re in any doubt about what you can do with something here, or you think a source or anything else is being used incorrectly, please <a class="inline-link" href={`${repository}/issues`}>open an issue</a> on GitHub.</p>
+			<p>Last updated on November 2, 2026.</p>
+		</div>
+	</section>
+</Layout>
