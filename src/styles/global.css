@@ -696,6 +696,14 @@ tbody tr {
 	gap: 20px;
 }
 
+@media (max-width: 640px) {
+	.footer-inner,
+	.footer-links {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+}
+
 /* The top nav hides these links on phones, so the footer only drops them on wider screens. */
 @media (min-width: 641px) {
 	.footer-links .in-top-nav {
