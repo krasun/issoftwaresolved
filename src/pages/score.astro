@@ -1,10 +1,9 @@
 ---
 import TrendChart from '../components/TrendChart.astro';
-import { areaAnchor } from '../lib/content';
 import 'katex/dist/katex.min.css';
 import Layout from '../layouts/Layout.astro';
 import { site } from '../content/site';
-import { scoreHistory as history } from '../lib/content';
+import { areaAnchor, scoreHistory as history } from '../lib/content';
 import { math } from '../lib/math';
 
 const latest = history?.at(-1);
@@ -58,7 +57,7 @@ const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_
 											</span>
 										</div>
 										<div class="progress progress-small" aria-hidden="true"><i style={`width: ${score}%`} /></div>
-										<p>{reason} Relative weight: {weight ?? 1}.</p>
+										<p>{reason} Relative weight: {weight}.</p>
 									</a>
 								</li>
 							))}

@@ -17,7 +17,7 @@ const signals = defineCollection({
 		trend: z.array(z.number()).optional(),
 		trendDates: z.array(z.string()).optional(),
 		trendLabel: z.string().optional(),
-		trendStart: z.string().optional(),
+		chartNote: z.string().optional(),
 		caution: z.array(z.string()).optional(),
 		prompt: z.string().optional(),
 		quote: z.object({ author: z.string(), role: z.string(), url: z.string(), image: z.string(), text: z.string() }).optional(),
@@ -25,7 +25,6 @@ const signals = defineCollection({
 		scoreReason: z.string().optional(),
 		comparison: z.object({ name: z.string(), sameAxis: z.boolean().optional(), values: z.array(z.number()) }).optional(),
 		trendName: z.string().optional(),
-		trendStep: z.number().optional(),
 		events: z.array(z.object({ month: z.string(), label: z.string() })).optional(),
 		analysis: z.object({ title: z.string(), intro: z.string(), points: z.array(z.string()) }).optional(),
 		// The last year of the trend, rebased so its start is 100.

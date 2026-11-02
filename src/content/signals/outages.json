@@ -93,5 +93,6 @@
 		"2026-08",
 		"2026-09",
 		"2026-10"
-	]
+	],
+	"chartNote": "This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions."
 }

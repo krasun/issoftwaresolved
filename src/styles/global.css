@@ -380,14 +380,6 @@ dl div {
 	overflow: visible;
 }
 
-.chart-end {
-	position: absolute;
-	left: calc(100% + 8px);
-	translate: 0 -50%;
-	font-size: 14px;
-	font-weight: 600;
-}
-
 .chart-x {
 	grid-column: 2;
 	display: flex;
@@ -400,54 +392,13 @@ dl div {
 	padding-top: 40px;
 }
 
-.chart-events {
-	padding-top: 40px;
-}
-
 .chart-y-right {
 	text-align: left;
-}
-
-.chart-x-years {
-	position: relative;
-	display: block;
-	height: 18px;
-}
-
-.chart-x-years span {
-	position: absolute;
-	translate: -50% 0;
 }
 
 polyline.comparison {
 	stroke: var(--muted);
 	stroke-dasharray: 5 4;
-}
-
-.chart-key {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 8px 24px;
-	margin: 0;
-	padding: 24px 24px 0;
-	list-style: none;
-	color: var(--muted);
-	font-size: 14px;
-}
-
-.chart-key li {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-}
-
-.key-line {
-	width: 20px;
-	border-top: 2px solid var(--accent);
-}
-
-.key-line.comparison {
-	border-top: 2px dashed var(--muted);
 }
 
 .chart-event {
@@ -464,12 +415,6 @@ polyline.comparison {
 	translate: -1px 0;
 	white-space: nowrap;
 	font-size: 12px;
-}
-
-.chart-event-before span {
-	right: 0;
-	left: auto;
-	translate: 1px 0;
 }
 
 .footer-inner {
@@ -1338,22 +1283,6 @@ td a {
 	font-size: 12px;
 }
 
-.spark-empty {
-	border-bottom-style: dashed;
-}
-
-/* Without a reading, this keeps the baseline level with the cards beside it. */
-.card-suggest .signal-spark {
-	margin-top: auto;
-}
-
-/* In two columns, it would start a row of its own unless the count is odd. */
-@media (min-width: 641px) and (max-width: 900px) {
-	.card-suggest:not(.card-suggest-odd) {
-		display: none;
-	}
-}
-
 .reading strong {
 	font-size: 40px;
 	font-weight: 600;
@@ -1467,11 +1396,6 @@ td a {
 .signal-spark .spark {
 	height: 44px;
 	margin: 0;
-}
-
-.period-label {
-	color: var(--muted);
-	font-size: 18px;
 }
 
 .inline-link {

@@ -54,8 +54,7 @@ export const signalRecord = ({ id, data }: Awaited<ReturnType<typeof getSignals>
 	trend: data.trend,
 	trendDates: data.trendDates,
 	trendLabel: data.trendLabel,
-	trendStart: data.trendStart,
-	trendStep: data.trendStep,
+	chartNote: data.chartNote,
 	caution: data.caution,
 	prompt: data.prompt,
 	score: data.score,
@@ -90,4 +89,4 @@ export const json = (data: unknown) =>
 	});
 
 export const areaAnchor = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-$/, "");
-export const signalArea = (id: string) => site.areas?.find(area => area.signals.some(signal => signal.href === `/signals/${id}`));
+export const signalArea = (id: string) => site.areas?.find(area => area.signals.some(signal => signal.id === id));

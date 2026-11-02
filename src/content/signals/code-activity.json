@@ -84,5 +84,11 @@
 		"2025 Q4",
 		"2026 Q1",
 		"2026 Q2"
+	],
+	"events": [
+		{
+			"month": "2022-11",
+			"label": "ChatGPT launched"
+		}
 	]
 }

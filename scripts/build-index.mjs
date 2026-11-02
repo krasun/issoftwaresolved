@@ -7,8 +7,21 @@ import { parseCsv } from './sources/lib.mjs';
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
 const writeJson = (path, data) => writeFile(path, `${JSON.stringify(data, null, '\t')}\n`);
 
+// Merges fields into a signal's file. A chart needs one date for every value.
+const updateSignal = async (id, fields) => {
+	const path = `src/content/signals/${id}.json`;
+	const signal = { ...(await readJson(path)), ...fields };
+	if (signal.trend && signal.trendDates?.length !== signal.trend.length) throw new Error(`${id}: trend and trendDates differ in length`);
+	await writeJson(path, signal);
+	return signal;
+};
+
 const DAY = 86_400_000;
-const today = new Date().toISOString().slice(0, 10);
+const CHATGPT_LAUNCH = [{ month: '2022-11', label: 'ChatGPT launched' }];
+// These charts show raw counts, but their scores are adjusted for git pushes.
+const PER_PUSH_NOTE = 'This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions.';
+const isoDay = (ms) => new Date(ms).toISOString().slice(0, 10);
+const today = isoDay(Date.now());
 // Quoted by hand, because OpenCode's terms restrict automated collection.
 const graduateRates = (await readJson('data/raw/economy/series.json')).graduates;
 const NY_FED_NOTE = `Recent graduates feel it more. Unemployment is ${graduateRates['Computer Science'].toFixed(1)}% for computer science and ${graduateRates['Computer Engineering'].toFixed(1)}% for computer engineering, against ${graduateRates.Overall.toFixed(1)}% for all majors, per the Federal Reserve Bank of New York. That is one year of data, so it does not show a trend and does not affect the score.`;
@@ -72,7 +85,7 @@ const trend = [];
 const securityDates = [];
 for (let end = kevAsOf; end - 365 * DAY >= dayOf('2023-01-01'); end -= 30 * DAY) {
 	trend.unshift(addedIn(end - 365 * DAY, end));
-	securityDates.unshift(new Date(end).toISOString().slice(0, 10));
+	securityDates.unshift(isoDay(end));
 }
 
 const kevByYear = countBy(kev, ({ dateAdded }) => dateAdded.slice(0, 4));
@@ -830,18 +843,15 @@ await writeJson('data/index/ai-company-jobs.json', {
 });
 
 // Only the numbers change here. The signal's wording is edited by hand.
-const signalPath = 'src/content/signals/security.json';
-await writeJson(signalPath, {
-	...(await readJson(signalPath)),
+await updateSignal('security', {
 	value: String(last12),
-	change: `${change >= 0 ? '+' : ''}${change}%`,
+	change: signed(change),
 	trend,
 	trendDates: securityDates,
+	chartNote: PER_PUSH_NOTE,
 });
 
-const jobsPath = 'src/content/signals/jobs.json';
-await writeJson(jobsPath, {
-	...(await readJson(jobsPath)),
+await updateSignal('jobs', {
 	value: us.latest.index.toFixed(1),
 	change: signed(us.change),
 	trend: monthly,
@@ -863,11 +873,6 @@ const recentOf = (values, points) => {
 	const recent = values.slice(-points);
 	return recent.map((value) => Math.round((value / recent[0]) * 1000) / 10);
 };
-const updateSignal = async (id, fields) => {
-	const path = `src/content/signals/${id}.json`;
-	await writeJson(path, { ...(await readJson(path)), ...fields });
-};
-
 const [, , stanceSolved, stanceNotSolved] = stanceRows[1];
 const solvedShare = percent(stanceSolved, stanceSolved + stanceNotSolved);
 // Share of comments taking a side that say "solved", per month.
@@ -906,7 +911,6 @@ await updateSignal('sentiment', {
 	value: `${combinedShare}%`,
 	metric: 'Sampled Hacker News comments and Bluesky posts taking a side that say it is getting solved, last 12 months',
 	trendLabel: 'Share of sampled posts taking a side that say software is getting solved, per month, averaged across Hacker News and Bluesky. Each month rests on few posts, so expect noise.',
-	trendStart: stanceMonths[0],
 	trend: combinedByMonth,
 	trendDates: stanceMonths.map(String),
 	recent: combinedByMonth.slice(-5),
@@ -948,7 +952,6 @@ const riseFromLow = Math.round((us.latest.index / softwareLow.index - 1) * 100);
 const allFromLowDate = signed(Math.round((allOn(us.latest.date) / allOn(softwareLow.date) - 1) * 100));
 await updateSignal('jobs', {
 	...reading(us.change, { up: 'Recovering', down: 'Falling' }, 'away'),
-	trendStart,
 	comparison: { name: 'Federal funds rate', values: rateTrend },
 	events: [
 		{ month: '2022-03', label: 'First rate rise' },
@@ -980,7 +983,8 @@ await updateSignal('outages', {
 	value: number(majorLast),
 	change: signed(majorChange),
 	trend: outageTrend,
-	trendDates: outageTrend.map((_, i) => nextMonth('2024-12', i)).map(String),
+	trendDates: outageTrend.map((_, i) => nextMonth('2024-12', i)),
+	chartNote: PER_PUSH_NOTE,
 	recent: recentOf(outageTrend, 13),
 	...reading(majorChange, { up: 'More incidents', down: 'Fewer incidents' }, 'away'),
 	rule: 'More incidents when these services report more than in the previous 12 months.',
@@ -1022,7 +1026,7 @@ await updateSignal('prices', {
 	value: latestPrice.index.toFixed(1),
 	change: signed(priceChange),
 	trend: priceTrend,
-	trendDates: priceRows.map(row => row.month).map(String),
+	trendDates: priceRows.map(row => row.month),
 	recent: recentOf(priceTrend, 13),
 	...reading(priceChange, { up: 'Rising', down: 'Getting cheaper' }, 'away'),
 	rule: 'Rising when the price index is higher than a year before. Falling prices move toward solved.',
@@ -1112,6 +1116,7 @@ await updateSignal('code-activity', {
 	change: signed(pushChange),
 	trend: pushTrend,
 	trendDates: quarters.map(String),
+	events: CHATGPT_LAUNCH,
 	recent: recentOf(pushTrend, 5),
 	...reading(pushChange, { up: 'Git pushes increased', down: 'Git pushes decreased' }, 'away'),
 	rule: 'Git pushes increased when pushes rise by at least 2% over the year.',
@@ -1371,7 +1376,6 @@ await updateSignal('ai-built-sites', {
 	change: builderByMonth[siteYearAgo] ? signed(Math.round((builderSites(siteLatest) / builderByMonth[siteYearAgo] - 1) * 100)) : undefined,
 	trend: builderTrend,
 	trendDates: builderMonths.map(String),
-	trendStart: builderStart,
 	recent: recentOf(builderTrend, 13),
 	...reading(Math.round((builderSites(siteLatest) / builderTrend.at(-4) - 1) * 100), { up: 'Growing', down: 'Shrinking' }, 'toward'),
 	rule: 'Growing when more sites are detected than three months before.',
@@ -1434,6 +1438,7 @@ await updateSignal('stack-overflow', {
 	change: signed(soChange),
 	trend: soTrend,
 	trendDates: soList.map(String),
+	events: CHATGPT_LAUNCH,
 	recent: recentOf(soTrend, 13),
 	...reading(soChange, { up: 'Asking more', down: 'Asking less' }, 'away'),
 	rule: 'Asking less when fewer questions are asked than in the same month a year before.',
@@ -1491,8 +1496,6 @@ await updateSignal('tech-output', {
 	trend: techChart.map((month) => indexOf(tech.output[month], tech.output[TECH_BASE])),
 	trendDates: techChart,
 	trendName: 'Real output',
-	trendStart: techChart[0],
-	trendStep: 3,
 	comparison: { name: 'Employment', sameAxis: true, values: techChart.map((month) => indexOf(quarterEmployment(month), quarterEmployment(TECH_BASE))) },
 	events: [{ month: '2022-11', label: 'ChatGPT' }],
 	recent: recentOf(techPerWorkerTrend, 5),
@@ -1634,6 +1637,7 @@ await updateSignal('bugs', {
 	change: signed(bugChange),
 	trend: bugTrend,
 	trendDates: bugMonths.map(String),
+	chartNote: PER_PUSH_NOTE,
 	recent: recentOf(bugTrend, 13),
 	...reading(bugChange, { up: 'More reported', down: 'Fewer reported' }, 'away'),
 	rule: 'More reported when more vulnerabilities are published than in the 12 months before.',
@@ -1792,7 +1796,7 @@ await writeJson('data/index/model-opinions.json', {
 await updateSignal('model-opinions', {
 	value: `${modelMedian}%`,
 	trend: modelTrend,
-	trendDates: modelScores.map(model => model.name).map(String),
+	trendDates: modelScores.map(model => model.name),
 	recent: modelTrend.slice(-13),
 	status: modelMedian >= 50 ? 'Say it is close' : 'Say not yet',
 	direction: modelMedian >= 50 ? 'toward' : 'away',
@@ -1968,9 +1972,9 @@ const SCORE_AREAS = [
 		name: 'Can AI do the work?',
 		signals: [
 			{ id: 'coding-benchmarks', at: (month) => (month >= sweFirst ? readingAt(sweByMonth, month, 24) : undefined), reason: () => `The best model resolves ${swePercent}% of SWE-bench Verified tasks.` },
-			{ id: 'task-length', name: 'AI task length', source: 'metr', at: metrLevelAt, reason: () => `Best model: tasks of about ${hours(metrBest.estimate)} hours half the time, against a goal of a working year.` },
+			{ id: 'task-length', name: 'AI task length', source: 'metr', question: 'How long a task can AI complete?', metric: 'Human working hours of tasks completed with 50% success', solvedIf: 'AI completes tasks lasting a working year (2,000 hours)', value: () => `${hours(metrBest.estimate)} hours`, at: metrLevelAt, reason: () => `Best model: tasks of about ${hours(metrBest.estimate)} hours half the time, against a goal of a working year.` },
 			{ id: 'token-prices', at: (month) => fallSince(tokenByMonth, month, 50), reason: (month) => sinceFirst(tokenByMonth, month) },
-			{ id: 'task-cost', name: 'Cost of a hard task', source: 'epoch-benchmarks', at: taskCostAt, reason: (month) => `About ${usd(taskCostRunAt(month).cost)} of AI usage per FrontierSWE task for a near-top score, against a goal of $1.` },
+			{ id: 'task-cost', name: 'Cost of a hard task', source: 'epoch-benchmarks', question: 'How much does a hard coding task cost?', metric: 'AI usage cost per FrontierSWE task for a near-top score', solvedIf: 'A hard coding task costs $1 in AI usage', value: (month) => usd(taskCostRunAt(month).cost), at: taskCostAt, reason: (month) => `About ${usd(taskCostRunAt(month).cost)} of AI usage per FrontierSWE task for a near-top score, against a goal of $1.` },
 		],
 	},
 	{
@@ -2041,31 +2045,19 @@ const scoreAt = (month) => Math.round(average(areaScoresAt(month)));
 const currentMonth = today.slice(0, 7);
 const solvedScore = scoreAt(currentMonth);
 const scoreByMonth = scoreMonths.map((month) => ({ date: month, score: scoreAt(month) }));
-const signalNames = {};
-for (const file of await readdir('src/content/signals')) signalNames[file.replace('.json', '')] = (await readJson(`src/content/signals/${file}`)).name;
-const scoreAreas = [];
-for (const [i, { name, note, signals }] of SCORE_AREAS.entries()) {
-	const rows = [];
-	for (const { id, name: signalName, source, at, reason, weight = 1 } of signals) {
+const scoreAreas = await Promise.all(SCORE_AREAS.map(async ({ name, note, signals }, i) => {
+	const rows = await Promise.all(signals.map(async ({ id, name: signalName, source, at, reason, weight = 1, question, metric, solvedIf, value }) => {
 		const score = Math.round(at(currentMonth) ?? 0);
 		const why = reason(currentMonth);
-		if (!signalName) await updateSignal(id, { score, scoreReason: why });
-		else await writeJson(`src/content/signals/${id}.json`, {
-			order: 100 + i,
-			group: 'Capability',
-			name: signalName,
-			question: id === 'task-length' ? 'How long a task can AI complete?' : 'How much does a hard coding task cost?',
-			metric: id === 'task-length' ? 'Human working hours of tasks completed with 50% success' : 'AI usage cost per FrontierSWE task for a near-top score',
-			solvedIf: id === 'task-length' ? 'AI completes tasks lasting a working year (2,000 hours)' : 'A hard coding task costs $1 in AI usage',
-			value: id === 'task-length' ? `${hours(metrBest.estimate)} hours` : usd(taskCostRunAt(currentMonth).cost),
-			score,
-			scoreReason: why,
-		});
-		rows.push({ id, weight, source, href: `/signals/${id}`, name: signalName ?? signalNames[id], score, reason: why });
-	}
+		const signal = signalName
+			? { order: 100 + i, group: 'Capability', name: signalName, question, metric, solvedIf, value: value(currentMonth), score, scoreReason: why }
+			: await updateSignal(id, { score, scoreReason: why });
+		if (signalName) await writeJson(`src/content/signals/${id}.json`, signal);
+		return { id, weight, source, href: `/signals/${id}`, name: signal.name, score, reason: why };
+	}));
 	rows.sort((a, b) => b.score - a.score);
-	scoreAreas.push({ name, note, score: Math.round(areaScoresAt(currentMonth)[i]), signals: rows });
-}
+	return { name, note, score: Math.round(areaScoresAt(currentMonth)[i]), signals: rows };
+}));
 const VERDICTS = [
 	[90, 'Solved.'],
 	[75, 'Almost.'],
@@ -2089,11 +2081,10 @@ console.log(`Solved score: ${solvedScore}`);
 // Every run saves each signal's reading under the date it was checked.
 const CHECKS = 'data/signal-checks.json';
 const checks = await readFile(CHECKS, 'utf8').then(JSON.parse).catch(() => ({}));
-const checkedOn = new Date().toISOString().slice(0, 10);
-checks[checkedOn] = {};
+checks[today] = {};
 for (const file of (await readdir('src/content/signals')).sort()) {
 	const { value, change, status } = await readJson(`src/content/signals/${file}`);
-	if (value !== undefined) checks[checkedOn][file.replace('.json', '')] = { value, change, status };
+	if (value !== undefined) checks[today][file.replace('.json', '')] = { value, change, status };
 }
 await writeJson(CHECKS, checks);
 

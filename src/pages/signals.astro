@@ -1,14 +1,14 @@
 ---
 import { site } from '../content/site';
-import { areaAnchor } from '../lib/content';
 import Layout from '../layouts/Layout.astro';
-import { getSignals } from '../lib/content';
+import { areaAnchor, getSignals, signalArea } from '../lib/content';
 
 const signals = await getSignals();
-const groups = [...(site.areas ?? []).map(area => ({ name: area.name, href: `/score#${areaAnchor(area.name)}`, signals: signals.filter(signal => area.signals.some(row => row.href === `/signals/${signal.id}`)) })), { name: "Supporting context", href: undefined, signals: signals.filter(signal => !site.areas?.some(area => area.signals.some(row => row.href === `/signals/${signal.id}`))) }].filter(group => group.signals.length);
+const groups = [
+	...(site.areas ?? []).map((area) => ({ name: area.name, href: `/score#${areaAnchor(area.name)}`, signals: signals.filter((signal) => signalArea(signal.id) === area) })),
+	{ name: 'Supporting context', href: undefined, signals: signals.filter((signal) => !signalArea(signal.id)) },
+].filter((group) => group.signals.length);
 const suggestUrl = 'https://github.com/krasun/issoftwaresolved/issues/new?title=Signal%20suggestion%3A%20';
-// The card only fills a gap in the last row of three, and never starts a row of its own.
-const showSuggestCard = signals.length % 3 !== 0;
 
 // Each card has its own scale. The minimum range keeps small moves looking small.
 const MIN_RANGE = 20;
@@ -33,7 +33,6 @@ const sparkPoints = (values: number[]) => {
 					<p>If software were solved, each of these numbers would show it.</p>
 					<p>Based on <a class="inline-link" href="/sources">these data sources</a>. <a class="inline-link" href={suggestUrl}>Suggest a signal</a>.</p>
 				</div>
-
 			</div>
 		</div>
 	</section>
@@ -72,25 +71,6 @@ const sparkPoints = (values: number[]) => {
 							)}
 							<p class="card-metric">{data.metric}</p>
 							</article>))}
-					{false && showSuggestCard && (
-						<article class:list={['card card-suggest', { 'card-suggest-odd': signals.length % 2 === 1 }]}>
-							<div class="card-top">
-								<h2 class="card-title">
-									<a class="card-link" href={suggestUrl}>
-										Suggest a signal
-									</a>
-								</h2>
-								<svg class="stat-arrow" viewBox="0 0 16 16" aria-hidden="true">
-									<path d="M2 8h11M9 4l4 4-4 4" />
-								</svg>
-							</div>
-							<p class="question">What number would change your mind?</p>
-							<div class="signal-spark" aria-hidden="true">
-								<div class="spark spark-empty"></div>
-							</div>
-							<p class="card-metric">Open an issue on GitHub with the number and where its data comes from</p>
-						</article>
-					)}
 				</div></>)}
 			</section>
 		)

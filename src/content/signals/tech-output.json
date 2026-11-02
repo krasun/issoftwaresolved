@@ -45,8 +45,6 @@
 		135.3
 	],
 	"trendName": "Real output",
-	"trendStart": "2019-01",
-	"trendStep": 3,
 	"comparison": {
 		"name": "Employment",
 		"sameAxis": true,

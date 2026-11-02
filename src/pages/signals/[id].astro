@@ -9,13 +9,13 @@ export const getStaticPaths = async () =>
 
 const { signal } = Astro.props;
 const area = signalArea(signal.id);
-const scored = area?.signals.find(row => row.href === `/signals/${signal.id}`);
-const extraSource = scored?.source;
+const scored = area?.signals.find(row => row.id === signal.id);
 const labels = signal.data.trendDates ?? [];
 
-const { name, question, metric, solvedIf, value, change, trend, trendLabel, prompt, trendName, caution, quote, score, scoreReason, comparison, events, analysis, status, rule, direction, fromHigh } = signal.data;
+const { name, question, metric, solvedIf, value, change, trend, trendLabel, prompt, trendName, caution, quote, score, scoreReason, comparison, events, chartNote, analysis, status, rule, direction, fromHigh } = signal.data;
 const statCount = 1 + [change, status, fromHigh].filter(Boolean).length;
-const sources = (await getSources()).filter((source) => source.data.signal.id === signal.id || source.id === extraSource);
+const sources = (await getSources()).filter((source) => source.data.signal.id === signal.id || source.id === scored?.source);
+const scoredSource = ({ id, data }: (typeof sources)[number]) => id === scored?.source || data.role === 'headline';
 
 const checks = getSignalChecks(signal.id);
 
@@ -29,7 +29,7 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 			<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/score">Score</a> / {area ? <a href={`/score#${areaAnchor(area.name)}`}>{area.name}</a> : <a href="/signals">Signals</a>} / <span aria-current="page">{name}</span></nav>
 			<h1 class="page-title">{name}</h1>
 			<p>{question}</p>
-			{area ? <p>Contributes to: <a class="inline-link" href={`/score#${areaAnchor(area.name)}`}>{area.name}</a>. Signal score: {score} / 100. Relative weight within this question: {scored?.weight ?? 1}.</p> : <p>Supporting context; does not contribute to the overall score.</p>}
+			{area ? <p>Contributes to: <a class="inline-link" href={`/score#${areaAnchor(area.name)}`}>{area.name}</a>. Signal score: {score} / 100. Relative weight within this question: {scored?.weight}.</p> : <p>Supporting context; does not contribute to the overall score.</p>}
 			<p class="source-links">
 				<a href="/signals">All signals</a>
 				<a href={`/api/signals/${signal.id}.json`}>JSON</a>
@@ -81,7 +81,7 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 		)
 	}
 
-	{chartTrend && labels.length === chartTrend.length && <section class="section"><div class="section-head"><h2>Observed trend</h2>{trendLabel && <p>{trendLabel}</p>}{scoreReason?.startsWith('Per git push:') && <p>This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions.</p>}</div><TrendChart name={trendName ?? trendLabel ?? metric} values={chartTrend} labels={labels} comparison={comparison} events={events ?? (['code-activity', 'stack-overflow'].includes(signal.id) ? [{month:'2022-11',label:'ChatGPT launched'}] : [])} /></section>}
+	{chartTrend && <section class="section"><div class="section-head"><h2>Observed trend</h2>{trendLabel && <p>{trendLabel}</p>}{chartNote && <p>{chartNote}</p>}</div><TrendChart name={trendName ?? trendLabel ?? metric} values={chartTrend} labels={labels} comparison={comparison} events={events} /></section>}
 
 	<section class="section">
 		<div class="section-head">
@@ -208,7 +208,7 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 									<td>
 										<a href={`/sources/${id}`}>{data.name}</a>
 									</td>
-									<td>{id === extraSource || data.role === "headline" ? "Scored measurement" : "Supporting context"}</td>
+									<td>{scoredSource({ id, data }) ? 'Scored measurement' : 'Supporting context'}</td>
 									<td>{data.measures}</td>
 									<td>{data.checked}</td>
 								</tr>

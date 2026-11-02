@@ -106,5 +106,6 @@
 		"2026-08-31",
 		"2026-09-30",
 		"2026-10-30"
-	]
+	],
+	"chartNote": "This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions."
 }
