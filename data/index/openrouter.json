@@ -28,13 +28,8 @@
 			"rows": [
 				[
 					"deepseek/deepseek-v4.1-flash",
-					"119T",
-					"15%"
-				],
-				[
-					"deepseek/deepseek-v4.1-flash",
-					"79T",
-					"10%"
+					"198T",
+					"25%"
 				],
 				[
 					"z-ai/glm-5.3-flash",
@@ -50,6 +45,11 @@
 					"xiaomi/mimo-v2.6-flash",
 					"35T",
 					"5%"
+				],
+				[
+					"openai/gpt-6-luna",
+					"34T",
+					"4%"
 				]
 			]
 		}

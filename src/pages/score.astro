@@ -15,10 +15,12 @@ const formula = math(String.raw`\begin{aligned} \text{Score} &= \frac{1}{n}\sum_
 		<div class="score-head">
 			<div>
 				<h1 class="page-title"><span data-count>{site.score}%</span>. {site.verdict}</h1>
-				<p>How far software has moved toward solved since ChatGPT launched in November 2022, based on 4 questions and the signals behind them.</p>
+				<p>An index from 0 to 100, not a literal share of software that is solved. It adds up indirect evidence that AI can build and maintain useful software with little human help, at acceptable cost and reliability, measured as movement since ChatGPT launched in November 2022 across 4 questions and the signals behind them.</p>
 				<p>The line is recalculated from today's data rather than recorded at the time, and it can jump when a new signal joins.</p>
-					<p>The goals behind each bar are our judgment. Moving them all easier or harder gives {site.scoreRange?.low}% to {site.scoreRange?.high}%. <a class="inline-link" href="/how-it-works#formula">Why each goal</a>.</p>
-					<p>Most bars use a log scale, so they track multiples rather than the share of a goal. Growing 32 times fills half the bar for a goal of 1,000 times.</p>
+				<p>The goals behind each bar are our judgment. Moving them all easier or harder gives {site.scoreRange?.low}% to {site.scoreRange?.high}%. <a class="inline-link" href="/how-it-works#formula">Why each goal</a>.</p>
+				{site.withoutPushAdjustment !== undefined && <p>Failures are counted per git push, and AI agents may inflate pushes. Counting them raw instead, with no adjustment, the score would be {site.withoutPushAdjustment}%.</p>}
+				<p>Most bars use a log scale, so they track multiples rather than the share of a goal. Growing 32 times fills half the bar for a goal of 1,000 times.</p>
+				<p>"Solved." needs 90% overall and at least 75% on every question, so one strong area cannot hide a weak one.</p>
 			</div>
 			<a class="score-formula" href="/how-it-works#formula">
 				<span class="score-formula-title">

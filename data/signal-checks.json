@@ -260,5 +260,139 @@
 			"change": "+3423%",
 			"status": "Growing"
 		}
+	},
+	"2026-11-03": {
+		"agent-prs": {
+			"value": "1.5M",
+			"change": "+177%",
+			"status": "More agents"
+		},
+		"agent-tools": {
+			"value": "7,639",
+			"change": "+1208%",
+			"status": "Expanding"
+		},
+		"ai-built-sites": {
+			"value": "6,768",
+			"status": "Growing"
+		},
+		"ai-company-jobs": {
+			"value": "464",
+			"status": "Still hiring"
+		},
+		"bugs": {
+			"value": "98,371",
+			"change": "+109%",
+			"status": "More reported"
+		},
+		"code-activity": {
+			"value": "408M",
+			"change": "+95%",
+			"status": "Git pushes increased"
+		},
+		"coding-agents": {
+			"value": "205T",
+			"change": "+3179%",
+			"status": "Growing"
+		},
+		"coding-benchmarks": {
+			"value": "83%",
+			"change": "+12%",
+			"status": "Improving"
+		},
+		"jobs": {
+			"value": "80.8",
+			"change": "+24%",
+			"status": "Recovering"
+		},
+		"model-opinions": {
+			"value": "20%",
+			"status": "Say not yet"
+		},
+		"new-businesses": {
+			"value": "13,806",
+			"change": "+49%",
+			"status": "More applications"
+		},
+		"no-code-revenue": {
+			"value": "$13.5B",
+			"change": "+27%",
+			"status": "Still growing"
+		},
+		"outages": {
+			"value": "1,679",
+			"change": "+18%",
+			"status": "More incidents"
+		},
+		"outsourcing": {
+			"value": "$118B",
+			"change": "+7%",
+			"status": "Still growing"
+		},
+		"prices": {
+			"value": "102.1",
+			"change": "+2%",
+			"status": "Rising"
+		},
+		"product-launches": {
+			"value": "837",
+			"change": "+194%",
+			"status": "More launches"
+		},
+		"programming-share": {
+			"value": "26%",
+			"change": "-36%",
+			"status": "Falling"
+		},
+		"revenue": {
+			"value": "$192B",
+			"change": "+15%",
+			"status": "Still growing"
+		},
+		"security": {
+			"value": "313",
+			"change": "+24%",
+			"status": "Getting worse"
+		},
+		"sentiment": {
+			"value": "7%",
+			"status": "Skeptical"
+		},
+		"software-spending": {
+			"value": "$986B",
+			"change": "+13%",
+			"status": "Still rising"
+		},
+		"stack-overflow": {
+			"value": "1,046",
+			"change": "-80%",
+			"status": "Asking less"
+		},
+		"task-cost": {
+			"value": "$99"
+		},
+		"task-length": {
+			"value": "17 hours"
+		},
+		"tech-hiring": {
+			"value": "94K",
+			"change": "-26%",
+			"status": "Hiring less"
+		},
+		"tech-output": {
+			"value": "151.2",
+			"change": "+14%",
+			"status": "More per worker"
+		},
+		"token-prices": {
+			"value": "$2.00",
+			"change": "-27%",
+			"status": "Getting cheaper"
+		},
+		"token-usage": {
+			"value": "787T",
+			"change": "+3423%",
+			"status": "Growing"
+		}
 	}
 }

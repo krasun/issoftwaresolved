@@ -5,6 +5,8 @@
 		"low": 29,
 		"high": 39
 	},
+	"withoutPushAdjustment": 31,
+	"weakestQuestion": 8,
 	"areas": [
 		{
 			"name": "Can AI do the work?",
@@ -48,6 +50,7 @@
 		},
 		{
 			"name": "Is it being used to build?",
+			"note": "This measures use, not whether the software works. Pushes and tokens can also grow through retries, longer reasoning or automation, so growth here is the weakest kind of evidence in the score.",
 			"score": 41,
 			"signals": [
 				{
@@ -56,7 +59,7 @@
 					"href": "/signals/token-usage",
 					"name": "AI token usage",
 					"score": 85,
-					"reason": "353 times the tokens of January 2025, against a goal of 1,000 times."
+					"reason": "353 times the tokens of January 2025. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it."
 				},
 				{
 					"id": "coding-agents",
@@ -64,7 +67,7 @@
 					"href": "/signals/coding-agents",
 					"name": "Coding agent tokens",
 					"score": 79,
-					"reason": "227 times the tokens of January 2025, against a goal of 1,000 times."
+					"reason": "227 times the tokens of January 2025. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it."
 				},
 				{
 					"id": "code-activity",
@@ -104,7 +107,7 @@
 					"href": "/signals/ai-built-sites",
 					"name": "AI-built sites",
 					"score": 17,
-					"reason": "3.2 times the sites of December 2025, against a goal of 1,000 times. Counts a quarter as much as other signals here."
+					"reason": "3.2 times the sites of December 2025. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
 				},
 				{
 					"id": "agent-prs",
@@ -180,7 +183,7 @@
 		},
 		{
 			"name": "Is software cheaper and more reliable?",
-			"note": "Money is compared with the economy and inflation, and failures with how much code is pushed. A rise scores 0%, which means no sign of change yet. AI agents may be inflating the number of pushes, which would make failures look rarer than they are.",
+			"note": "Money is compared with the economy and inflation, and failures with how much code is pushed. A rise scores 0%, which means no sign of change yet. AI agents may be inflating the number of pushes, which would make failures look rarer than they are, so each failure signal shows what it would score without that adjustment.",
 			"score": 8,
 			"signals": [
 				{
@@ -431,6 +434,10 @@
 		},
 		{
 			"date": "2026-11-02",
+			"score": 33
+		},
+		{
+			"date": "2026-11-03",
 			"score": 33
 		}
 	]

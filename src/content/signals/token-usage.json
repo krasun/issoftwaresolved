@@ -123,15 +123,15 @@
 	"fromHigh": "At its high",
 	"analysis": {
 		"title": "Most used models",
-		"intro": "No single model dominates. These are the top five of 2026-10.",
+		"intro": "The top five of 2026-10 account for 46% of all tokens, and the largest alone for 25%.",
 		"points": [
-			"deepseek/deepseek-v4.1-flash: 119T, 15% of all tokens.",
-			"deepseek/deepseek-v4.1-flash: 79T, 10% of all tokens.",
+			"deepseek/deepseek-v4.1-flash: 198T, 25% of all tokens.",
 			"z-ai/glm-5.3-flash: 57T, 7% of all tokens.",
 			"tencent/hy4-preview: 36T, 5% of all tokens.",
-			"xiaomi/mimo-v2.6-flash: 35T, 5% of all tokens."
+			"xiaomi/mimo-v2.6-flash: 35T, 5% of all tokens.",
+			"openai/gpt-6-luna: 34T, 4% of all tokens."
 		]
 	},
 	"score": 85,
-	"scoreReason": "353 times the tokens of January 2025, against a goal of 1,000 times."
+	"scoreReason": "353 times the tokens of January 2025. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it."
 }

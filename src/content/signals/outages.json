@@ -136,7 +136,105 @@
 	"scoreReason": "Per git push: Down 42% since December 2024, when the data starts.",
 	"caution": [
 		"The data behind this score starts in December 2024, so it misses the first 25 months after ChatGPT launched.",
-		"The score divides this count by git pushes. If AI agents are inflating the number of pushes, it can improve even if software is no more reliable."
+		"Since December 2024: the count is up 41%, down 42% per git push (what the score uses) and down 6% per developer. If AI agents make pushes grow without making software more reliable, the per-push reading flatters this signal.",
+		"Without the git push adjustment, this signal would score 0% instead of 23%."
 	],
-	"chartNote": "This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions."
+	"chartNote": "The solid line is the count. The dashed line is what the score uses: the same count divided by git pushes, with the starting month of the score set to 100. Pushes have grown faster than failures, so the dashed line can fall while the count rises.",
+	"comparison": {
+		"name": "Per git push (December 2024 = 100)",
+		"trend": [
+			{
+				"label": "2024-12",
+				"value": 100
+			},
+			{
+				"label": "2025-01",
+				"value": 98.9
+			},
+			{
+				"label": "2025-02",
+				"value": 100.4
+			},
+			{
+				"label": "2025-03",
+				"value": 97.3
+			},
+			{
+				"label": "2025-04",
+				"value": 97.8
+			},
+			{
+				"label": "2025-05",
+				"value": 101.6
+			},
+			{
+				"label": "2025-06",
+				"value": 85.6
+			},
+			{
+				"label": "2025-07",
+				"value": 87.8
+			},
+			{
+				"label": "2025-08",
+				"value": 90.1
+			},
+			{
+				"label": "2025-09",
+				"value": 90.7
+			},
+			{
+				"label": "2025-10",
+				"value": 93.3
+			},
+			{
+				"label": "2025-11",
+				"value": 96.3
+			},
+			{
+				"label": "2025-12",
+				"value": 86.6
+			},
+			{
+				"label": "2026-01",
+				"value": 88.4
+			},
+			{
+				"label": "2026-02",
+				"value": 91.3
+			},
+			{
+				"label": "2026-03",
+				"value": 72.1
+			},
+			{
+				"label": "2026-04",
+				"value": 73
+			},
+			{
+				"label": "2026-05",
+				"value": 73.7
+			},
+			{
+				"label": "2026-06",
+				"value": 59.2
+			},
+			{
+				"label": "2026-07",
+				"value": 60
+			},
+			{
+				"label": "2026-08",
+				"value": 60.4
+			},
+			{
+				"label": "2026-09",
+				"value": 58.6
+			},
+			{
+				"label": "2026-10",
+				"value": 58.2
+			}
+		]
+	}
 }

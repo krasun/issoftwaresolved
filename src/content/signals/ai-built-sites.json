@@ -80,5 +80,5 @@
 		]
 	},
 	"score": 17,
-	"scoreReason": "3.2 times the sites of December 2025, against a goal of 1,000 times. Counts a quarter as much as other signals here."
+	"scoreReason": "3.2 times the sites of December 2025. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
 }

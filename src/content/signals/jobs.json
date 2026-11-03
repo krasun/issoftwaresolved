@@ -354,7 +354,7 @@
 		125.7
 	],
 	"comparison": {
-		"name": "Federal funds rate",
+		"name": "Federal funds rate (%)",
 		"trend": [
 			{
 				"label": "2020-02-01",

@@ -23,7 +23,7 @@ const updateSignal = async (id, fields) => {
 const DAY = 86_400_000;
 const CHATGPT_LAUNCH = [{ month: '2022-11', label: 'ChatGPT launched' }];
 // These charts show raw counts, but their scores are adjusted for git pushes.
-const PER_PUSH_NOTE = 'This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions.';
+const PER_PUSH_NOTE = 'The solid line is the count. The dashed line is what the score uses: the same count divided by git pushes, with the starting month of the score set to 100. Pushes have grown faster than failures, so the dashed line can fall while the count rises.';
 const isoDay = (ms) => new Date(ms).toISOString().slice(0, 10);
 const today = isoDay(Date.now());
 // Quoted by hand, because OpenCode's terms restrict automated collection.
@@ -954,7 +954,7 @@ const riseFromLow = Math.round((us.latest.index / softwareLow.index - 1) * 100);
 const allFromLowDate = signed(Math.round((allOn(us.latest.date) / allOn(softwareLow.date) - 1) * 100));
 await updateSignal('jobs', {
 	...reading(us.change, { up: 'Recovering', down: 'Falling' }, 'away'),
-	comparison: { name: 'Federal funds rate', trend: series(jobDates.slice(0, rateTrend.length), rateTrend) },
+	comparison: { name: 'Federal funds rate (%)', trend: series(jobDates.slice(0, rateTrend.length), rateTrend) },
 	events: [
 		{ month: '2022-03', label: 'First rate rise' },
 		{ month: '2022-11', label: 'ChatGPT' },
@@ -1511,11 +1511,13 @@ const routerChange = Math.round((routerTotal(routerLatest) / routerTotal(routerY
 const routerTrend = routerMonths.map((month) => Math.round(routerTotal(month) / 1e12));
 const routerByMonth = Object.fromEntries(routerMonths.map((month) => [month, routerTotal(month)]));
 const trillions = (value) => `${number(Math.round(value / 1e12))}T`;
-const routerTop = Object.entries(openRouter.months[routerLatest])
-	.filter(([model]) => model !== 'other')
-	.sort((a, b) => b[1] - a[1])
-	.slice(0, 5);
 const routerModel = (model) => model.replace(/-20\d{6}/, '').replace(/-\d{4}$/, '');
+// Dated releases of one model share a name once the date is dropped, so they count together.
+const routerByModel = {};
+for (const [model, tokens] of Object.entries(openRouter.months[routerLatest])) {
+	if (model !== 'other') routerByModel[routerModel(model)] = (routerByModel[routerModel(model)] ?? 0) + tokens;
+}
+const routerTop = Object.entries(routerByModel).sort((a, b) => b[1] - a[1]).slice(0, 5);
 const routerGrowth = Math.round(routerTotal(routerLatest) / routerTotal(routerMonths[0]));
 const routerCredit = `Source: OpenRouter (openrouter.ai/rankings), as of ${openRouter.asOf}. Licensed under CC BY 4.0.`;
 
@@ -1531,7 +1533,7 @@ await writeJson('data/index/openrouter.json', {
 		{
 			title: `Most used models, ${routerLatest}`,
 			columns: ['Model', 'Tokens', 'Share'],
-			rows: routerTop.map(([model, tokens]) => [routerModel(model), trillions(tokens), `${percent(tokens, routerTotal(routerLatest))}%`]),
+			rows: routerTop.map(([model, tokens]) => [model, trillions(tokens), `${percent(tokens, routerTotal(routerLatest))}%`]),
 		},
 	],
 });
@@ -1549,8 +1551,8 @@ await updateSignal('token-usage', {
 	fromHigh: fromHighOf(routerTrend),
 	analysis: {
 		title: 'Most used models',
-		intro: `No single model dominates. These are the top five of ${routerLatest}.`,
-		points: routerTop.map(([model, tokens]) => `${routerModel(model)}: ${trillions(tokens)}, ${percent(tokens, routerTotal(routerLatest))}% of all tokens.`),
+		intro: `The top five of ${routerLatest} account for ${percent(routerTop.reduce((sum, [, tokens]) => sum + tokens, 0), routerTotal(routerLatest))}% of all tokens, and the largest alone for ${percent(routerTop[0][1], routerTotal(routerLatest))}%.`,
+		points: routerTop.map(([model, tokens]) => `${model}: ${trillions(tokens)}, ${percent(tokens, routerTotal(routerLatest))}% of all tokens.`),
 	},
 });
 
@@ -1909,6 +1911,8 @@ const pushesByMonth = fromQuarters(quarters, (quarter) => pushes[quarter]);
 const revenueByMonth = fromQuarters(sharedQuarters, (quarter) => quarterlyTotals[sharedQuarters.indexOf(quarter)]);
 const pricesByMonth = Object.fromEntries(priceRows.map(({ month, index }) => [month, index]));
 const tokenByMonth = Object.fromEntries(pricedMonths.map((month) => [month, tokenPriceAt(month)]));
+// A log bar fills slowly at first, so each growth signal says what its bar means.
+const LOG_GOAL = 'The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it.';
 const signedMove = (ratio) => `${ratio >= 1 ? 'Up' : 'Down'} ${Math.abs(Math.round((ratio - 1) * 100))}% since ChatGPT launched.`;
 const movedSince = (series, month) => signedMove(readingAt(series, month) / baselineOf(series));
 const firstMonth = (series) => Object.keys(series).sort()[0];
@@ -1939,9 +1943,17 @@ const revenueShare = Object.fromEntries(
 	}),
 );
 const outsourcingReal = divideSeries(outsourcingByMonth, economy.consumerPrices, 3);
-const bugsPerPush = divideSeries(bugByMonth, pushesByMonth);
-const securityPerPush = divideSeries(kevRolling, pushesByMonth);
-const outagesPerPush = divideSeries(outageRolling, pushesByMonth);
+const developersByMonth = fromQuarters(quarters, (quarter) => developers[quarter]);
+// Failures are scored per git push. Raw counts and failures per developer sit beside them as cross-checks,
+// because AI agents can make pushes grow without making software any more reliable.
+const FAILURES = Object.fromEntries(
+	Object.entries({ security: kevRolling, bugs: bugByMonth, outages: outageRolling }).map(([id, raw]) => [
+		id,
+		{ raw, perPush: divideSeries(raw, pushesByMonth), perDeveloper: divideSeries(raw, developersByMonth) },
+	]),
+);
+let pushAdjusted = true;
+const failuresScored = (id) => (pushAdjusted ? FAILURES[id].perPush : FAILURES[id].raw);
 
 // Each area asks one question and counts equally, so a busy area can't outvote a quiet one.
 const SCORE_AREAS = [
@@ -1956,6 +1968,7 @@ const SCORE_AREAS = [
 	},
 	{
 		name: 'Is it being used to build?',
+		note: 'This measures use, not whether the software works. Pushes and tokens can also grow through retries, longer reasoning or automation, so growth here is the weakest kind of evidence in the score.',
 		signals: [
 			{ id: 'code-activity', at: (month) => growthSince(pushesByMonth, month), reason: (month) => movedSince(pushesByMonth, month) },
 			{ id: 'agent-prs', at: (month) => readingAt(agentShare, month, 3) ?? 0, reason: () => `${oneDecimal(agentShareAt(agentLatest))}% of public pull requests clearly come from agents, and most agent work is hidden.` },
@@ -1964,16 +1977,16 @@ const SCORE_AREAS = [
 			{ id: 'coding-agents', at: (month) => {
 				const value = readingAt(codingByMonth, month, 3);
 				return value === undefined ? undefined : toGoal((Math.log10(value / codingTotal(codingMonths[0])) / 3) * 100);
-			}, reason: () => `${codingGrowth} times the tokens of ${monthName(codingMonths[0])}, against a goal of 1,000 times.` },
+			}, reason: () => `${codingGrowth} times the tokens of ${monthName(codingMonths[0])}. ${LOG_GOAL}` },
 			{ id: 'new-businesses', at: (month) => growthSince(applications, month), reason: (month) => movedSince(applications, month) },
 			{ id: 'token-usage', at: (month) => {
 				const value = readingAt(routerByMonth, month, 3);
 				return value === undefined ? undefined : toGoal((Math.log10(value / routerTotal(routerMonths[0])) / 3) * 100);
-			}, reason: () => `${routerGrowth} times the tokens of ${monthName(routerMonths[0])}, against a goal of 1,000 times.` },
+			}, reason: () => `${routerGrowth} times the tokens of ${monthName(routerMonths[0])}. ${LOG_GOAL}` },
 			{ id: 'ai-built-sites', weight: 0.25, at: (month) => {
 				const value = readingAt(builderByMonth, month, 3);
 				return value === undefined ? undefined : toGoal((Math.log10(value / builderTrend[0]) / 3) * 100);
-			}, reason: (month) => `${(readingAt(builderByMonth, month, 3) / builderTrend[0]).toFixed(1)} times the sites of ${monthName(builderStart)}, against a goal of 1,000 times. Counts a quarter as much as other signals here.` },
+			}, reason: (month) => `${(readingAt(builderByMonth, month, 3) / builderTrend[0]).toFixed(1)} times the sites of ${monthName(builderStart)}. ${LOG_GOAL} Counts a quarter as much as other signals here.` },
 		],
 	},
 	{
@@ -1995,14 +2008,14 @@ const SCORE_AREAS = [
 	},
 	{
 		name: 'Is software cheaper and more reliable?',
-		note: 'Money is compared with the economy and inflation, and failures with how much code is pushed. A rise scores 0%, which means no sign of change yet. AI agents may be inflating the number of pushes, which would make failures look rarer than they are.',
+		note: 'Money is compared with the economy and inflation, and failures with how much code is pushed. A rise scores 0%, which means no sign of change yet. AI agents may be inflating the number of pushes, which would make failures look rarer than they are, so each failure signal shows what it would score without that adjustment.',
 		signals: [
 			{ id: 'revenue', at: (month) => fallSince(revenueShare, month), reason: (month) => `Against GDP: ${sinceFirst(revenueShare, month)}` },
 			{ id: 'prices', at: (month) => fallSince(pricesReal, month), reason: (month) => `After inflation: ${sinceFirst(pricesReal, month)}` },
-			{ id: 'security', at: (month) => fallSince(securityPerPush, month), reason: (month) => `Per git push: ${sinceFirst(securityPerPush, month)}` },
-			{ id: 'bugs', at: (month) => fallSince(bugsPerPush, month), reason: (month) => `Per git push: ${sinceFirst(bugsPerPush, month)}` },
+			{ id: 'security', at: (month) => fallSince(failuresScored('security'), month), reason: (month) => `Per git push: ${sinceFirst(FAILURES.security.perPush, month)}` },
+			{ id: 'bugs', at: (month) => fallSince(failuresScored('bugs'), month), reason: (month) => `Per git push: ${sinceFirst(FAILURES.bugs.perPush, month)}` },
 			{ id: 'software-spending', at: (month) => fallSince(spendingShare, month), reason: (month) => `Against real GDP: ${sinceFirst(spendingShare, month)}` },
-			{ id: 'outages', at: (month) => fallSince(outagesPerPush, month), reason: (month) => `Per git push: ${sinceFirst(outagesPerPush, month)}` },
+			{ id: 'outages', at: (month) => fallSince(failuresScored('outages'), month), reason: (month) => `Per git push: ${sinceFirst(FAILURES.outages.perPush, month)}` },
 		],
 	},
 ];
@@ -2025,6 +2038,12 @@ const scoreWithGoals = (distance) => {
 	goalDistance = 1;
 	return score;
 };
+const scoreWithoutPushAdjustment = () => {
+	pushAdjusted = false;
+	const score = scoreAt(currentMonth);
+	pushAdjusted = true;
+	return score;
+};
 const scoreByMonth = scoreMonths.map((month) => ({ date: month, score: scoreAt(month) }));
 const scoreAreas = await Promise.all(SCORE_AREAS.map(async ({ name, note, signals }, i) => {
 	const rows = await Promise.all(signals.map(async ({ id, name: signalName, source, at, reason, weight = 1, question, metric, solvedIf, value }) => {
@@ -2039,8 +2058,45 @@ const scoreAreas = await Promise.all(SCORE_AREAS.map(async ({ name, note, signal
 	rows.sort((a, b) => b.score - a.score);
 	return { name, note, score: Math.round(areaScoresAt(currentMonth)[i]), signals: rows };
 }));
+// Each failure signal shows its count against what the score uses, and what it would score without the push adjustment.
+const startOf = (series) => (firstMonth(series) > BASELINE ? monthName(firstMonth(series)) : 'ChatGPT launched');
+const moveSince = (series) => {
+	const ratio = readingAt(series, currentMonth) / baselineOf(series);
+	return `${ratio >= 1 ? 'up' : 'down'} ${Math.abs(Math.round((ratio - 1) * 100))}%`;
+};
+const baselineMonth = (series) => Object.keys(series).sort().find((key) => key >= BASELINE);
+const perPushLine = (perPush, labels) =>
+	labels.flatMap((label) => {
+		const value = perPush[label.slice(0, 7)];
+		return value === undefined ? [] : [{ label, value: Math.round((value / baselineOf(perPush)) * 1000) / 10 }];
+	});
+const scoreWithout = (raw, perPush) => {
+	const [rawScore, adjusted] = [raw, perPush].map((series) => Math.round(fallSince(series, currentMonth) ?? 0));
+	return rawScore === adjusted ? `This signal scores ${adjusted}% with or without the git push adjustment.` : `Without the git push adjustment, this signal would score ${rawScore}% instead of ${adjusted}%.`;
+};
+const noAdjustment = scoreWithoutPushAdjustment();
+for (const [id, labels] of [
+	['security', securityDates],
+	['bugs', bugMonths],
+	['outages', outageTrend.map((_, i) => nextMonth('2024-12', i))],
+]) {
+	const { raw, perPush, perDeveloper } = FAILURES[id];
+	const kept = ((await readJson(`src/content/signals/${id}.json`)).caution ?? []).filter((line) => !line.includes('git push'));
+	await updateSignal(id, {
+		comparison: { name: `Per git push (${monthName(baselineMonth(perPush))} = 100)`, trend: perPushLine(perPush, labels) },
+		caution: [
+			...kept,
+			`Since ${startOf(raw)}: the count is ${moveSince(raw)}, ${moveSince(perPush)} per git push (what the score uses) and ${moveSince(perDeveloper)} per developer. If AI agents make pushes grow without making software more reliable, the per-push reading flatters this signal.`,
+			scoreWithout(raw, perPush),
+		],
+	});
+}
+// A high average can hide a weak question, so "Solved." also needs every question above a floor.
+const SOLVED_AT = 90;
+const SOLVED_EVERY_QUESTION_AT = 75;
+const weakestQuestion = Math.min(...scoreAreas.map(({ score }) => score));
 const VERDICTS = [
-	[90, 'Solved.'],
+	[SOLVED_AT, 'Solved.'],
 	[75, 'Almost.'],
 	[50, 'Getting there.'],
 	[0, 'Not yet.'],
@@ -2052,8 +2108,10 @@ scoreHistory[today] = solvedScore;
 await writeJson(SCORE_HISTORY, scoreHistory);
 await writeJson('data/score.json', {
 	score: solvedScore,
-	verdict: VERDICTS.find(([floor]) => solvedScore >= floor)[1],
+	verdict: solvedScore >= SOLVED_AT && weakestQuestion < SOLVED_EVERY_QUESTION_AT ? 'Almost.' : VERDICTS.find(([floor]) => solvedScore >= floor)[1],
 	scoreRange: { low: scoreWithGoals(1.25), high: scoreWithGoals(0.8) },
+	withoutPushAdjustment: noAdjustment,
+	weakestQuestion,
 	areas: scoreAreas,
 	history: scoreByMonth,
 	checks: Object.entries(scoreHistory).map(([date, score]) => ({ date, score })),

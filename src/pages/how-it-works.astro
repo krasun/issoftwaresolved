@@ -12,11 +12,11 @@ const flow = [
 	{ value: sources.length, label: 'Data sources', href: '#sources' },
 	{ value: signals.length, label: 'Signals', href: '#signals' },
 	{ value: areas.length, label: 'Questions', href: '#formula' },
-	{ value: `${site.score}%`, label: 'Software solved', href: '/score' },
+	{ value: `${site.score}%`, label: 'Solved index', href: '/score' },
 ];
 
-const main = math(String.raw`\text{Software solved} = \frac{1}{4}\sum_{q=1}^{4} \text{question score}_q \qquad \text{question score}_q = \frac{\sum_{i} w_{q,i}\,\text{signal score}_{q,i}}{\sum_{i} w_{q,i}}`);
-const worked = math(String.raw`\text{Software solved} = \frac{${areas.map(({ score }) => score).join(' + ')}}{4} \approx ${site.score}\%`);
+const main = math(String.raw`\text{Solved index} = \frac{1}{4}\sum_{q=1}^{4} \text{question score}_q \qquad \text{question score}_q = \frac{\sum_{i} w_{q,i}\,\text{signal score}_{q,i}}{\sum_{i} w_{q,i}}`);
+const worked = math(String.raw`\text{Solved index} = \frac{${areas.map(({ score }) => score).join(' + ')}}{4} \approx ${site.score}\%`);
 const rules = [
 	{
 		title: 'Fell since the start',
@@ -170,7 +170,7 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 			}
 		</div>
 		<div class="math" set:html={worked} />
-		<p class="flow-note">Under 50% reads "Not yet.", under 75% "Getting there.", under 90% "Almost.", and 90% or more "Solved." <a class="inline-link" href="/score">See the score</a>.</p>
+		<p class="flow-note">Under 50% reads "Not yet.", under 75% "Getting there.", under 90% "Almost.", and 90% or more "Solved." But "Solved." also needs every question at 75% or more, so a strong area cannot hide a weak one. Today the weakest question is at {site.weakestQuestion}%. <a class="inline-link" href="/score">See the score</a>.</p>
 	</section>
 
 	<section class="section">
@@ -179,6 +179,8 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 			<p>A simple formula we chose, so you can check it or argue with it.</p>
 		</div>
 		<ul class="findings">
+			<li>Git pushes count twice: as building activity, and as the denominator that makes failures look rarer. If AI agents inflate pushes, both help the score without software improving. The score page shows the result without the push adjustment ({site.withoutPushAdjustment}% against {site.score}%), and each failure signal charts its raw count beside the adjusted line.</li>
+			<li>Token growth shows use, not finished software. Retries, longer reasoning and cheap models raise it too, so those bars are the weakest evidence here.</li>
 			<li>More building counts toward solved because it suggests software is getting easier to make, but people still build most of it and the data can't separate them. Read the other way, the score would be lower.</li>
 			<li>The goals and groups are our judgment, and no data sets them. Moving every goal together, a fifth closer or a quarter further on its log scale, takes today's score from {site.score}% to between {site.scoreRange?.low}% and {site.scoreRange?.high}%. A tenfold goal, for example, becomes about 6 or 18 times.</li>
 				<li>New MCP repos and product launches are shown but left out of the score, because we found no defensible number of them that would mean solved.</li>

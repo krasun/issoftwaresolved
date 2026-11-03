@@ -173,7 +173,149 @@
 	"scoreReason": "Per git push: Down 44% since January 2024, when the data starts.",
 	"caution": [
 		"The data behind this score starts in January 2024, so it misses the first 14 months after ChatGPT launched.",
-		"The score divides this count by git pushes. If AI agents are inflating the number of pushes, it can improve even if software is no more reliable."
+		"Since January 2024: the count is up 52%, down 44% per git push (what the score uses) and down 16% per developer. If AI agents make pushes grow without making software more reliable, the per-push reading flatters this signal.",
+		"Without the git push adjustment, this signal would score 0% instead of 25%."
 	],
-	"chartNote": "This chart shows counts. The score below adjusts counts for git pushes, so the two can move in opposite directions."
+	"chartNote": "The solid line is the count. The dashed line is what the score uses: the same count divided by git pushes, with the starting month of the score set to 100. Pushes have grown faster than failures, so the dashed line can fall while the count rises.",
+	"comparison": {
+		"name": "Per git push (January 2024 = 100)",
+		"trend": [
+			{
+				"label": "2024-01-14",
+				"value": 100
+			},
+			{
+				"label": "2024-02-13",
+				"value": 97.5
+			},
+			{
+				"label": "2024-03-14",
+				"value": 91.4
+			},
+			{
+				"label": "2024-04-13",
+				"value": 86.6
+			},
+			{
+				"label": "2024-05-13",
+				"value": 85.6
+			},
+			{
+				"label": "2024-06-12",
+				"value": 75.8
+			},
+			{
+				"label": "2024-07-12",
+				"value": 74.9
+			},
+			{
+				"label": "2024-08-11",
+				"value": 80
+			},
+			{
+				"label": "2024-09-10",
+				"value": 85.7
+			},
+			{
+				"label": "2024-10-10",
+				"value": 85.2
+			},
+			{
+				"label": "2024-11-09",
+				"value": 87.1
+			},
+			{
+				"label": "2024-12-09",
+				"value": 81.6
+			},
+			{
+				"label": "2025-01-08",
+				"value": 78.5
+			},
+			{
+				"label": "2025-02-07",
+				"value": 86.4
+			},
+			{
+				"label": "2025-03-09",
+				"value": 90.7
+			},
+			{
+				"label": "2025-04-08",
+				"value": 92.8
+			},
+			{
+				"label": "2025-05-08",
+				"value": 96.9
+			},
+			{
+				"label": "2025-06-07",
+				"value": 86.2
+			},
+			{
+				"label": "2025-07-07",
+				"value": 88.3
+			},
+			{
+				"label": "2025-08-06",
+				"value": 86.9
+			},
+			{
+				"label": "2025-09-05",
+				"value": 81.5
+			},
+			{
+				"label": "2025-10-05",
+				"value": 86.3
+			},
+			{
+				"label": "2025-11-04",
+				"value": 82.5
+			},
+			{
+				"label": "2025-12-04",
+				"value": 73.1
+			},
+			{
+				"label": "2026-01-03",
+				"value": 74
+			},
+			{
+				"label": "2026-02-02",
+				"value": 74.3
+			},
+			{
+				"label": "2026-03-04",
+				"value": 55.9
+			},
+			{
+				"label": "2026-04-03",
+				"value": 59.6
+			},
+			{
+				"label": "2026-05-03",
+				"value": 58.9
+			},
+			{
+				"label": "2026-06-02",
+				"value": 46.8
+			},
+			{
+				"label": "2026-07-02",
+				"value": 47.9
+			},
+			{
+				"label": "2026-08-01",
+				"value": 50.7
+			},
+			{
+				"label": "2026-08-31",
+				"value": 50.7
+			},
+			{
+				"label": "2026-09-30",
+				"value": 55.6
+			}
+		]
+	}
 }

@@ -29,7 +29,7 @@ const marks = events.filter(e => dated && stamp(e.month) >= times[0] && stamp(e.
 ---
 <div class="interactive-chart" data-values={JSON.stringify(values.map((v,i) => `${labels[i]} — ${name}: ${exacts[i]}${comparison ? `; ${comparison.name}: ${exact(otherValues[i])}` : ''}`))} data-positions={JSON.stringify(values.map((_,i) => x(i)))}>
  <p class="chart-caption">{name} · {labels[0]} – {labels.at(-1)}</p>
- {comparison && <p class="chart-caption">Solid: {name}. Dashed: {comparison.name}{comparison.sameAxis ? ' (same scale).' : ' (%, right scale).'}</p>}
+ {comparison && <p class="chart-caption">Solid: {name}. Dashed: {comparison.name}{comparison.sameAxis ? ' (same scale).' : ' (right scale).'}</p>}
  <div class:list={['chart', { 'chart-dual': comparison && !comparison.sameAxis }]}>
   <div class="chart-y" aria-hidden="true">{[4,3,2,1,0].map(n => <span>{compact(n*step)}</span>)}</div>
   <div class="chart-plot" data-inspect>
