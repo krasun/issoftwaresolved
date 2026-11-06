@@ -25,6 +25,6 @@ An index of public evidence on whether AI has solved software engineering, built
 
 ## Data
 
-Sources are fetched by `scripts/sources/` into `data/raw/`, a private cache and backup of source data, stored in R2 so reports can be rebuilt quickly without fetching every source again. It is ignored by Git and never published. `scripts/build-index.mjs` turns them into the committed numbers the site is built from.
+Sources are fetched by `scripts/sources/` into `data/raw/`, a private cache and backup of source data, stored in R2 so reports can be rebuilt quickly without fetching every source again. It is ignored by Git and never published. `scripts/build-index.ts` turns them into the committed numbers the site is built from.
 
 To work on the data, copy `.env.example` to `.env` and fill it in. See [`data/README.md`](data/README.md) for the data policy and monthly snapshots, and [`data/ATTRIBUTION.md`](data/ATTRIBUTION.md) for source credits.

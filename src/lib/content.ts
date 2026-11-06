@@ -15,7 +15,7 @@ const analyses = import.meta.glob<{ default: Analysis }>('/data/index/*.json', {
 
 export type Analysis = {
 	asOf: string;
-	chart?: { name: string; labels: string[]; values: number[] };
+	chart?: { name: string; trend: { label: string; value: number }[] };
 	stats: { label: string; value: number | string }[];
 	findings: string[];
 	tables: { title: string; columns: string[]; rows: (number | string)[][] }[];

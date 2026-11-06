@@ -10,13 +10,15 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "fetch": "node --env-file-if-exists=.env scripts/fetch.mjs",
-    "hn:sample": "node scripts/hacker-news-sample.mjs",
-    "models:ask": "node --env-file=.env scripts/model-opinions.mjs",
-    "index": "node scripts/build-index.mjs",
-    "check:data": "node scripts/check-data-policy.mjs",
-    "cache:pull": "node --env-file-if-exists=.env scripts/sync-cache.mjs --pull",
-    "cache:synchronize": "node --env-file-if-exists=.env scripts/sync-cache.mjs"
+    "fetch": "node --env-file-if-exists=.env scripts/fetch.ts",
+    "hn:sample": "node scripts/hacker-news-sample.ts",
+    "models:ask": "node --env-file=.env scripts/model-opinions.ts",
+    "index": "node scripts/build-index.ts",
+    "check:data": "node scripts/check-data-policy.ts",
+    "cache:pull": "node --env-file-if-exists=.env scripts/sync-cache.ts --pull",
+    "cache:synchronize": "node --env-file-if-exists=.env scripts/sync-cache.ts",
+    "typecheck": "astro check && tsc --noEmit -p worker",
+    "test": "node --test scripts/tests/"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -26,7 +28,11 @@
     "sharp": "^0.35.5"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@cloudflare/workers-types": "^5.20261106.1",
+    "@types/node": "^26.6.6",
     "aws4fetch": "^1.0.20",
-    "stream-json": "^3.8.0"
+    "stream-json": "^3.8.0",
+    "typescript": "^6.0.3"
   }
 }

@@ -30,7 +30,7 @@ Run it after about the 10th of the month, because some sources publish last mont
 - **Failed fetches:** the last snapshot is restored and the source retries on the next run.
 - **Suspicious fetches:** a source below half its previous size is not uploaded unless forced.
 - **Identical fetches:** recorded as fetched, without storing another copy.
-- **Retention:** `stack-overflow` keeps only its latest snapshot, because we could not confirm how long its API terms allow data to be kept. Add a source to `LATEST_ONLY` in `scripts/sync-cache.mjs` if its terms limit retention.
+- **Retention:** `stack-overflow` keeps only its latest snapshot, because we could not confirm how long its API terms allow data to be kept. Add a source to `LATEST_ONLY` in `scripts/sync-cache.ts` if its terms limit retention.
 - **Hand-run data:** `model-opinions`, `bluesky`, and the Hacker News stance files can't be fetched again. Sync uploads them when they change, and never overwrites them without `--replace`.
 
 Most sources return or keep their whole history, so trends come from the latest snapshot and older ones are only an audit trail. AI company jobs only show today, so `data/ai-company-jobs-history.json` holds that history and must stay committed, along with `data/score-history.json` and `data/signal-checks.json`.
