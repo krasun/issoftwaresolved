@@ -6,24 +6,24 @@
 	"metric": "New products launched on Uneed, latest full month",
 	"solvedIf": "Launching a product takes almost no effort",
 	"trendLabel": "Products launched on Uneed per month. A weak proxy, because it covers one launch site.",
-	"value": "837",
-	"change": "+194%",
+	"value": "851",
+	"change": "+179%",
 	"trend": [
 		{
 			"label": "2024-02",
-			"value": 66
+			"value": 78
 		},
 		{
 			"label": "2024-03",
-			"value": 56
+			"value": 87
 		},
 		{
 			"label": "2024-04",
-			"value": 108
+			"value": 107
 		},
 		{
 			"label": "2024-05",
-			"value": 96
+			"value": 98
 		},
 		{
 			"label": "2024-06",
@@ -31,47 +31,47 @@
 		},
 		{
 			"label": "2024-07",
-			"value": 116
+			"value": 124
 		},
 		{
 			"label": "2024-08",
-			"value": 141
+			"value": 147
 		},
 		{
 			"label": "2024-09",
-			"value": 157
+			"value": 158
 		},
 		{
 			"label": "2024-10",
-			"value": 261
+			"value": 285
 		},
 		{
 			"label": "2024-11",
-			"value": 288
+			"value": 293
 		},
 		{
 			"label": "2024-12",
-			"value": 376
+			"value": 387
 		},
 		{
 			"label": "2025-01",
-			"value": 393
+			"value": 401
 		},
 		{
 			"label": "2025-02",
-			"value": 345
+			"value": 353
 		},
 		{
 			"label": "2025-03",
-			"value": 398
+			"value": 414
 		},
 		{
 			"label": "2025-04",
-			"value": 377
+			"value": 380
 		},
 		{
 			"label": "2025-05",
-			"value": 409
+			"value": 413
 		},
 		{
 			"label": "2025-06",
@@ -79,47 +79,47 @@
 		},
 		{
 			"label": "2025-07",
-			"value": 406
+			"value": 408
 		},
 		{
 			"label": "2025-08",
-			"value": 389
+			"value": 445
 		},
 		{
 			"label": "2025-09",
-			"value": 264
+			"value": 318
 		},
 		{
 			"label": "2025-10",
-			"value": 285
+			"value": 305
 		},
 		{
 			"label": "2025-11",
-			"value": 329
+			"value": 382
 		},
 		{
 			"label": "2025-12",
-			"value": 358
+			"value": 410
 		},
 		{
 			"label": "2026-01",
-			"value": 328
+			"value": 390
 		},
 		{
 			"label": "2026-02",
-			"value": 307
+			"value": 352
 		},
 		{
 			"label": "2026-03",
-			"value": 309
+			"value": 369
 		},
 		{
 			"label": "2026-04",
-			"value": 321
+			"value": 384
 		},
 		{
 			"label": "2026-05",
-			"value": 483
+			"value": 473
 		},
 		{
 			"label": "2026-06",
@@ -127,43 +127,70 @@
 		},
 		{
 			"label": "2026-07",
-			"value": 663
+			"value": 662
 		},
 		{
 			"label": "2026-08",
-			"value": 676
+			"value": 673
 		},
 		{
 			"label": "2026-09",
-			"value": 844
+			"value": 841
 		},
 		{
 			"label": "2026-10",
-			"value": 837
+			"value": 851
 		}
 	],
 	"recent": [
 		100,
+		125.2,
+		134.4,
+		127.9,
 		115.4,
-		125.6,
-		115.1,
-		107.7,
-		108.4,
-		112.6,
-		169.5,
-		202.5,
-		232.6,
-		237.2,
-		296.1,
-		293.7
+		121,
+		125.9,
+		155.1,
+		189.2,
+		217,
+		220.7,
+		275.7,
+		279
 	],
 	"status": "More launches",
 	"direction": "away",
 	"rule": "More launches when more products launch than in the same month a year before.",
-	"fromHigh": "-1% from high",
+	"fromHigh": "At its high",
 	"caution": [
 		"This is a weak proxy. It counts launches on one site, Uneed, not all new software.",
-		"Uneed's own growth could explain part of this rise, and AI makes small products cheaper to build, so more launches may not mean more demand. Editing a product page can also move it to a different month.",
-		"Treat it as a rough hint until we can compare it with other launch sites."
+		"Uneed's own growth and curation affect the counts. More launches do not establish more demand or AI's impact.",
+		"Launches count still-published products by real launch date. Removed products and relaunches can revise history."
+	],
+	"chartNote": "Source: Uneed, uneed.best (CC BY 4.0). Complete months in America/Los_Angeles. The official launch-stats API replaces the former sitemap-date proxy across the full history.",
+	"monthlyActivity": [
+		{
+			"month": "2026-08",
+			"complete": true,
+			"launched": 673,
+			"submitted": 4695,
+			"declined": 685,
+			"estimated": true
+		},
+		{
+			"month": "2026-09",
+			"complete": true,
+			"launched": 841,
+			"submitted": 5397,
+			"declined": 1106,
+			"estimated": true
+		},
+		{
+			"month": "2026-10",
+			"complete": true,
+			"launched": 851,
+			"submitted": 11150,
+			"declined": 2123,
+			"estimated": true
+		}
 	]
 }

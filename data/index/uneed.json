@@ -3,76 +3,118 @@
 	"stats": [
 		{
 			"label": "Launches, 2026-10",
-			"value": 837
+			"value": 851
 		},
 		{
 			"label": "Year over year",
-			"value": "+194%"
+			"value": "+179%"
 		},
 		{
 			"label": "Since 2024-02",
-			"value": 11467
+			"value": 12069
 		}
 	],
 	"findings": [
-		"837 products launched in 2026-10, against 285 in 2025-10: +194%.",
-		"This is one launch site, so its growth may reflect the site itself rather than more software being built."
+		"851 products launched in 2026-10, against 305 in 2025-10: +179%.",
+		"This is one launch site, so its growth may reflect the site itself rather than more software being built.",
+		"Launches count still-published products by launch date. Relaunches move products to their later launch month. Months use America/Los_Angeles.",
+		"Submissions enter the waiting line; declines count moderation decisions, including repeated declines. These are different monthly populations, so their ratios are not acceptance or rejection rates.",
+		"Submission and decline counts begin in August 2026. Before the ledger started on 5 November 2026, submissions are reconstructed and may run high; August and September declines are lower bounds."
 	],
 	"tables": [
 		{
-			"title": "Launches, latest months",
+			"title": "Monthly activity (complete months)",
 			"columns": [
 				"Month",
-				"Products"
+				"Submitted",
+				"Launched",
+				"Declined",
+				"Submission / decline estimates"
 			],
 			"rows": [
 				[
 					"2025-11",
-					329
+					"—",
+					382,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2025-12",
-					358
+					"—",
+					410,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-01",
-					328
+					"—",
+					390,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-02",
-					307
+					"—",
+					352,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-03",
-					309
+					"—",
+					369,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-04",
-					321
+					"—",
+					384,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-05",
-					483
+					"—",
+					473,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-06",
-					577
+					"—",
+					577,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-07",
-					663
+					"—",
+					662,
+					"—",
+					"Unavailable"
 				],
 				[
 					"2026-08",
-					676
+					4695,
+					673,
+					685,
+					"Estimated"
 				],
 				[
 					"2026-09",
-					844
+					5397,
+					841,
+					1106,
+					"Estimated"
 				],
 				[
 					"2026-10",
-					837
+					11150,
+					851,
+					2123,
+					"Estimated"
 				]
 			]
 		}

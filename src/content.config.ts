@@ -5,6 +5,7 @@ import { z } from 'astro/zod';
 const signals = defineCollection({
 	loader: glob({ pattern: '*.json', base: './src/content/signals' }),
 	schema: z.object({
+		monthlyActivity: z.array(z.object({ month: z.string(), complete: z.boolean(), launched: z.number(), submitted: z.number().nullable(), declined: z.number().nullable(), estimated: z.boolean() })).optional(),
 		order: z.number(),
 		group: z.string(),
 		name: z.string(),

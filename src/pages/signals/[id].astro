@@ -82,6 +82,21 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 
 	{chartTrend && <section class="section"><div class="section-head"><h2>Observed trend</h2>{trendLabel && <p>{trendLabel}</p>}{chartNote && <p>{chartNote}</p>}</div><TrendChart name={trendName ?? trendLabel ?? metric} trend={chartTrend} scale={trendScale} comparison={comparison} events={events} /></section>}
 
+
+	{signal.data.monthlyActivity && <section class="section">
+		<div class="section-head">
+			<h2>Submissions and moderation</h2>
+			<p>Monthly submissions enter the waiting line. Launches can follow weeks or months later; declines count decisions made that month, including repeated declines. These counts do not measure an acceptance or rejection rate.</p>
+			<p>Counts begin in August 2026. Before the ledger started on 5 November 2026, submissions are reconstructed and may run high; August and September declines are lower bounds. Only complete months are shown.</p>
+			<p>Source: <a class="inline-link" href="https://www.uneed.best/mcp#launch-stats">Uneed, uneed.best</a> · <a class="inline-link" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></p>
+		</div>
+		<TrendChart name="Submitted" trend={signal.data.monthlyActivity.filter(row => row.submitted !== null).map(row => ({ label: row.month, value: row.submitted! }))} comparison={{ name: 'Declined', sameAxis: true, trend: signal.data.monthlyActivity.filter(row => row.declined !== null).map(row => ({ label: row.month, value: row.declined! })) }} />
+		<div class="table-wrap"><table>
+			<thead><tr><th scope="col">Month</th><th scope="col">Submitted</th><th scope="col">Launched</th><th scope="col">Declined</th><th scope="col">Submission / decline data</th></tr></thead>
+			<tbody>{signal.data.monthlyActivity.map(row => <tr><td>{row.month}</td><td>{row.submitted?.toLocaleString('en-US') ?? '—'}</td><td>{row.launched.toLocaleString('en-US')}</td><td>{row.declined?.toLocaleString('en-US') ?? '—'}</td><td>{row.estimated ? 'Estimated' : 'Ledger'}</td></tr>)}</tbody>
+		</table></div>
+	</section>}
+
 	<section class="section">
 		<div class="section-head">
 			<h2>What it measures</h2>

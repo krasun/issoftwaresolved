@@ -1,3 +1,4 @@
+import { parseUneedMonths } from './sources/uneed.ts';
 import { createReadStream } from 'node:fs';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
@@ -12,6 +13,7 @@ interface Period { last: number; previous: number }
 type Direction = 'toward' | 'away' | 'flat';
 interface Reading { status: string; direction: Direction }
 interface Signal {
+	monthlyActivity?: import('./sources/uneed.ts').UneedMonth[];
 	order: number;
 	group: string;
 	name: string;
@@ -766,10 +768,10 @@ await writeJson('data/index/litellm.json', {
 });
 
 // Uneed: products launched per month, a weak proxy for new software.
-const launches = await readJson<Series>('data/raw/uneed/monthly.json');
-const launchMonths = Object.keys(launches)
-	.sort()
-	.filter((month) => month >= '2024-02' && month < new Date().toISOString().slice(0, 7));
+const launchRows = parseUneedMonths(await readJson('data/raw/uneed/monthly.json')).filter(row => row.complete);
+const launches = Object.fromEntries(launchRows.map(row => [row.month, row.launched]));
+const launchMonths = launchRows.map(row => row.month);
+const launchActivity = launchRows.filter(row => row.submitted !== null || row.declined !== null);
 const launchLatest = launchMonths.at(-1)!;
 const launchYearAgo = nextMonth(launchLatest, -12);
 const launchChange = Math.round((launches[launchLatest] / launches[launchYearAgo] - 1) * 100);
@@ -785,12 +787,15 @@ await writeJson('data/index/uneed.json', {
 	findings: [
 		`${launches[launchLatest]} products launched in ${launchLatest}, against ${launches[launchYearAgo]} in ${launchYearAgo}: ${signed(launchChange)}.`,
 		'This is one launch site, so its growth may reflect the site itself rather than more software being built.',
+		'Launches count still-published products by launch date. Relaunches move products to their later launch month. Months use America/Los_Angeles.',
+		'Submissions enter the waiting line; declines count moderation decisions, including repeated declines. These are different monthly populations, so their ratios are not acceptance or rejection rates.',
+		'Submission and decline counts begin in August 2026. Before the ledger started on 5 November 2026, submissions are reconstructed and may run high; August and September declines are lower bounds.',
 	],
 	tables: [
 		{
-			title: 'Launches, latest months',
-			columns: ['Month', 'Products'],
-			rows: launchMonths.slice(-12).map((month) => [month, launches[month]]),
+			title: 'Monthly activity (complete months)',
+			columns: ['Month', 'Submitted', 'Launched', 'Declined', 'Submission / decline estimates'],
+			rows: launchRows.slice(-12).map(row => [row.month, row.submitted ?? '—', row.launched, row.declined ?? '—', row.estimated ? 'Estimated' : row.submitted === null ? 'Unavailable' : 'Ledger']),
 		},
 	],
 });
@@ -1199,6 +1204,7 @@ await updateSignal('token-prices', {
 	},
 });
 await updateSignal('product-launches', {
+	monthlyActivity: launchActivity,
 	value: number(launches[launchLatest]),
 	change: signed(launchChange),
 	trend: series(launchMonths, launchTrend),
