@@ -1,0 +1,56 @@
+{
+	"asOf": "2026-11-01",
+	"stats": [
+		{
+			"label": "Open models behind by",
+			"value": "4 months"
+		},
+		{
+			"label": "Best open score",
+			"value": "79%"
+		},
+		{
+			"label": "Best closed score",
+			"value": "83%"
+		}
+	],
+	"findings": [
+		"glm-5.2, released in June 2026, scores 79% on SWE-bench Verified, which claude-opus-4-6 reached in February 2026.",
+		"1 of 35 results are left out, because models.dev doesn't list their model."
+	],
+	"tables": [
+		{
+			"title": "Each new best open-weight score",
+			"columns": [
+				"Released",
+				"Open model",
+				"Score",
+				"Closed model that reached it first",
+				"Months behind"
+			],
+			"rows": [
+				[
+					"2026-01",
+					"kimi-k2.5",
+					"74%",
+					"claude-opus-4-5-20251101 (2025-11)",
+					2
+				],
+				[
+					"2026-04",
+					"deepseek-v4-pro",
+					"78%",
+					"claude-opus-4-6 (2026-02)",
+					2
+				],
+				[
+					"2026-06",
+					"glm-5.2",
+					"79%",
+					"claude-opus-4-6 (2026-02)",
+					4
+				]
+			]
+		}
+	]
+}

@@ -49,6 +49,12 @@ const rules = [
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{3 - \log_{10} c_t}{3}\right)`,
 	},
 	{
+		title: 'Open models behind closed ones',
+		why: 'Our judgment: a year is about a full generation of models, and matching on release means anyone can run the best.',
+		text: 'How many months L the best open-weight model trails the closed model that first reached its SWE-bench Verified score, from a year behind at 0% to none at 100%.',
+		latex: String.raw`s = \operatorname{clamp}\!\left(100\left(1 - \frac{L_t}{12}\right)\right)`,
+	},
+	{
 		title: 'Growth from a recent start',
 		why: 'A round number and our judgment: these start from a small base, where tenfold comes quickly.',
 		text: 'AI and coding app tokens, and sites on AI builders, against their first month. Growing 1,000 times scores 100%.',

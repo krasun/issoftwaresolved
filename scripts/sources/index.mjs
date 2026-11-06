@@ -15,6 +15,7 @@ import { fetchIndeed } from './indeed.mjs';
 import { fetchInnovationGraph } from './innovation-graph.mjs';
 import { fetchLitellm } from './litellm.mjs';
 import { fetchMcpRegistry } from './mcp-registry.mjs';
+import { fetchModelsDev } from './models-dev.mjs';
 import { fetchNoCode } from './no-code.mjs';
 import { fetchNpm } from './npm.mjs';
 import { fetchNvd } from './nvd.mjs';
@@ -59,4 +60,5 @@ export const sources = {
 	'ai-company-jobs': fetchAiCompanyJobs,
 	'github-mcp': fetchGithubMcp,
 	'mcp-registry': fetchMcpRegistry,
+	'models-dev': fetchModelsDev,
 };

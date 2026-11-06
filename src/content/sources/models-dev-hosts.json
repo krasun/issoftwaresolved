@@ -1,0 +1,17 @@
+{
+	"name": "models.dev services",
+	"signal": "model-hosts",
+	"measures": "Services listing each AI model",
+	"about": "models.dev lists the models each service sells. We count services per model at the start of each month from the catalogue's git history, matching models by file name.",
+	"limitations": [
+		"The catalogue's own growth inflates the counts.",
+		"Matching by file name misses a model listed under a different name."
+	],
+	"url": "https://models.dev/",
+	"license": "MIT",
+	"licenseUrl": "https://github.com/anomalyco/models.dev/blob/dev/LICENSE",
+	"attribution": "Calculated from models.dev and its git history, as of 2026-11-01. MIT License.",
+	"checked": "2026-11",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

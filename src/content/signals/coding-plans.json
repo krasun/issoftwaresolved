@@ -1,0 +1,126 @@
+{
+	"order": 29,
+	"group": "Money",
+	"name": "AI coding plans",
+	"question": "Are vendors selling AI coding as a subscription?",
+	"metric": "Subscription plans for coding tools listed on models.dev, at the start of the month",
+	"solvedIf": "AI coding is sold like any other flat-rate utility",
+	"trendLabel": "Coding subscription plans listed on models.dev, at the start of each month. Regional versions of a plan count once.",
+	"caution": [
+		"This counts plans in one community catalogue, so part of the rise is the catalogue adding plans that already existed.",
+		"It counts plans, not how many people pay for them, and says nothing about their limits or prices."
+	],
+	"value": "16",
+	"change": "+700%",
+	"trend": [
+		{
+			"label": "2025-07",
+			"value": 0
+		},
+		{
+			"label": "2025-08",
+			"value": 0
+		},
+		{
+			"label": "2025-09",
+			"value": 0
+		},
+		{
+			"label": "2025-10",
+			"value": 2
+		},
+		{
+			"label": "2025-11",
+			"value": 2
+		},
+		{
+			"label": "2025-12",
+			"value": 2
+		},
+		{
+			"label": "2026-01",
+			"value": 3
+		},
+		{
+			"label": "2026-02",
+			"value": 4
+		},
+		{
+			"label": "2026-03",
+			"value": 7
+		},
+		{
+			"label": "2026-04",
+			"value": 8
+		},
+		{
+			"label": "2026-05",
+			"value": 9
+		},
+		{
+			"label": "2026-06",
+			"value": 13
+		},
+		{
+			"label": "2026-07",
+			"value": 14
+		},
+		{
+			"label": "2026-08",
+			"value": 14
+		},
+		{
+			"label": "2026-09",
+			"value": 16
+		},
+		{
+			"label": "2026-10",
+			"value": 16
+		},
+		{
+			"label": "2026-11",
+			"value": 16
+		}
+	],
+	"recent": [
+		100,
+		100,
+		150,
+		200,
+		350,
+		400,
+		450,
+		650,
+		700,
+		700,
+		800,
+		800,
+		800
+	],
+	"status": "More plans",
+	"direction": "toward",
+	"rule": "More plans when more are listed than a year before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "Plans listed",
+		"intro": "16 plans, counting regional versions of a plan once.",
+		"points": [
+			"Alibaba Coding Plan.",
+			"Alibaba Token Plan.",
+			"ClinePass.",
+			"KUAE Cloud Coding Plan.",
+			"Kimi For Coding.",
+			"MiniMax Token Plan.",
+			"OpenCode Go.",
+			"SCNet Token Plan.",
+			"StepFun Step Plan.",
+			"Tencent Coding Plan.",
+			"Tencent Token Plan.",
+			"Umans AI Coding Plan.",
+			"Volcengine Ark Coding Plan.",
+			"Xiaomi Token Plan.",
+			"Z.AI Coding Plan.",
+			"Zhipu AI Coding Plan."
+		]
+	}
+}

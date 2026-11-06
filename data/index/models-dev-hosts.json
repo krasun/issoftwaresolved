@@ -1,0 +1,72 @@
+{
+	"asOf": "2026-11-01",
+	"stats": [
+		{
+			"label": "Services listing the top model",
+			"value": 81
+		},
+		{
+			"label": "Services listed",
+			"value": 237
+		},
+		{
+			"label": "Year over year",
+			"value": "+376%"
+		}
+	],
+	"findings": [
+		"GLM-5.3 is listed by 81 services, against 17 for the top model a year before.",
+		"The catalogue grew from 57 to 237 services, so the top model's share went from 30% to 34% of them."
+	],
+	"tables": [
+		{
+			"title": "Most widely listed models",
+			"columns": [
+				"Model",
+				"Services"
+			],
+			"rows": [
+				[
+					"GLM-5.3",
+					81
+				],
+				[
+					"GLM-5.2",
+					80
+				],
+				[
+					"Kimi K3",
+					77
+				],
+				[
+					"GLM-5.3-Flash",
+					77
+				],
+				[
+					"DeepSeek V4 Pro",
+					66
+				],
+				[
+					"Kimi K2.6",
+					63
+				],
+				[
+					"GPT OSS 120B",
+					61
+				],
+				[
+					"DeepSeek V4.1 Flash",
+					61
+				],
+				[
+					"DeepSeek V4 Flash",
+					60
+				],
+				[
+					"MiniMax-M3",
+					57
+				]
+			]
+		}
+	]
+}

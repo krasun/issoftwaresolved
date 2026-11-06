@@ -1,0 +1,17 @@
+{
+	"name": "models.dev plans",
+	"signal": "coding-plans",
+	"measures": "Subscription plans for coding tools",
+	"about": "models.dev lists coding subscriptions, such as Z.AI Coding Plan or OpenCode Go, as services of their own. We count them at the start of each month from the catalogue's git history.",
+	"limitations": [
+		"The catalogue adds plans after they launch, so dates can be late.",
+		"Plans count in the months they were listed, so a plan the catalogue drops stops counting."
+	],
+	"url": "https://models.dev/",
+	"license": "MIT",
+	"licenseUrl": "https://github.com/anomalyco/models.dev/blob/dev/LICENSE",
+	"attribution": "Calculated from models.dev and its git history, as of 2026-11-01. MIT License.",
+	"checked": "2026-11",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

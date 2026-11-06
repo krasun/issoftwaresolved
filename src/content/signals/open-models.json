@@ -1,0 +1,42 @@
+{
+	"order": 28,
+	"group": "Demand",
+	"name": "Open coding models",
+	"question": "Can anyone run a top coding model themselves?",
+	"metric": "Months the best open-weight model trails closed models on SWE-bench Verified",
+	"solvedIf": "Open-weight models match the best closed models as they are released",
+	"trendLabel": "Months behind closed models, at each new best open-weight score, by release month.",
+	"caution": [
+		"This only uses models Epoch AI has tested on SWE-bench Verified, and only those models.dev lists, so a new model can be missing for a while.",
+		"Open-weight means anyone can download the model, not that it is cheap to run. The largest open models need serious hardware."
+	],
+	"value": "4 months",
+	"trend": [
+		{
+			"label": "2026-01",
+			"value": 2
+		},
+		{
+			"label": "2026-04",
+			"value": 2
+		},
+		{
+			"label": "2026-06",
+			"value": 4
+		}
+	],
+	"status": "Falling behind",
+	"direction": "away",
+	"rule": "Catching up when the newest open-weight best trails closed models by fewer months than the first one did.",
+	"analysis": {
+		"title": "Each new best open-weight score",
+		"intro": "The best closed model scores 83%, from claude-opus-4-7, against 79% for the best open-weight model.",
+		"points": [
+			"kimi-k2.5 (2026-01): 74%, which claude-opus-4-5-20251101 reached 2 months earlier.",
+			"deepseek-v4-pro (2026-04): 78%, which claude-opus-4-6 reached 2 months earlier.",
+			"glm-5.2 (2026-06): 79%, which claude-opus-4-6 reached 4 months earlier."
+		]
+	},
+	"score": 67,
+	"scoreReason": "The best open-weight model trails closed models by 4 months, against a goal of none. A year behind scores 0%."
+}

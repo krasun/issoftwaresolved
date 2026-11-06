@@ -1,0 +1,115 @@
+{
+	"order": 30,
+	"group": "Money",
+	"name": "AI model hosts",
+	"question": "Is running AI models becoming a commodity?",
+	"metric": "Services on models.dev listing the most widely listed model, at the start of the month",
+	"solvedIf": "Top models are sold by so many services that price is all that differs",
+	"trendLabel": "Services listing the most widely listed model on models.dev, at the start of each month.",
+	"caution": [
+		"The catalogue itself grew fast, so much of this rise is models.dev adding services, not new services appearing.",
+		"Models are matched across services by name, so the same model under different names counts separately. A listing does not show how much a service is used."
+	],
+	"value": "81",
+	"change": "+376%",
+	"trend": [
+		{
+			"label": "2025-07",
+			"value": 5
+		},
+		{
+			"label": "2025-08",
+			"value": 8
+		},
+		{
+			"label": "2025-09",
+			"value": 11
+		},
+		{
+			"label": "2025-10",
+			"value": 13
+		},
+		{
+			"label": "2025-11",
+			"value": 17
+		},
+		{
+			"label": "2025-12",
+			"value": 20
+		},
+		{
+			"label": "2026-01",
+			"value": 24
+		},
+		{
+			"label": "2026-02",
+			"value": 33
+		},
+		{
+			"label": "2026-03",
+			"value": 35
+		},
+		{
+			"label": "2026-04",
+			"value": 41
+		},
+		{
+			"label": "2026-05",
+			"value": 43
+		},
+		{
+			"label": "2026-06",
+			"value": 47
+		},
+		{
+			"label": "2026-07",
+			"value": 54
+		},
+		{
+			"label": "2026-08",
+			"value": 62
+		},
+		{
+			"label": "2026-09",
+			"value": 76
+		},
+		{
+			"label": "2026-10",
+			"value": 78
+		},
+		{
+			"label": "2026-11",
+			"value": 81
+		}
+	],
+	"recent": [
+		100,
+		117.6,
+		141.2,
+		194.1,
+		205.9,
+		241.2,
+		252.9,
+		276.5,
+		317.6,
+		364.7,
+		447.1,
+		458.8,
+		476.5
+	],
+	"status": "More hosts",
+	"direction": "toward",
+	"rule": "More hosts when the top model is listed by more services than the top model a year before.",
+	"fromHigh": "At its high",
+	"analysis": {
+		"title": "Most widely listed models",
+		"intro": "The catalogue itself grew from 57 to 237 services in a year, so the top model's share went from 30% to 34%.",
+		"points": [
+			"GLM-5.3: 81 services.",
+			"GLM-5.2: 80 services.",
+			"Kimi K3: 77 services.",
+			"GLM-5.3-Flash: 77 services.",
+			"DeepSeek V4 Pro: 66 services."
+		]
+	}
+}

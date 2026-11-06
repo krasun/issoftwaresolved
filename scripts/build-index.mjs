@@ -1227,6 +1227,165 @@ await updateSignal('coding-benchmarks', {
 	},
 });
 
+// models.dev: a community catalogue of AI models and the services selling them, read as it stood at the start of each month.
+const modelsDev = await readJson('data/raw/models-dev/api.json');
+const modelsDevHistory = await readJson('data/raw/models-dev/history.json');
+const modelsDevMonths = Object.keys(modelsDevHistory).sort();
+const modelsDevLatest = modelsDevMonths.at(-1);
+const modelsDevYearAgo = nextMonth(modelsDevLatest, -12);
+const modelsDevAsOf = `${modelsDevLatest}-01`;
+const modelKey = (id) => id.split('/').at(-1).toLowerCase().replace(/[^a-z0-9]/g, '');
+const modelNames = {};
+const openVotes = {};
+for (const { models } of Object.values(modelsDev)) {
+	for (const [id, model] of Object.entries(models)) {
+		for (const key of new Set([modelKey(id), modelKey(model.canonical_model_id ?? id)])) {
+			modelNames[key] ??= model.name;
+			(openVotes[key] ??= []).push(model.open_weights);
+		}
+	}
+}
+const growth = (series, month) => Math.round((series(modelsDevLatest) / series(month) - 1) * 100);
+for (const id of ['models-dev', 'models-dev-plans', 'models-dev-hosts']) {
+	const path = `src/content/sources/${id}.json`;
+	await writeJson(path, { ...(await readJson(path)), checked: modelsDevLatest });
+}
+
+// Coding plans: one per product, so regional copies of the same plan count once.
+const planName = (id) => (modelsDev[id]?.name ?? id).replace(/\s*\(.*\)$/, '');
+const plansAt = (month) => [...new Set(modelsDevHistory[month].plans.map(planName))].sort();
+const planCount = (month) => plansAt(month).length;
+const planTrend = modelsDevMonths.map(planCount);
+const planChange = growth(planCount, modelsDevYearAgo);
+const planFirst = modelsDevMonths.find((month) => planCount(month) > 0);
+await writeJson('data/index/models-dev-plans.json', {
+	asOf: modelsDevAsOf,
+	stats: [
+		{ label: 'Coding plans listed', value: planCount(modelsDevLatest) },
+		{ label: `Listed in ${modelsDevYearAgo}`, value: planCount(modelsDevYearAgo) },
+	],
+	findings: [
+		`models.dev listed ${planCount(modelsDevLatest)} subscription plans for coding tools on ${formatDate(modelsDevAsOf)}, up from ${planCount(modelsDevYearAgo)} a year before. The first appeared in ${monthName(planFirst)}.`,
+	],
+	tables: [{ title: 'Plans listed', columns: ['Plan'], rows: plansAt(modelsDevLatest).map((name) => [name]) }],
+});
+await updateSignal('coding-plans', {
+	value: number(planCount(modelsDevLatest)),
+	change: signed(planChange),
+	trend: series(modelsDevMonths, planTrend),
+	recent: recentOf(planTrend, 13),
+	...reading(planChange, { up: 'More plans', down: 'Fewer plans' }, 'toward'),
+	rule: 'More plans when more are listed than a year before.',
+	fromHigh: fromHighOf(planTrend),
+	analysis: {
+		title: 'Plans listed',
+		intro: `${planCount(modelsDevLatest)} plans, counting regional versions of a plan once.`,
+		points: plansAt(modelsDevLatest).map((name) => `${name}.`),
+	},
+});
+
+// Model hosts: services listing the most widely listed model, matched across services by file name.
+const hostsOf = (month) => Object.entries(modelsDevHistory[month].hosts);
+const topHosts = (month) => hostsOf(month)[0][1];
+const hostTrend = modelsDevMonths.map(topHosts);
+const hostChange = growth(topHosts, modelsDevYearAgo);
+const hostName = (key) => modelNames[key] ?? key;
+const hostShare = (month) => percent(topHosts(month), modelsDevHistory[month].providers);
+await writeJson('data/index/models-dev-hosts.json', {
+	asOf: modelsDevAsOf,
+	stats: [
+		{ label: 'Services listing the top model', value: topHosts(modelsDevLatest) },
+		{ label: 'Services listed', value: modelsDevHistory[modelsDevLatest].providers },
+		{ label: 'Year over year', value: signed(hostChange) },
+	],
+	findings: [
+		`${hostName(hostsOf(modelsDevLatest)[0][0])} is listed by ${topHosts(modelsDevLatest)} services, against ${topHosts(modelsDevYearAgo)} for the top model a year before.`,
+		`The catalogue grew from ${modelsDevHistory[modelsDevYearAgo].providers} to ${modelsDevHistory[modelsDevLatest].providers} services, so the top model's share went from ${hostShare(modelsDevYearAgo)}% to ${hostShare(modelsDevLatest)}% of them.`,
+	],
+	tables: [
+		{ title: 'Most widely listed models', columns: ['Model', 'Services'], rows: hostsOf(modelsDevLatest).slice(0, 10).map(([key, count]) => [hostName(key), count]) },
+	],
+});
+await updateSignal('model-hosts', {
+	value: number(topHosts(modelsDevLatest)),
+	change: signed(hostChange),
+	trend: series(modelsDevMonths, hostTrend),
+	recent: recentOf(hostTrend, 13),
+	...reading(hostChange, { up: 'More hosts', down: 'Fewer hosts' }, 'toward'),
+	rule: 'More hosts when the top model is listed by more services than the top model a year before.',
+	fromHigh: fromHighOf(hostTrend),
+	analysis: {
+		title: 'Most widely listed models',
+		intro: `The catalogue itself grew from ${modelsDevHistory[modelsDevYearAgo].providers} to ${modelsDevHistory[modelsDevLatest].providers} services in a year, so the top model's share went from ${hostShare(modelsDevYearAgo)}% to ${hostShare(modelsDevLatest)}%.`,
+		points: hostsOf(modelsDevLatest).slice(0, 5).map(([key, count]) => `${hostName(key)}: ${count} services.`),
+	},
+});
+
+// Open models: how many months the best open-weight SWE-bench Verified score trails closed models reaching it.
+// Models count as open when most models.dev listings say so. Models it doesn't list are left out.
+const isOpen = (model) => {
+	const votes = openVotes[modelKey(model)] ?? openVotes[modelKey(model.replace(/-\d{4}-?\d{2}-?\d{2}$/, ''))];
+	return votes && votes.filter(Boolean).length > votes.length / 2;
+};
+const knownSwe = sweRows.filter(({ model }) => isOpen(model) !== undefined).sort((a, b) => a.month.localeCompare(b.month));
+const monthsBetween = (from, to) => (Number(to.slice(0, 4)) - Number(from.slice(0, 4))) * 12 + Number(to.slice(5, 7)) - Number(from.slice(5, 7));
+const openRecords = new Map();
+let openBest = 0;
+for (const row of knownSwe.filter(({ model }) => isOpen(model))) {
+	if (row.score <= openBest) continue;
+	openBest = row.score;
+	const matched = knownSwe.find(({ model, score, month }) => !isOpen(model) && score >= row.score && month <= row.month);
+	openRecords.set(row.month, { ...row, closed: matched, lag: matched ? monthsBetween(matched.month, row.month) : 0 });
+}
+const openList = [...openRecords.values()];
+const openLatest = openList.at(-1);
+const closedBest = bestRow(knownSwe.filter(({ model }) => !isOpen(model)));
+const openTrend = openList.map(({ lag }) => lag);
+const lagWord = (lag) => `${lag} month${lag === 1 ? '' : 's'}`;
+// Matching closed models on release scores 100, and a year behind scores 0.
+const OPEN_LAG_LIMIT = 12;
+const openRecordAt = (month) => openList.filter((record) => record.month <= month).at(-1);
+const openLagAt = (month) => {
+	const record = openRecordAt(month);
+	return record && toGoal((1 - record.lag / OPEN_LAG_LIMIT) * 100);
+};
+await writeJson('data/index/models-dev.json', {
+	asOf: modelsDevAsOf,
+	stats: [
+		{ label: 'Open models behind by', value: lagWord(openLatest.lag) },
+		{ label: 'Best open score', value: benchmarkPercent(openLatest.score) },
+		{ label: 'Best closed score', value: benchmarkPercent(closedBest.score) },
+	],
+	findings: [
+		`${openLatest.model}, released in ${monthName(openLatest.month)}, scores ${benchmarkPercent(openLatest.score)} on SWE-bench Verified, which ${openLatest.closed ? `${openLatest.closed.model} reached in ${monthName(openLatest.closed.month)}` : 'no closed model had reached'}.`,
+		`${sweRows.length - knownSwe.length} of ${sweRows.length} results are left out, because models.dev doesn't list their model.`,
+	],
+	tables: [
+		{
+			title: 'Each new best open-weight score',
+			columns: ['Released', 'Open model', 'Score', 'Closed model that reached it first', 'Months behind'],
+			rows: openList.map(({ month, model, score, closed, lag }) => [month, model, benchmarkPercent(score), closed ? `${closed.model} (${closed.month})` : 'None', lag]),
+		},
+	],
+});
+await updateSignal('open-models', {
+	value: lagWord(openLatest.lag),
+	trend: series(openList.map(({ month }) => month), openTrend),
+	...(openLatest.lag < openList[0].lag
+		? { status: 'Catching up', direction: 'toward' }
+		: openLatest.lag > openList[0].lag
+			? { status: 'Falling behind', direction: 'away' }
+			: { status: 'Flat', direction: 'flat' }),
+	rule: 'Catching up when the newest open-weight best trails closed models by fewer months than the first one did.',
+	analysis: {
+		title: 'Each new best open-weight score',
+		intro: `The best closed model scores ${benchmarkPercent(closedBest.score)}, from ${closedBest.model}, against ${benchmarkPercent(openLatest.score)} for the best open-weight model.`,
+		points: openList.map(({ month, model, score, closed, lag }) =>
+			closed ? `${model} (${month}): ${benchmarkPercent(score)}, which ${closed.model} reached ${lagWord(lag)} earlier.` : `${model} (${month}): ${benchmarkPercent(score)}, ahead of every closed model.`,
+		),
+	},
+});
+
 // Coding agents: public pull requests from accounts and branches that identify an agent.
 const agentMonths = await readJson('data/raw/agent-prs/monthly.json');
 const AGENT_NAMES = ['Codex', 'Copilot', 'Devin', 'Cursor', 'Claude', 'Jules'];
@@ -1963,6 +2122,7 @@ const SCORE_AREAS = [
 			{ id: 'coding-benchmarks', at: (month) => (month >= sweFirst ? readingAt(sweByMonth, month, 24) : undefined), reason: () => `The best model resolves ${swePercent}% of SWE-bench Verified tasks.` },
 			{ id: 'task-length', name: 'AI task length', source: 'metr', question: 'How long a task can AI complete?', metric: 'Human working hours of tasks completed with 50% success', solvedIf: 'AI completes tasks lasting a working year (2,000 hours)', value: () => `${hours(metrBest.estimate)} hours`, at: metrLevelAt, reason: () => `Best model: tasks of about ${hours(metrBest.estimate)} hours half the time, against a goal of a working year.` },
 			{ id: 'token-prices', at: (month) => fallSince(tokenByMonth, month, 50), reason: (month) => sinceFirst(tokenByMonth, month) },
+			{ id: 'open-models', at: openLagAt, reason: (month) => `The best open-weight model trails closed models by ${lagWord(openRecordAt(month).lag)}, against a goal of none. A year behind scores 0%.` },
 			{ id: 'task-cost', name: 'Cost of a hard task', source: 'epoch-benchmarks', question: 'How much does a hard coding task cost?', metric: 'AI usage cost per FrontierSWE task for a near-top score', solvedIf: 'A hard coding task costs $1 in AI usage', value: (month) => usd(taskCostRunAt(month).cost), at: taskCostAt, reason: (month) => `About ${usd(taskCostRunAt(month).cost)} of AI usage per FrontierSWE task for a near-top score, against a goal of $1.` },
 		],
 	},

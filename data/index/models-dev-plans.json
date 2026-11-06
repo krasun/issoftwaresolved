@@ -1,0 +1,74 @@
+{
+	"asOf": "2026-11-01",
+	"stats": [
+		{
+			"label": "Coding plans listed",
+			"value": 16
+		},
+		{
+			"label": "Listed in 2025-11",
+			"value": 2
+		}
+	],
+	"findings": [
+		"models.dev listed 16 subscription plans for coding tools on Nov 1, 2026, up from 2 a year before. The first appeared in October 2025."
+	],
+	"tables": [
+		{
+			"title": "Plans listed",
+			"columns": [
+				"Plan"
+			],
+			"rows": [
+				[
+					"Alibaba Coding Plan"
+				],
+				[
+					"Alibaba Token Plan"
+				],
+				[
+					"ClinePass"
+				],
+				[
+					"KUAE Cloud Coding Plan"
+				],
+				[
+					"Kimi For Coding"
+				],
+				[
+					"MiniMax Token Plan"
+				],
+				[
+					"OpenCode Go"
+				],
+				[
+					"SCNet Token Plan"
+				],
+				[
+					"StepFun Step Plan"
+				],
+				[
+					"Tencent Coding Plan"
+				],
+				[
+					"Tencent Token Plan"
+				],
+				[
+					"Umans AI Coding Plan"
+				],
+				[
+					"Volcengine Ark Coding Plan"
+				],
+				[
+					"Xiaomi Token Plan"
+				],
+				[
+					"Z.AI Coding Plan"
+				],
+				[
+					"Zhipu AI Coding Plan"
+				]
+			]
+		}
+	]
+}
