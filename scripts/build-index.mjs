@@ -1859,6 +1859,91 @@ await updateSignal('tech-hiring', {
 		],
 	},
 });
+// Layoffs.fyi: tech layoffs over rolling 12 months, and the people in cuts attributed to AI, labelled from 2024.
+const layoffs = await readJson('data/raw/layoffs/monthly.json');
+const AI_LABELS_FROM = '2024-01';
+const layoffFirst = Object.keys(layoffs.months).sort()[0];
+const layoffMonths = [];
+for (let month = nextMonth(layoffFirst, 11); month < layoffs.asOf.slice(0, 7); month = nextMonth(month)) layoffMonths.push(month);
+const layoffsOver = (month, key, length = 12) => {
+	let sum = 0;
+	for (let i = 0; i < length; i++) sum += layoffs.months[nextMonth(month, -i)]?.[key] ?? 0;
+	return sum;
+};
+const aiLayoffMonths = layoffMonths.filter((month) => nextMonth(month, -11) >= AI_LABELS_FROM);
+const layoffLatest = layoffMonths.at(-1);
+const layoffYearAgo = nextMonth(layoffLatest, -12);
+const aiShareOf = (month, length = 12) => (layoffsOver(month, 'aiLaidOff', length) / layoffsOver(month, 'laidOff', length)) * 100;
+const aiShareByMonth = Object.fromEntries(aiLayoffMonths.map((month) => [month, aiShareOf(month)]));
+const aiLayoffTrend = aiLayoffMonths.map((month) => layoffsOver(month, 'aiLaidOff'));
+const aiLayoffChange = Math.round((layoffsOver(layoffLatest, 'aiLaidOff') / Math.max(layoffsOver(layoffYearAgo, 'aiLaidOff'), 1) - 1) * 100);
+const layoffPeak = layoffMonths.reduce((best, month) => (layoffsOver(month, 'laidOff') > layoffsOver(best, 'laidOff') ? month : best));
+const layoffTotal = layoffsOver(layoffLatest, 'laidOff');
+const layoffsAgainst = (month) => signed(Math.round((layoffTotal / layoffsOver(month, 'laidOff') - 1) * 100));
+const kilo = (value) => `${Math.round(value / 1000)}K`;
+const aiShareNow = Math.round(aiShareOf(layoffLatest));
+const aiLargest = layoffs.largest.filter(({ ai }) => ai).slice(0, 3);
+const joltsLayoffsThen = Math.round(rollingAverage(economy.layoffs, BASELINE_MONTH));
+const layoffYears = [...new Set(Object.keys(layoffs.months).map((month) => month.slice(0, 4)))].sort();
+const layoffsInYear = (year, key) => Object.entries(layoffs.months).reduce((sum, [month, totals]) => sum + (month.startsWith(year) ? totals[key] : 0), 0);
+await writeJson('data/index/layoffs.json', {
+	asOf: layoffLatest,
+	stats: [
+		{ label: 'Tech layoffs, last 12 months', value: kilo(layoffTotal) },
+		{ label: 'In cuts attributed to AI', value: kilo(layoffsOver(layoffLatest, 'aiLaidOff')) },
+		{ label: 'Share attributed to AI', value: `${aiShareNow}%` },
+		{ label: 'Share a year earlier', value: `${Math.round(aiShareOf(layoffYearAgo))}%` },
+	],
+	findings: [
+		`${number(layoffTotal)} tech workers were laid off in the 12 months to ${monthName(layoffLatest)}, ${layoffsAgainst(BASELINE_MONTH)} on the 12 months to November 2022, when ChatGPT launched.`,
+		`${aiShareNow}% of them were in cuts the company or press attributed to AI, against ${Math.round(aiShareOf(layoffYearAgo))}% a year earlier.`,
+		`About ${percent(layoffsOver(layoffLatest, 'unknown'), layoffsOver(layoffLatest, 'events'))}% of layoffs over the same 12 months have no published number, so the totals are too low.`,
+	],
+	tables: [
+		{
+			title: 'By year',
+			columns: ['Year', 'Layoffs', 'People laid off', 'Attributed to AI'],
+			rows: layoffYears.map((year) => [
+				year === layoffs.asOf.slice(0, 4) ? `${year} (to ${formatDate(layoffs.asOf)})` : year,
+				layoffsInYear(year, 'events'),
+				layoffsInYear(year, 'laidOff'),
+				year >= AI_LABELS_FROM.slice(0, 4) ? layoffsInYear(year, 'aiLaidOff') : '–',
+			]),
+		},
+		{
+			title: `Largest cuts, 12 months to ${monthName(layoffLatest)}`,
+			columns: ['Company', 'Month', 'People laid off', 'Attributed to AI'],
+			rows: layoffs.largest.map(({ company, month, laidOff, ai }) => [company, month, laidOff, ai ? 'Yes' : 'No']),
+		},
+	],
+});
+{
+	const path = 'src/content/sources/layoffs.json';
+	await writeJson(path, { ...(await readJson(path)), checked: layoffLatest });
+}
+await updateSignal('layoffs', {
+	value: kilo(layoffsOver(layoffLatest, 'aiLaidOff')),
+	change: signed(aiLayoffChange),
+	trend: series(aiLayoffMonths, aiLayoffTrend),
+	trendName: 'Attributed to AI, last 12 months',
+	comparison: { name: 'All tech layoffs', sameAxis: true, trend: series(aiLayoffMonths, aiLayoffMonths.map((month) => layoffsOver(month, 'laidOff'))) },
+	events: undefined,
+	recent: recentOf(aiLayoffTrend, 13),
+	...reading(aiLayoffChange, { up: 'More AI cuts', down: 'Fewer AI cuts' }, 'toward'),
+	rule: 'More AI cuts when more people were laid off in cuts attributed to AI over the last 12 months than over the 12 months before.',
+	fromHigh: fromHighOf(aiLayoffTrend),
+	analysis: {
+		title: 'More of the cuts are put down to AI',
+		intro: `${aiShareNow}% of tech workers laid off over the last 12 months were in cuts attributed to AI, against ${Math.round(aiShareOf(layoffYearAgo))}% a year earlier.`,
+		points: [
+			`All tech layoffs: ${kilo(layoffTotal)} over the 12 months to ${monthName(layoffLatest)}, ${layoffsAgainst(BASELINE_MONTH)} on the 12 months to November 2022 and ${layoffsAgainst(layoffPeak)} on the peak in the 12 months to ${monthName(layoffPeak)}.`,
+			`The largest cuts attributed to AI: ${aiLargest.map(({ company, laidOff }) => `${company} ${number(laidOff)}`).join(', ')}. A few large cuts move the share a lot.`,
+			`Over the last three months, ${Math.round(aiShareOf(layoffLatest, 3))}% of tech workers laid off were in cuts attributed to AI.`,
+			`For comparison, BLS counts ${layoffsNow}K layoffs and discharges a month in the US information sector over the 12 months to ${monthName(joltsLatest)}, against ${joltsLayoffsThen}K over the 12 months to November 2022. That count does not depend on anyone naming AI.`,
+		],
+	},
+});
+
 const applications = economy.businessApplications;
 const applicationMonths = Object.keys(applications).sort().filter((month) => month >= '2016');
 const applicationLatest = applicationMonths.at(-1);
@@ -2156,6 +2241,7 @@ const SCORE_AREAS = [
 			{ id: 'ai-company-jobs', at: () => percent(aiJobsRows.length - aiJobsHiring.length, aiJobsRows.length), reason: () => `${aiJobsRows.length - aiJobsHiring.length} of ${aiJobsRows.length} AI companies have stopped hiring engineers.` },
 			{ id: 'outsourcing', at: (month) => fallSince(outsourcingReal, month), reason: (month) => `After inflation: ${sinceFirst(outsourcingReal, month)}` },
 			{ id: 'tech-hiring', at: (month) => fallSince(openingsByMonth, month), reason: (month) => movedSince(openingsByMonth, month) },
+			{ id: 'layoffs', weight: 0.5, at: (month) => readingAt(aiShareByMonth, month, 3), reason: () => `${aiShareNow}% of tech workers laid off over the last 12 months were in cuts attributed to AI, including cuts to pay for AI. Counts half as much as other signals here, because it is a stated reason, not a measurement.` },
 			{ id: 'stack-overflow', at: (month) => fallSince(soMonths, month), reason: (month) => `${movedSince(soMonths, month)} Falling to a tenth scores 100%.` },
 			{ id: 'tech-output', at: (month) => {
 				const value = readingAt(perWorker, month, 12);

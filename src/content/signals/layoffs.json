@@ -1,0 +1,239 @@
+{
+	"order": 31,
+	"group": "Demand",
+	"name": "Tech layoffs",
+	"question": "Are tech companies cutting jobs because of AI?",
+	"metric": "Tech workers laid off in cuts attributed to AI, last 12 months",
+	"solvedIf": "Most tech layoffs are put down to AI",
+	"trendLabel": "Tech workers laid off over the previous 12 months, per month. Layoffs.fyi labels cuts by AI from 2024, so the chart starts in December 2024, the first full 12 months.",
+	"caution": [
+		"A cut counts as AI when the company or the press says so, and Layoffs.fyi includes cuts made to pay for AI investment or to respond to AI disrupting the market, not only people replaced by AI. Companies also have reasons to name AI, because investors like hearing it.",
+		"It counts everyone laid off at tech companies, not only engineers, and mostly announcements reported in the press. About a third of layoffs have no published number, so the totals are too low."
+	],
+	"value": "98K",
+	"change": "+213%",
+	"trend": [
+		{
+			"label": "2024-12",
+			"value": 10030
+		},
+		{
+			"label": "2025-01",
+			"value": 2156
+		},
+		{
+			"label": "2025-02",
+			"value": 6246
+		},
+		{
+			"label": "2025-03",
+			"value": 6366
+		},
+		{
+			"label": "2025-04",
+			"value": 6976
+		},
+		{
+			"label": "2025-05",
+			"value": 9674
+		},
+		{
+			"label": "2025-06",
+			"value": 10059
+		},
+		{
+			"label": "2025-07",
+			"value": 10075
+		},
+		{
+			"label": "2025-08",
+			"value": 14358
+		},
+		{
+			"label": "2025-09",
+			"value": 15665
+		},
+		{
+			"label": "2025-10",
+			"value": 31210
+		},
+		{
+			"label": "2025-11",
+			"value": 35350
+		},
+		{
+			"label": "2025-12",
+			"value": 35534
+		},
+		{
+			"label": "2026-01",
+			"value": 55161
+		},
+		{
+			"label": "2026-02",
+			"value": 58917
+		},
+		{
+			"label": "2026-03",
+			"value": 72732
+		},
+		{
+			"label": "2026-04",
+			"value": 74740
+		},
+		{
+			"label": "2026-05",
+			"value": 94704
+		},
+		{
+			"label": "2026-06",
+			"value": 117755
+		},
+		{
+			"label": "2026-07",
+			"value": 117702
+		},
+		{
+			"label": "2026-08",
+			"value": 114092
+		},
+		{
+			"label": "2026-09",
+			"value": 112985
+		},
+		{
+			"label": "2026-10",
+			"value": 97541
+		}
+	],
+	"trendName": "Attributed to AI, last 12 months",
+	"comparison": {
+		"name": "All tech layoffs",
+		"sameAxis": true,
+		"trend": [
+			{
+				"label": "2024-12",
+				"value": 152922
+			},
+			{
+				"label": "2025-01",
+				"value": 121322
+			},
+			{
+				"label": "2025-02",
+				"value": 122067
+			},
+			{
+				"label": "2025-03",
+				"value": 123578
+			},
+			{
+				"label": "2025-04",
+				"value": 126375
+			},
+			{
+				"label": "2025-05",
+				"value": 125941
+			},
+			{
+				"label": "2025-06",
+				"value": 117464
+			},
+			{
+				"label": "2025-07",
+				"value": 125061
+			},
+			{
+				"label": "2025-08",
+				"value": 105569
+			},
+			{
+				"label": "2025-09",
+				"value": 105987
+			},
+			{
+				"label": "2025-10",
+				"value": 121445
+			},
+			{
+				"label": "2025-11",
+				"value": 123622
+			},
+			{
+				"label": "2025-12",
+				"value": 122606
+			},
+			{
+				"label": "2026-01",
+				"value": 145252
+			},
+			{
+				"label": "2026-02",
+				"value": 140127
+			},
+			{
+				"label": "2026-03",
+				"value": 147911
+			},
+			{
+				"label": "2026-04",
+				"value": 127776
+			},
+			{
+				"label": "2026-05",
+				"value": 141441
+			},
+			{
+				"label": "2026-06",
+				"value": 166498
+			},
+			{
+				"label": "2026-07",
+				"value": 160850
+			},
+			{
+				"label": "2026-08",
+				"value": 157953
+			},
+			{
+				"label": "2026-09",
+				"value": 160446
+			},
+			{
+				"label": "2026-10",
+				"value": 147197
+			}
+		]
+	},
+	"recent": [
+		100,
+		113.3,
+		113.9,
+		176.7,
+		188.8,
+		233,
+		239.5,
+		303.4,
+		377.3,
+		377.1,
+		365.6,
+		362,
+		312.5
+	],
+	"status": "More AI cuts",
+	"direction": "toward",
+	"rule": "More AI cuts when more people were laid off in cuts attributed to AI over the last 12 months than over the 12 months before.",
+	"fromHigh": "-17% from high",
+	"analysis": {
+		"title": "More of the cuts are put down to AI",
+		"intro": "66% of tech workers laid off over the last 12 months were in cuts attributed to AI, against 26% a year earlier.",
+		"points": [
+			"All tech layoffs: 147K over the 12 months to October 2026, -6% on the 12 months to November 2022 and -57% on the peak in the 12 months to May 2023.",
+			"The largest cuts attributed to AI: Oracle 21,000, Amazon 16,000, Dell 11,000. A few large cuts move the share a lot.",
+			"Over the last three months, 6% of tech workers laid off were in cuts attributed to AI.",
+			"For comparison, BLS counts 46K layoffs and discharges a month in the US information sector over the 12 months to August 2026, against 37K over the 12 months to November 2022. That count does not depend on anyone naming AI."
+		]
+	},
+	"score": 66,
+	"scoreReason": "66% of tech workers laid off over the last 12 months were in cuts attributed to AI, including cuts to pay for AI. Counts half as much as other signals here, because it is a stated reason, not a measurement."
+}

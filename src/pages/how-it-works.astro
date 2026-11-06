@@ -33,7 +33,7 @@ const rules = [
 	{
 		title: 'A direct share',
 		why: 'No goal chosen, because a share stops at 100% by itself.',
-		text: 'Coding benchmarks, AI pull requests, the programming share of AI, developer sentiment and AI company hiring score the share itself.',
+		text: 'Coding benchmarks, AI pull requests, the programming share of AI, developer sentiment, AI company hiring and the share of tech layoffs attributed to AI score the share itself.',
 		latex: String.raw`s = 100 \cdot \text{share}_t`,
 	},
 	{
@@ -138,7 +138,7 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 	<section class="section" id="formula">
 		<div class="section-head">
 			<h2>3. Formula</h2>
-			<p>The score is the average of four questions, and each question is the weighted average of its signals. Every signal has a weight w of 1, except AI-built sites at 0.25, because its history is short. Counting questions equally stops a busy area from outvoting a quiet one.</p>
+			<p>The score is the average of four questions, and each question is the weighted average of its signals. Every signal has a weight w of 1, except AI-built sites at 0.25, because its history is short, and tech layoffs at 0.5, because the reason for a layoff is what the company or press says, not a measurement. Counting questions equally stops a busy area from outvoting a quiet one.</p>
 		</div>
 		<div class="math" set:html={main} />
 		<div class="section-head subhead">
@@ -192,6 +192,7 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 				<li>New MCP repos and product launches are shown but left out of the score, because we found no defensible number of them that would mean solved.</li>
 			<li>What AI models say is shown as a signal but left out of the score, because it is opinion, not evidence.</li>
 			<li>Coding benchmarks, task length and token prices only show what AI could do or cost, not that it replaced anyone.</li>
+			<li>Tech layoffs score the share attributed to AI, not how many people were laid off. Layoffs.fyi counts cuts made to pay for AI as AI layoffs, and companies have reasons to name AI, so the signal counts half. Its page sets the share against all tech layoffs and against BLS counts, which don't depend on anyone naming AI.</li>
 			<li>AI company hiring has only one reading, so past months assume it was the same. Signals count from when their data starts, so the trend can jump when one joins.</li>
 		</ul>
 	</section>

@@ -13,6 +13,7 @@ import { fetchHibp } from './hibp.mjs';
 import { fetchHttpArchive } from './http-archive.mjs';
 import { fetchIndeed } from './indeed.mjs';
 import { fetchInnovationGraph } from './innovation-graph.mjs';
+import { fetchLayoffs } from './layoffs.mjs';
 import { fetchLitellm } from './litellm.mjs';
 import { fetchMcpRegistry } from './mcp-registry.mjs';
 import { fetchModelsDev } from './models-dev.mjs';
@@ -61,4 +62,5 @@ export const sources = {
 	'github-mcp': fetchGithubMcp,
 	'mcp-registry': fetchMcpRegistry,
 	'models-dev': fetchModelsDev,
+	layoffs: fetchLayoffs,
 };

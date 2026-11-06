@@ -1,0 +1,152 @@
+{
+	"asOf": "2026-10",
+	"stats": [
+		{
+			"label": "Tech layoffs, last 12 months",
+			"value": "147K"
+		},
+		{
+			"label": "In cuts attributed to AI",
+			"value": "98K"
+		},
+		{
+			"label": "Share attributed to AI",
+			"value": "66%"
+		},
+		{
+			"label": "Share a year earlier",
+			"value": "26%"
+		}
+	],
+	"findings": [
+		"147,197 tech workers were laid off in the 12 months to October 2026, -6% on the 12 months to November 2022, when ChatGPT launched.",
+		"66% of them were in cuts the company or press attributed to AI, against 26% a year earlier.",
+		"About 36% of layoffs over the same 12 months have no published number, so the totals are too low."
+	],
+	"tables": [
+		{
+			"title": "By year",
+			"columns": [
+				"Year",
+				"Layoffs",
+				"People laid off",
+				"Attributed to AI"
+			],
+			"rows": [
+				[
+					"2020",
+					635,
+					80998,
+					"–"
+				],
+				[
+					"2021",
+					44,
+					15823,
+					"–"
+				],
+				[
+					"2022",
+					1231,
+					165269,
+					"–"
+				],
+				[
+					"2023",
+					1390,
+					265660,
+					"–"
+				],
+				[
+					"2024",
+					634,
+					152922,
+					10030
+				],
+				[
+					"2025",
+					333,
+					122606,
+					35534
+				],
+				[
+					"2026 (to Nov 6, 2026)",
+					392,
+					142004,
+					93937
+				]
+			]
+		},
+		{
+			"title": "Largest cuts, 12 months to October 2026",
+			"columns": [
+				"Company",
+				"Month",
+				"People laid off",
+				"Attributed to AI"
+			],
+			"rows": [
+				[
+					"Oracle",
+					"2026-06",
+					21000,
+					"Yes"
+				],
+				[
+					"Amazon",
+					"2026-01",
+					16000,
+					"Yes"
+				],
+				[
+					"Dell",
+					"2026-03",
+					11000,
+					"Yes"
+				],
+				[
+					"Meta",
+					"2026-05",
+					8000,
+					"Yes"
+				],
+				[
+					"Microsoft",
+					"2026-07",
+					4800,
+					"No"
+				],
+				[
+					"Cisco",
+					"2026-05",
+					4000,
+					"Yes"
+				],
+				[
+					"Block",
+					"2026-02",
+					4000,
+					"Yes"
+				],
+				[
+					"HP",
+					"2025-11",
+					4000,
+					"Yes"
+				],
+				[
+					"Uber",
+					"2026-09",
+					3300,
+					"No"
+				],
+				[
+					"Intuit",
+					"2026-05",
+					3000,
+					"Yes"
+				]
+			]
+		}
+	]
+}

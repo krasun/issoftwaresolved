@@ -1,0 +1,19 @@
+{
+	"name": "Layoffs.fyi",
+	"url": "https://layoffs.fyi/",
+	"signal": "layoffs",
+	"measures": "Tech layoffs by month, and the share attributed to AI",
+	"about": "Layoffs.fyi tracks layoffs at tech companies from press reports and public filings since March 2020, and from 2024 labels the ones that the company or press attributed to AI. We read its public tracker once a month and store only monthly counts and the largest recent cuts, not sources or notes.",
+	"license": "Free to use with attribution",
+	"licenseUrl": "https://layoffs.fyi/",
+	"attribution": "Data from Layoffs.fyi (layoffs.fyi), created by Roger Lee. We calculate monthly totals and shares from its tracker.",
+	"limitations": [
+		"It relies on announcements and press reports, so cuts that are never reported are missed, and about a third of layoffs have no published number.",
+		"It covers tech companies worldwide, every role and not only engineers.",
+		"The AI label includes cutting staff to pay for AI and responding to AI-driven market change, not only replacing people with AI.",
+		"Layoffs are added after they happen, so recent months can rise in later readings."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

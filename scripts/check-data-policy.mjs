@@ -2,7 +2,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 
 // Local folders that hold sources without a clear license. These may only contain numbers and short labels.
-const NUMBERS_ONLY = ['agent-prs', 'bluesky', 'ai-company-jobs', 'github-mcp', 'hacker-news', 'http-archive', 'npm', 'pwn-watch', 'stack-overflow', 'status-pages', 'uneed'];
+const NUMBERS_ONLY = ['agent-prs', 'bluesky', 'ai-company-jobs', 'github-mcp', 'hacker-news', 'http-archive', 'layoffs', 'npm', 'pwn-watch', 'stack-overflow', 'status-pages', 'uneed'];
 const BENCHMARK_FILES = ['frontierswe_external.csv', 'frontiercode_external.csv', 'deepswe_external.csv', 'metr.json'];
 const TEXT_KEYS = /^(text|title|summary|description|comment|body|content|url|slug|sources?)$/i;
 const MAX_STRING = 80;

@@ -444,6 +444,11 @@
 			"change": "+24%",
 			"status": "Recovering"
 		},
+		"layoffs": {
+			"value": "98K",
+			"change": "+213%",
+			"status": "More AI cuts"
+		},
 		"model-hosts": {
 			"value": "81",
 			"change": "+376%",
