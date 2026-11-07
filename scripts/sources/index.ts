@@ -24,6 +24,7 @@ import { fetchNvd } from './nvd.ts';
 import { fetchOsv } from './osv.ts';
 import { fetchOpenRouter } from './openrouter.ts';
 import { fetchOutsourcing } from './outsourcing.ts';
+import { fetchProductHunt } from './product-hunt.ts';
 import { fetchPwnWatch } from './pwn-watch.ts';
 import { fetchSec } from './sec.ts';
 import { fetchStackOverflow } from './stack-overflow.ts';
@@ -53,6 +54,7 @@ export const sources: Record<string, Source> = {
 	'fed-funds': fetchFedFunds,
 	uneed: fetchUneed,
 	devhunt: fetchDevHunt,
+	'product-hunt': fetchProductHunt,
 	outsourcing: fetchOutsourcing,
 	economy: fetchEconomy,
 	openrouter: fetchOpenRouter,

@@ -1,0 +1,19 @@
+{
+	"name": "Product Hunt",
+	"url": "https://www.producthunt.com/",
+	"signal": "product-launches",
+	"measures": "Products posted per month, and how many Product Hunt featured on its home page",
+	"about": "Product Hunt is the largest launch site for new software, with every month back to November 2013. We ask its official API how many products were posted in each month, and how many of them it featured, by Pacific time, the time its launch days run on. We store only the two monthly counts. Posts count in the score with Uneed and DevHunt.",
+	"license": "No data license published",
+	"licenseUrl": "https://api.producthunt.com/v2/docs",
+	"attribution": "Data by Product Hunt (producthunt.com), from its official API. We count products posted and featured per month.",
+	"limitations": [
+		"It is one site, so its growth can reflect its own popularity and rules rather than more software being built.",
+		"Featuring is an editorial choice. Product Hunt featured most posts until 2016 and about one in thirty in 2026, so featured counts follow its policy more than demand.",
+		"Removed and hidden posts leave every month, so past months can change slightly.",
+		"Incomplete months are excluded."
+	],
+	"checked": "2026-10",
+	"role": "headline",
+	"dataPolicy": "numbers-only"
+}

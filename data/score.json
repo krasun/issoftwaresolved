@@ -94,6 +94,14 @@
 					"reason": "Up 94% since ChatGPT launched."
 				},
 				{
+					"id": "product-launches",
+					"weight": 0.25,
+					"href": "/signals/product-launches",
+					"name": "Product launches",
+					"score": 28,
+					"reason": "Uneed, DevHunt and Product Hunt launches combined: 7.0 times their February 2024 level by October 2026. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
+				},
+				{
 					"id": "programming-share",
 					"weight": 1,
 					"href": "/signals/programming-share",
@@ -108,14 +116,6 @@
 					"name": "New tech businesses",
 					"score": 24,
 					"reason": "Up 74% since ChatGPT launched."
-				},
-				{
-					"id": "product-launches",
-					"weight": 0.25,
-					"href": "/signals/product-launches",
-					"name": "Product launches",
-					"score": 22,
-					"reason": "Uneed launches and DevHunt submissions combined: 4.5 times their February 2024 level by August 2026. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
 				},
 				{
 					"id": "ai-built-sites",

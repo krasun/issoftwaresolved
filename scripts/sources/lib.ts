@@ -8,10 +8,10 @@ import { createGzip } from 'node:zlib';
 
 const USER_AGENT = 'issoftwaresolved-index';
 
-export const request = async (url: string, attempts = 3): Promise<Response> => {
+export const request = async (url: string, attempts = 3, init: RequestInit = {}): Promise<Response> => {
 	for (let attempt = 1; ; attempt++) {
 		try {
-			const response = await fetch(url, { headers: { 'user-agent': USER_AGENT } });
+			const response = await fetch(url, { ...init, headers: { 'user-agent': USER_AGENT, ...init.headers } });
 			if (!response.ok) throw new Error(`HTTP ${response.status}`);
 			return response;
 		} catch (error) {

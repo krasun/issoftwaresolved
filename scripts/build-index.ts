@@ -1,5 +1,6 @@
 import { parseUneedMonths } from './sources/uneed.ts';
 import type { DevHunt } from './sources/devhunt.ts';
+import type { ProductHuntMonth } from './sources/product-hunt.ts';
 import { createReadStream } from 'node:fs';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
@@ -824,16 +825,6 @@ const devHuntCrossCheck = uneedSameMonths === undefined
 	? undefined
 	: `On DevHunt, a launch site for developer tools, submissions changed ${signed(devHuntChange)} from ${devHuntYearAgo} to ${devHuntLatest}, while Uneed launches changed ${signed(uneedSameMonths)} over the same months. ${Math.abs(devHuntChange - uneedSameMonths) >= 20 ? 'The two sites disagree, so the rise may belong to Uneed rather than to software launches in general.' : 'The two sites roughly agree.'} Later DevHunt months are left out because a new submit form multiplied its submissions.`;
 
-// Launches in the score: both sites against their first shared month, combined as a geometric mean,
-// so neither site's own growth outweighs the other. It stops where DevHunt stops being comparable.
-const launchIndexMonths = devHuntComparable.filter((month) => launches[month] !== undefined);
-const launchIndexStart = launchIndexMonths[0];
-const launchIndex: Series = Object.fromEntries(launchIndexMonths.map((month) => [
-	month,
-	Math.sqrt((launches[month] / launches[launchIndexStart]) * (devHuntSubmitted[month] / devHuntSubmitted[launchIndexStart])),
-]));
-const launchIndexLatest = launchIndexMonths.at(-1)!;
-const launchTimes = (site: Series) => (site[launchIndexLatest] / site[launchIndexStart]).toFixed(1);
 
 await writeJson('data/index/devhunt.json', {
 	asOf: devHuntNewest.month,
@@ -862,6 +853,69 @@ await writeJson('data/index/devhunt.json', {
 			title: 'Changes DevHunt logged',
 			columns: ['Date', 'Kind', 'Change'],
 			rows: devHunt.changes.map(({ date, kind, summary }) => [date, kind, summary]),
+		},
+	],
+});
+
+// Product Hunt: products posted per month since 2013, the largest launch site, to check the other two against.
+// Featured posts follow Product Hunt's editors, so the total is the series that tracks makers.
+const productHunt = (await readJson<{ months: ProductHuntMonth[] }>('data/raw/product-hunt/monthly.json')).months;
+const phMonths = productHunt.map(({ month }) => month);
+const phLaunched = Object.fromEntries(productHunt.map(({ month, launched }) => [month, launched]));
+const phFeatured = Object.fromEntries(productHunt.map(({ month, featured }) => [month, featured]));
+const phLatest = phMonths.at(-1)!;
+const phYearAgo = nextMonth(phLatest, -12);
+const phChange = Math.round((phLaunched[phLatest] / phLaunched[phYearAgo] - 1) * 100);
+const phShare = (month: string) => Math.round((phFeatured[month] / phLaunched[month]) * 1000) / 10;
+const phPeakBefore = (before: string) => phMonths.filter((month) => month < before).reduce((best, month) => (phLaunched[month] > phLaunched[best] ? month : best));
+const phOldPeak = phPeakBefore('2024-01');
+const phYear = (year: string) => phMonths.filter((month) => month.startsWith(year)).reduce((sum, month) => sum + phLaunched[month], 0);
+const phCrossCheck = launches[phLatest] && launches[phYearAgo]
+	? `On Product Hunt, the largest launch site, products posted changed ${signed(phChange)} from ${phYearAgo} to ${phLatest}, while Uneed launches changed ${signed(Math.round((launches[phLatest] / launches[phYearAgo] - 1) * 100))} over the same months.`
+	: undefined;
+
+// Launches in the score: a chained index of all three sites. Each month moves by the geometric mean of the
+// month-on-month changes of the sites that have both months, so a site can drop out (DevHunt after its new
+// submit form) without making the index jump. It needs two sites, so one site's own growth never decides it.
+const LAUNCH_SITES: [string, Series][] = [
+	['Uneed launches', launches],
+	['DevHunt submissions', Object.fromEntries(devHuntComparable.map((month) => [month, devHuntSubmitted[month]]))],
+	['Product Hunt posts', phLaunched],
+];
+const launchIndexStart = launchMonths.find((month) => LAUNCH_SITES.every(([, site]) => site[month]))!;
+const launchIndex: Series = { [launchIndexStart]: 1 };
+for (let previous = launchIndexStart, month = nextMonth(previous); ; previous = month, month = nextMonth(month)) {
+	const changes = LAUNCH_SITES.flatMap(([, site]) => (site[month] && site[previous] ? [Math.log(site[month] / site[previous])] : []));
+	if (changes.length < 2) break;
+	launchIndex[month] = launchIndex[previous] * Math.exp(changes.reduce((sum, change) => sum + change, 0) / changes.length);
+}
+const launchIndexLatest = Object.keys(launchIndex).at(-1)!;
+const launchSitePoints = LAUNCH_SITES.map(([name, site]) => {
+	const last = Object.keys(launchIndex).filter((month) => site[month]).at(-1)!;
+	return `${name}: ${(site[last] / site[launchIndexStart]).toFixed(1)} times their ${launchIndexStart} level by ${last}.`;
+});
+
+await writeJson('data/index/product-hunt.json', {
+	asOf: phLatest,
+	chart: { name: 'Products posted to Product Hunt per month', trend: series(phMonths, phMonths.map((month) => phLaunched[month])) },
+	stats: [
+		{ label: `Posted, ${phLatest}`, value: phLaunched[phLatest] },
+		{ label: 'Year over year', value: signed(phChange) },
+		{ label: `Featured, ${phLatest}`, value: phFeatured[phLatest] },
+		{ label: `Since ${phMonths[0]}`, value: phMonths.reduce((sum, month) => sum + phLaunched[month], 0) },
+	],
+	findings: [
+		`${number(phLaunched[phLatest])} products were posted to Product Hunt in ${phLatest}, against ${number(phLaunched[phYearAgo])} in ${phYearAgo}: ${signed(phChange)}.`,
+		`Before 2024 the busiest month was ${phOldPeak}, with ${number(phLaunched[phOldPeak])} products. ${phLatest} had ${(phLaunched[phLatest] / phLaunched[phOldPeak]).toFixed(1)} times as many.`,
+		`${number(phYear('2025'))} products were posted in 2025, against ${number(phYear('2023'))} in 2023.`,
+		`Product Hunt featured ${phShare(phLatest)}% of posts in ${phLatest}, against ${phShare(phYearAgo)}% a year before and ${phShare(phMonths[12])}% in ${phMonths[12]}. Featured counts follow its editors, so we use every post.`,
+		'This is one site, so its growth may reflect the site itself. Removed posts leave every month, so past months can go down slightly. Months use America/Los_Angeles.',
+	],
+	tables: [
+		{
+			title: 'Products per month (complete months, Pacific time)',
+			columns: ['Month', 'Posted', 'Featured', 'Featured share'],
+			rows: phMonths.slice(-36).reverse().map((month) => [month, phLaunched[month], phFeatured[month], `${phShare(month)}%`]),
 		},
 	],
 });
@@ -1274,17 +1328,17 @@ await updateSignal('product-launches', {
 	monthlyActivity: launchActivity,
 	comparison: { name: `DevHunt tools submitted, to ${devHuntLatest}`, trend: series(devHuntOnChart, devHuntOnChart.map((month) => devHuntSubmitted[month])) },
 	caution: [
-		...((await readJson<Signal>('src/content/signals/product-launches.json')).caution ?? []).filter((line) => !line.includes('DevHunt')),
+		...((await readJson<Signal>('src/content/signals/product-launches.json')).caution ?? []).filter((line) => !line.includes('DevHunt') && !line.includes('Product Hunt')),
 		...(devHuntCrossCheck ? [devHuntCrossCheck] : []),
+		...(phCrossCheck ? [phCrossCheck] : []),
 	],
 	analysis: {
 		title: 'How launches count in the score',
-		intro: `The score combines both launch sites, so neither one's own growth decides it. Each site is set against ${launchIndexStart}, and the two multiples are averaged as a geometric mean. The combined index stands at ${launchIndex[launchIndexLatest].toFixed(1)} times in ${launchIndexLatest}.`,
+		intro: `The score combines three launch sites, so no one site's growth decides it. Starting at 1 in ${launchIndexStart}, the index moves each month by the geometric mean of the sites' month-on-month changes. The combined index stands at ${launchIndex[launchIndexLatest].toFixed(1)} times in ${launchIndexLatest}.`,
 		points: [
-			`Uneed launches: ${launchTimes(launches)} times their ${launchIndexStart} level by ${launchIndexLatest}.`,
-			`DevHunt submissions: ${launchTimes(devHuntSubmitted)} times their ${launchIndexStart} level by ${launchIndexLatest}.`,
-			`The index stops at ${launchIndexLatest}, the last month before DevHunt's new submit form, and the score keeps that reading for up to a year. It does not use Uneed alone after that, because one site's growth would decide it.`,
-			'Growing 1,000 times scores 100%, as for the other growth signals, and launches count a quarter as much as other signals in their question, because both sites can grow through their own popularity and pricing.',
+			...launchSitePoints,
+			`DevHunt leaves the index after ${devHuntLatest}, the last month before its new submit form. Because the index is chained month to month, a site leaving doesn't make it jump, and it always needs at least two sites.`,
+			'Growing 1,000 times scores 100%, as for the other growth signals, and launches count a quarter as much as other signals in their question, because launch sites can grow through their own popularity and pricing.',
 		],
 	},
 	value: number(launches[launchLatest]),
@@ -1326,6 +1380,7 @@ for (const [id, asOf] of [
 	['fed-funds', rateLatestMonth],
 	['github-mcp', mcpLatest],
 	['uneed', launchLatest],
+	['product-hunt', phLatest],
 	['ai-company-jobs', formatDate(aiJobs.date)],
 	['mcp-registry', registryLatest],
 ]) {
@@ -2424,7 +2479,7 @@ const SCORE_AREAS: ScoreArea[] = [
 			{ id: 'product-launches', weight: 0.25, at: (month) => {
 				const value = readingAt(launchIndex, month);
 				return value === undefined ? undefined : toGoal((Math.log10(value) / 3) * 100);
-			}, reason: (month) => `Uneed launches and DevHunt submissions combined: ${readingAt(launchIndex, month)!.toFixed(1)} times their ${monthName(launchIndexStart)} level by ${monthName(launchIndexLatest)}. ${LOG_GOAL} Counts a quarter as much as other signals here.` },
+			}, reason: (month) => `Uneed, DevHunt and Product Hunt launches combined: ${readingAt(launchIndex, month)!.toFixed(1)} times their ${monthName(launchIndexStart)} level by ${monthName(launchIndexLatest)}. ${LOG_GOAL} Counts a quarter as much as other signals here.` },
 		],
 	},
 	{

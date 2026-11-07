@@ -165,7 +165,8 @@
 		"This is a weak proxy. It counts launches on one site, Uneed, not all new software.",
 		"Uneed's own growth and curation affect the counts. More launches do not establish more demand or AI's impact.",
 		"Launches count still-published products by real launch date. Removed products and relaunches can revise history.",
-		"On DevHunt, a launch site for developer tools, submissions changed +3% from 2025-08 to 2026-08, while Uneed launches changed +51% over the same months. The two sites disagree, so the rise may belong to Uneed rather than to software launches in general. Later DevHunt months are left out because a new submit form multiplied its submissions."
+		"On DevHunt, a launch site for developer tools, submissions changed +3% from 2025-08 to 2026-08, while Uneed launches changed +51% over the same months. The two sites disagree, so the rise may belong to Uneed rather than to software launches in general. Later DevHunt months are left out because a new submit form multiplied its submissions.",
+		"On Product Hunt, the largest launch site, products posted changed +326% from 2025-10 to 2026-10, while Uneed launches changed +179% over the same months."
 	],
 	"chartNote": "Source: Uneed, uneed.best (CC BY 4.0). Complete months in America/Los_Angeles. The official launch-stats API replaces the former sitemap-date proxy across the full history. Dashed line: Data: DevHunt (devhunt.org), CC BY 4.0, developer tools submitted per month in UTC, shown only before its new submit form of September 2026.",
 	"monthlyActivity": [
@@ -325,14 +326,15 @@
 	},
 	"analysis": {
 		"title": "How launches count in the score",
-		"intro": "The score combines both launch sites, so neither one's own growth decides it. Each site is set against 2024-02, and the two multiples are averaged as a geometric mean. The combined index stands at 4.5 times in 2026-08.",
+		"intro": "The score combines three launch sites, so no one site's growth decides it. Starting at 1 in 2024-02, the index moves each month by the geometric mean of the sites' month-on-month changes. The combined index stands at 7.0 times in 2026-10.",
 		"points": [
-			"Uneed launches: 8.6 times their 2024-02 level by 2026-08.",
+			"Uneed launches: 10.9 times their 2024-02 level by 2026-10.",
 			"DevHunt submissions: 2.4 times their 2024-02 level by 2026-08.",
-			"The index stops at 2026-08, the last month before DevHunt's new submit form, and the score keeps that reading for up to a year. It does not use Uneed alone after that, because one site's growth would decide it.",
-			"Growing 1,000 times scores 100%, as for the other growth signals, and launches count a quarter as much as other signals in their question, because both sites can grow through their own popularity and pricing."
+			"Product Hunt posts: 10.1 times their 2024-02 level by 2026-10.",
+			"DevHunt leaves the index after 2026-08, the last month before its new submit form. Because the index is chained month to month, a site leaving doesn't make it jump, and it always needs at least two sites.",
+			"Growing 1,000 times scores 100%, as for the other growth signals, and launches count a quarter as much as other signals in their question, because launch sites can grow through their own popularity and pricing."
 		]
 	},
-	"score": 22,
-	"scoreReason": "Uneed launches and DevHunt submissions combined: 4.5 times their February 2024 level by August 2026. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
+	"score": 28,
+	"scoreReason": "Uneed, DevHunt and Product Hunt launches combined: 7.0 times their February 2024 level by October 2026. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
 }

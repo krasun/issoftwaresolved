@@ -57,7 +57,7 @@ const rules = [
 	{
 		title: 'Growth from a recent start',
 		why: 'A round number and our judgment: these start from a small base, where tenfold comes quickly.',
-		text: 'AI and coding app tokens, sites on AI builders, and product launches on Uneed and DevHunt combined, against their first month. Growing 1,000 times scores 100%.',
+		text: 'AI and coding app tokens, sites on AI builders, and product launches on Uneed, DevHunt and Product Hunt combined, against their first month. Growing 1,000 times scores 100%.',
 		latex: String.raw`s = \operatorname{clamp}\!\left(100\,\frac{\log_{10}(x_t / x_0)}{3}\right)`,
 	},
 	{
@@ -190,7 +190,7 @@ const clampNote = math(String.raw`\operatorname{clamp}`, false);
 			<li>More building counts toward solved because it suggests software is getting easier to make, but people still build most of it and the data can't separate them. Read the other way, the score would be lower.</li>
 			<li>The goals and groups are our judgment, and no data sets them. Moving every goal together, a fifth closer or a quarter further on its log scale, takes today's score from {site.score}% to between {site.scoreRange?.low}% and {site.scoreRange?.high}%. A tenfold goal, for example, becomes about 6 or 18 times.</li>
 				<li>New MCP repos are shown but left out of the score, because we found no defensible number of them that would mean solved.</li>
-				<li>Product launches count at a quarter weight, as the geometric mean of Uneed launches and DevHunt submissions against February 2024. One site alone would let its own growth decide, and the two disagree. The index stops in August 2026, when a new DevHunt submit form multiplied its submissions.</li>
+				<li>Product launches count at a quarter weight, as a chained index of Uneed launches, DevHunt submissions and Product Hunt posts from February 2024. Each month moves by the geometric mean of the sites' monthly changes, so one site alone can't decide it, and the sites disagree. DevHunt leaves after August 2026, when a new submit form multiplied its submissions, and the index needs at least two sites.</li>
 			<li>What AI models say is shown as a signal but left out of the score, because it is opinion, not evidence.</li>
 			<li>Coding benchmarks, task length and token prices only show what AI could do or cost, not that it replaced anyone.</li>
 			<li>Tech layoffs score the share attributed to AI, not how many people were laid off. Layoffs.fyi counts cuts made to pay for AI as AI layoffs, and companies have reasons to name AI, so the signal counts half. Its page sets the share against all tech layoffs and against BLS counts, which don't depend on anyone naming AI.</li>
