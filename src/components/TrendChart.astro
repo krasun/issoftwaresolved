@@ -1,4 +1,5 @@
 ---
+import LinkedText from './LinkedText.astro';
 type Props = { maxValue?: number; name: string; trend: { label: string; value: number }[]; scale?: 'time' | 'category'; comparison?: { name: string; trend: { label: string; value: number }[]; sameAxis?: boolean }; events?: { month: string; label: string }[] };
 const { maxValue, name, trend, scale = 'time', comparison, events = [] } = Astro.props;
 const labels = trend.map(point => point.label);
@@ -28,8 +29,8 @@ const tickIndexes = [...new Set([0, Math.floor((values.length-1)/2), values.leng
 const marks = events.filter(e => dated && stamp(e.month) >= times[0] && stamp(e.month) <= times.at(-1)!);
 ---
 <div class="interactive-chart" data-values={JSON.stringify(values.map((v,i) => `${labels[i]} — ${name}: ${exacts[i]}${comparison ? `; ${comparison.name}: ${exact(otherValues[i])}` : ''}`))} data-positions={JSON.stringify(values.map((_,i) => x(i)))}>
- <p class="chart-caption">{name} · {labels[0]} – {labels.at(-1)}</p>
- {comparison && <p class="chart-caption">Solid: {name}. Dashed: {comparison.name}{comparison.sameAxis ? ' (same scale).' : ' (right scale).'}</p>}
+ <p class="chart-caption"><LinkedText text={name} /> · {labels[0]} – {labels.at(-1)}</p>
+ {comparison && <p class="chart-caption">Solid: <LinkedText text={name} />. Dashed: <LinkedText text={comparison.name} />{comparison.sameAxis ? ' (same scale).' : ' (right scale).'}</p>}
  <div class:list={['chart', { 'chart-dual': comparison && !comparison.sameAxis }]}>
   <div class="chart-y" aria-hidden="true">{[4,3,2,1,0].map(n => <span>{compact(n*step)}</span>)}</div>
   <div class="chart-plot" data-inspect>

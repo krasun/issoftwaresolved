@@ -1,4 +1,5 @@
 ---
+import LinkedText from '../../components/LinkedText.astro';
 import TrendChart from '../../components/TrendChart.astro';
 import { signalArea, areaAnchor } from '../../lib/content';
 import Layout from '../../layouts/Layout.astro';
@@ -27,7 +28,7 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 		<div class="section-head">
 			<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/score">Score</a> / {area ? <a href={`/score#${areaAnchor(area.name)}`}>{area.name}</a> : <a href="/signals">Signals</a>} / <span aria-current="page">{name}</span></nav>
 			<h1 class="page-title">{name}</h1>
-			<p>{question}</p>
+			<p><LinkedText text={question} /></p>
 			{area ? <p>Contributes to: <a class="inline-link" href={`/score#${areaAnchor(area.name)}`}>{area.name}</a>. Signal score: {score} / 100. Relative weight within this question: {scored?.weight}.</p> : <p>Supporting context; does not contribute to the overall score.</p>}
 			<p class="source-links">
 				<a href="/signals">All signals</a>
@@ -73,14 +74,14 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 				<div class="caution">
 					<strong>Caution</strong>
 					{caution.map((line) => (
-						<p>{line}</p>
+						<p><LinkedText text={line} /></p>
 					))}
 				</div>
 			</section>
 		)
 	}
 
-	{chartTrend && <section class="section"><div class="section-head"><h2>Observed trend</h2>{trendLabel && <p>{trendLabel}</p>}{chartNote && <p>{chartNote}</p>}</div><TrendChart name={trendName ?? trendLabel ?? metric} trend={chartTrend} scale={trendScale} comparison={comparison} events={events} /></section>}
+	{chartTrend && <section class="section"><div class="section-head"><h2>Observed trend</h2>{trendLabel && <p><LinkedText text={trendLabel} /></p>}{chartNote && <p><LinkedText text={chartNote} /></p>}</div><TrendChart name={trendName ?? trendLabel ?? metric} trend={chartTrend} scale={trendScale} comparison={comparison} events={events} /></section>}
 
 
 	{signal.data.monthlyActivity && <section class="section">
@@ -104,17 +105,17 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 		<dl class="signal-details">
 			<div>
 				<dt>Metric</dt>
-				<dd>{metric}</dd>
+				<dd><LinkedText text={metric} /></dd>
 			</div>
 			<div>
 				<dt>Solved if</dt>
-				<dd>{solvedIf}</dd>
+				<dd><LinkedText text={solvedIf} /></dd>
 			</div>
 			{
 				score !== undefined && (
 					<div>
 						<dt>Signal score</dt>
-						<dd>{score} / 100. {scoreReason} <a class="inline-link" href="/score">How it is scored</a></dd>
+						<dd>{score} / 100. {scoreReason && <LinkedText text={scoreReason} />} <a class="inline-link" href="/score">How it is scored</a></dd>
 					</div>
 				)
 			}
@@ -122,7 +123,7 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 				rule && (
 					<div>
 						<dt>Status rule</dt>
-						<dd>{rule}</dd>
+						<dd><LinkedText text={rule} /></dd>
 					</div>
 				)
 			}
@@ -146,11 +147,11 @@ const chartTrend = trend && trend.length >= 2 ? trend : undefined;
 			<section class="section">
 				<div class="section-head">
 					<h2>{analysis.title}</h2>
-					<p>{analysis.intro}</p>
+					<p><LinkedText text={analysis.intro} /></p>
 				</div>
 				<ul class="findings">
 					{analysis.points.map((point) => (
-						<li>{point}</li>
+						<li><LinkedText text={point} /></li>
 					))}
 				</ul>
 				{quote && (

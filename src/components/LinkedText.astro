@@ -1,0 +1,13 @@
+---
+// Links each mention of a launch site to the site itself, as thanks for opening its data to us.
+const SITES: Record<string, string> = {
+	Uneed: 'https://www.uneed.best/',
+	DevHunt: 'https://devhunt.org/',
+};
+const MENTION = new RegExp(`\\b(${Object.keys(SITES).join('|')})\\b`);
+
+type Props = { text: string };
+const parts = Astro.props.text.split(MENTION);
+---
+
+{parts.map((part, i) => (i % 2 ? <a class="inline-link" href={SITES[part]}>{part}</a> : part))}
