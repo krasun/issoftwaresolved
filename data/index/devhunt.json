@@ -1,0 +1,582 @@
+{
+	"asOf": "2026-10",
+	"chart": {
+		"name": "Developer tools submitted to DevHunt per month",
+		"trend": [
+			{
+				"label": "2024-01",
+				"value": 163
+			},
+			{
+				"label": "2024-02",
+				"value": 132
+			},
+			{
+				"label": "2024-03",
+				"value": 106
+			},
+			{
+				"label": "2024-04",
+				"value": 162
+			},
+			{
+				"label": "2024-05",
+				"value": 145
+			},
+			{
+				"label": "2024-06",
+				"value": 210
+			},
+			{
+				"label": "2024-07",
+				"value": 214
+			},
+			{
+				"label": "2024-08",
+				"value": 228
+			},
+			{
+				"label": "2024-09",
+				"value": 266
+			},
+			{
+				"label": "2024-10",
+				"value": 292
+			},
+			{
+				"label": "2024-11",
+				"value": 123
+			},
+			{
+				"label": "2024-12",
+				"value": 99
+			},
+			{
+				"label": "2025-01",
+				"value": 125
+			},
+			{
+				"label": "2025-02",
+				"value": 179
+			},
+			{
+				"label": "2025-03",
+				"value": 305
+			},
+			{
+				"label": "2025-04",
+				"value": 288
+			},
+			{
+				"label": "2025-05",
+				"value": 440
+			},
+			{
+				"label": "2025-06",
+				"value": 410
+			},
+			{
+				"label": "2025-07",
+				"value": 383
+			},
+			{
+				"label": "2025-08",
+				"value": 302
+			},
+			{
+				"label": "2025-09",
+				"value": 362
+			},
+			{
+				"label": "2025-10",
+				"value": 343
+			},
+			{
+				"label": "2025-11",
+				"value": 381
+			},
+			{
+				"label": "2025-12",
+				"value": 392
+			},
+			{
+				"label": "2026-01",
+				"value": 434
+			},
+			{
+				"label": "2026-02",
+				"value": 498
+			},
+			{
+				"label": "2026-03",
+				"value": 525
+			},
+			{
+				"label": "2026-04",
+				"value": 209
+			},
+			{
+				"label": "2026-05",
+				"value": 209
+			},
+			{
+				"label": "2026-06",
+				"value": 276
+			},
+			{
+				"label": "2026-07",
+				"value": 304
+			},
+			{
+				"label": "2026-08",
+				"value": 311
+			},
+			{
+				"label": "2026-09",
+				"value": 553
+			},
+			{
+				"label": "2026-10",
+				"value": 3203
+			}
+		]
+	},
+	"stats": [
+		{
+			"label": "Submitted, 2026-08",
+			"value": 311
+		},
+		{
+			"label": "Year over year",
+			"value": "+3%"
+		},
+		{
+			"label": "Submitted, 2026-10",
+			"value": 3203
+		},
+		{
+			"label": "Since 2024-01",
+			"value": 12572
+		}
+	],
+	"findings": [
+		"311 developer tools were submitted in 2026-08, against 302 in 2025-08: +3%. Uneed launches changed +51% over the same months.",
+		"On 2026-09-27, DevHunt's new submit form started filling itself from a website URL. 3,203 tools were submitted in 2026-10. DevHunt says to read this jump as a change to the form, not to demand, so we compare only months before 2026-09.",
+		"Share of submissions tagged AI Agents: 8.7% in 2026-08, against 2.6% a year before; MCP: 7.7% in 2026-08, against 2.3% a year before; AI Coding: 3.2% in 2026-08, against 0.7% a year before. DevHunt added these categories in 2026 and tagged older tools once, so the history is its classifier's reading.",
+		"Launch counts follow DevHunt's free queue and pricing more than demand. 2025-01 and 2026-01 hold large batches of queued free tools, so we use submissions.",
+		"DevHunt logs 16 changes to its pricing, launch queue, moderation and categories since 2024-03-05. The paywall of 2024-11-05 cut submissions, which shows how much the site's own rules move these counts.",
+		"Tools later deleted or blocked are left out of every month, so past months can go down slightly. This is one site for developer tools, and its growth may reflect the site itself."
+	],
+	"tables": [
+		{
+			"title": "Tools per month (complete months, UTC)",
+			"columns": [
+				"Month",
+				"Submitted",
+				"Launched",
+				"Removed later",
+				"AI Agents share",
+				"MCP share",
+				"AI Coding share"
+			],
+			"rows": [
+				[
+					"2024-01",
+					163,
+					613,
+					8,
+					"0.6%",
+					"0%",
+					"1.2%"
+				],
+				[
+					"2024-02",
+					132,
+					86,
+					6,
+					"0%",
+					"0%",
+					"0%"
+				],
+				[
+					"2024-03",
+					106,
+					101,
+					6,
+					"0%",
+					"0.9%",
+					"0%"
+				],
+				[
+					"2024-04",
+					162,
+					83,
+					12,
+					"0.6%",
+					"0%",
+					"0.6%"
+				],
+				[
+					"2024-05",
+					145,
+					57,
+					10,
+					"2.8%",
+					"0%",
+					"0.7%"
+				],
+				[
+					"2024-06",
+					210,
+					58,
+					6,
+					"0%",
+					"0%",
+					"0%"
+				],
+				[
+					"2024-07",
+					214,
+					82,
+					9,
+					"0.9%",
+					"0%",
+					"0.9%"
+				],
+				[
+					"2024-08",
+					228,
+					64,
+					21,
+					"1.8%",
+					"0%",
+					"0%"
+				],
+				[
+					"2024-09",
+					266,
+					90,
+					10,
+					"0.8%",
+					"0%",
+					"0%"
+				],
+				[
+					"2024-10",
+					292,
+					105,
+					15,
+					"0.7%",
+					"0%",
+					"0%"
+				],
+				[
+					"2024-11",
+					123,
+					130,
+					9,
+					"3.3%",
+					"0%",
+					"0%"
+				],
+				[
+					"2024-12",
+					99,
+					136,
+					4,
+					"2%",
+					"0%",
+					"0%"
+				],
+				[
+					"2025-01",
+					125,
+					941,
+					4,
+					"1.6%",
+					"0%",
+					"0.8%"
+				],
+				[
+					"2025-02",
+					179,
+					98,
+					8,
+					"5%",
+					"0%",
+					"0.6%"
+				],
+				[
+					"2025-03",
+					305,
+					69,
+					10,
+					"2%",
+					"1%",
+					"0.7%"
+				],
+				[
+					"2025-04",
+					288,
+					83,
+					15,
+					"2.1%",
+					"0.7%",
+					"0%"
+				],
+				[
+					"2025-05",
+					440,
+					63,
+					13,
+					"3%",
+					"0.5%",
+					"0.7%"
+				],
+				[
+					"2025-06",
+					410,
+					72,
+					11,
+					"3.7%",
+					"0.7%",
+					"1%"
+				],
+				[
+					"2025-07",
+					383,
+					88,
+					5,
+					"3.4%",
+					"0.5%",
+					"0.8%"
+				],
+				[
+					"2025-08",
+					302,
+					60,
+					9,
+					"2.6%",
+					"2.3%",
+					"0.7%"
+				],
+				[
+					"2025-09",
+					362,
+					76,
+					10,
+					"5%",
+					"0.8%",
+					"1.1%"
+				],
+				[
+					"2025-10",
+					343,
+					65,
+					13,
+					"4.4%",
+					"1.5%",
+					"0.6%"
+				],
+				[
+					"2025-11",
+					381,
+					145,
+					12,
+					"2.9%",
+					"1.3%",
+					"1.3%"
+				],
+				[
+					"2025-12",
+					392,
+					83,
+					9,
+					"4.1%",
+					"2%",
+					"2.6%"
+				],
+				[
+					"2026-01",
+					434,
+					2554,
+					8,
+					"5.5%",
+					"1.4%",
+					"0.9%"
+				],
+				[
+					"2026-02",
+					498,
+					93,
+					14,
+					"6.8%",
+					"2.8%",
+					"1.6%"
+				],
+				[
+					"2026-03",
+					525,
+					108,
+					15,
+					"9%",
+					"4.4%",
+					"2.3%"
+				],
+				[
+					"2026-04",
+					209,
+					92,
+					8,
+					"8.6%",
+					"6.2%",
+					"1.9%"
+				],
+				[
+					"2026-05",
+					209,
+					73,
+					12,
+					"9.6%",
+					"2.9%",
+					"3.8%"
+				],
+				[
+					"2026-06",
+					276,
+					104,
+					10,
+					"13.4%",
+					"7.6%",
+					"2.5%"
+				],
+				[
+					"2026-07",
+					304,
+					100,
+					10,
+					"13.2%",
+					"6.3%",
+					"4.3%"
+				],
+				[
+					"2026-08",
+					311,
+					83,
+					16,
+					"8.7%",
+					"7.7%",
+					"3.2%"
+				],
+				[
+					"2026-09",
+					553,
+					98,
+					129,
+					"11.9%",
+					"9.2%",
+					"3.8%"
+				],
+				[
+					"2026-10",
+					3203,
+					340,
+					203,
+					"9.4%",
+					"7.6%",
+					"7.7%"
+				]
+			]
+		},
+		{
+			"title": "Changes DevHunt logged",
+			"columns": [
+				"Date",
+				"Kind",
+				"Change"
+			],
+			"rows": [
+				[
+					"2024-03-05",
+					"pricing",
+					"Optional paid \"skip the queue\" launch added. Free launches keep waiting in a queue."
+				],
+				[
+					"2024-11-05",
+					"pricing",
+					"Paywall: new tools are asked to pay ($297 \"skip the queue\") before launching. Unpaid tools stay drafts. Submissions drop."
+				],
+				[
+					"2024-12-10",
+					"pricing",
+					"Skip-the-queue price cut from $297 to $46."
+				],
+				[
+					"2025-02-02",
+					"launch-queue",
+					"Free launches return: 15 free slots a week, a $49 paid launch picks any week."
+				],
+				[
+					"2026-09-27",
+					"submit-flow",
+					"New submit flow: paste your website URL and the form fills itself. Submissions per day go from about 10 to 50-120. Read the jump from 2026-09 on as a change to the submit form, not a change in demand."
+				],
+				[
+					"2026-09-27",
+					"moderation",
+					"Automatic moderation of submissions starts: scams are blocked, non-developer tools are marked \"not a dev tool\"."
+				],
+				[
+					"2026-09-27",
+					"categories",
+					"16 new categories (including AI Agents and MCP), back-filled onto older tools."
+				],
+				[
+					"2026-09-27",
+					"pricing",
+					"Paid launches move to Stripe Checkout."
+				],
+				[
+					"2026-09-28",
+					"launch-queue",
+					"Test: new tools are offered paid launch weeks only. Tools already in the free queue keep their date."
+				],
+				[
+					"2026-09-29",
+					"launch-queue",
+					"Tools marked \"not a dev tool\" get their own launch queue (10 a week) and do not compete."
+				],
+				[
+					"2026-10-01",
+					"pricing",
+					"Two paid launches: $49 boosted and $19 basic. Regional prices ($29 / $9) outside high-income countries."
+				],
+				[
+					"2026-10-01",
+					"categories",
+					"AI Coding category added and back-filled."
+				],
+				[
+					"2026-10-22",
+					"pricing",
+					"Boost upgrades for launched tools and 3 \"super boost\" spots a week. Stricter check for regional prices."
+				],
+				[
+					"2026-10-31",
+					"pricing",
+					"$19 basic launch at the same price everywhere. No regional price for super boosts."
+				],
+				[
+					"2026-11-02",
+					"pricing",
+					"Test: the $19 basic launch is hidden, only the $49 launch is on sale."
+				],
+				[
+					"2026-11-05",
+					"pricing",
+					"Test: regional prices off. The $19 basic launch comes back as an exit offer."
+				]
+			]
+		}
+	]
+}

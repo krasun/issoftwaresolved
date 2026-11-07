@@ -164,9 +164,10 @@
 	"caution": [
 		"This is a weak proxy. It counts launches on one site, Uneed, not all new software.",
 		"Uneed's own growth and curation affect the counts. More launches do not establish more demand or AI's impact.",
-		"Launches count still-published products by real launch date. Removed products and relaunches can revise history."
+		"Launches count still-published products by real launch date. Removed products and relaunches can revise history.",
+		"On DevHunt, a launch site for developer tools, submissions changed +3% from 2025-08 to 2026-08, while Uneed launches changed +51% over the same months. The two sites disagree, so the rise may belong to Uneed rather than to software launches in general. Later DevHunt months are left out because a new submit form multiplied its submissions."
 	],
-	"chartNote": "Source: Uneed, uneed.best (CC BY 4.0). Complete months in America/Los_Angeles. The official launch-stats API replaces the former sitemap-date proxy across the full history.",
+	"chartNote": "Source: Uneed, uneed.best (CC BY 4.0). Complete months in America/Los_Angeles. The official launch-stats API replaces the former sitemap-date proxy across the full history. Dashed line: Data: DevHunt (devhunt.org), CC BY 4.0, developer tools submitted per month in UTC, shown only before its new submit form of September 2026.",
 	"monthlyActivity": [
 		{
 			"month": "2026-08",
@@ -192,5 +193,146 @@
 			"declined": 2123,
 			"estimated": true
 		}
-	]
+	],
+	"comparison": {
+		"name": "DevHunt tools submitted, to 2026-08",
+		"trend": [
+			{
+				"label": "2024-02",
+				"value": 132
+			},
+			{
+				"label": "2024-03",
+				"value": 106
+			},
+			{
+				"label": "2024-04",
+				"value": 162
+			},
+			{
+				"label": "2024-05",
+				"value": 145
+			},
+			{
+				"label": "2024-06",
+				"value": 210
+			},
+			{
+				"label": "2024-07",
+				"value": 214
+			},
+			{
+				"label": "2024-08",
+				"value": 228
+			},
+			{
+				"label": "2024-09",
+				"value": 266
+			},
+			{
+				"label": "2024-10",
+				"value": 292
+			},
+			{
+				"label": "2024-11",
+				"value": 123
+			},
+			{
+				"label": "2024-12",
+				"value": 99
+			},
+			{
+				"label": "2025-01",
+				"value": 125
+			},
+			{
+				"label": "2025-02",
+				"value": 179
+			},
+			{
+				"label": "2025-03",
+				"value": 305
+			},
+			{
+				"label": "2025-04",
+				"value": 288
+			},
+			{
+				"label": "2025-05",
+				"value": 440
+			},
+			{
+				"label": "2025-06",
+				"value": 410
+			},
+			{
+				"label": "2025-07",
+				"value": 383
+			},
+			{
+				"label": "2025-08",
+				"value": 302
+			},
+			{
+				"label": "2025-09",
+				"value": 362
+			},
+			{
+				"label": "2025-10",
+				"value": 343
+			},
+			{
+				"label": "2025-11",
+				"value": 381
+			},
+			{
+				"label": "2025-12",
+				"value": 392
+			},
+			{
+				"label": "2026-01",
+				"value": 434
+			},
+			{
+				"label": "2026-02",
+				"value": 498
+			},
+			{
+				"label": "2026-03",
+				"value": 525
+			},
+			{
+				"label": "2026-04",
+				"value": 209
+			},
+			{
+				"label": "2026-05",
+				"value": 209
+			},
+			{
+				"label": "2026-06",
+				"value": 276
+			},
+			{
+				"label": "2026-07",
+				"value": 304
+			},
+			{
+				"label": "2026-08",
+				"value": 311
+			}
+		]
+	},
+	"analysis": {
+		"title": "How launches count in the score",
+		"intro": "The score combines both launch sites, so neither one's own growth decides it. Each site is set against 2024-02, and the two multiples are averaged as a geometric mean. The combined index stands at 4.5 times in 2026-08.",
+		"points": [
+			"Uneed launches: 8.6 times their 2024-02 level by 2026-08.",
+			"DevHunt submissions: 2.4 times their 2024-02 level by 2026-08.",
+			"The index stops at 2026-08, the last month before DevHunt's new submit form, and the score keeps that reading for up to a year. It does not use Uneed alone after that, because one site's growth would decide it.",
+			"Growing 1,000 times scores 100%, as for the other growth signals, and launches count a quarter as much as other signals in their question, because both sites can grow through their own popularity and pricing."
+		]
+	},
+	"score": 22,
+	"scoreReason": "Uneed launches and DevHunt submissions combined: 4.5 times their February 2024 level by August 2026. The goal is 1,000 times. The bar is logarithmic, so 32 times fills half of it. Counts a quarter as much as other signals here."
 }

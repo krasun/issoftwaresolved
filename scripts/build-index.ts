@@ -1,4 +1,5 @@
 import { parseUneedMonths } from './sources/uneed.ts';
+import type { DevHunt } from './sources/devhunt.ts';
 import { createReadStream } from 'node:fs';
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline';
@@ -800,6 +801,71 @@ await writeJson('data/index/uneed.json', {
 	],
 });
 
+// DevHunt: developer tools submitted per month, a second launch site to check Uneed against.
+// Launches follow DevHunt's free queue, so submissions are the series that tracks makers.
+const devHunt = await readJson<DevHunt>('data/raw/devhunt/open-data.json');
+const devHuntSubmitted = Object.fromEntries(devHunt.tools.map(({ month, submitted }) => [month, submitted]));
+const devHuntMonths = devHunt.tools.map(({ month }) => month);
+// A new submit form multiplied submissions, so only months before it compare with each other.
+const devHuntForm = devHunt.changes.find(({ kind }) => kind === 'submit-flow');
+const devHuntComparable = devHuntMonths.filter((month) => !devHuntForm || month < devHuntForm.date.slice(0, 7));
+const devHuntLatest = devHuntComparable.at(-1)!;
+const devHuntYearAgo = nextMonth(devHuntLatest, -12);
+const devHuntChange = Math.round((devHuntSubmitted[devHuntLatest] / devHuntSubmitted[devHuntYearAgo] - 1) * 100);
+const devHuntNewest = devHunt.tools.at(-1)!;
+const DEVHUNT_AI = ['AI Agents', 'MCP', 'AI Coding'];
+const devHuntShare = (month: string, category: string) => {
+	const row = devHunt.categories.find((candidate) => candidate.month === month)!;
+	return Math.round((row.counts[category] / row.submitted) * 1000) / 10;
+};
+// Uneed over the same months, so the two sites are compared like for like.
+const uneedSameMonths = launches[devHuntLatest] && launches[devHuntYearAgo] ? Math.round((launches[devHuntLatest] / launches[devHuntYearAgo] - 1) * 100) : undefined;
+const devHuntCrossCheck = uneedSameMonths === undefined
+	? undefined
+	: `On DevHunt, a launch site for developer tools, submissions changed ${signed(devHuntChange)} from ${devHuntYearAgo} to ${devHuntLatest}, while Uneed launches changed ${signed(uneedSameMonths)} over the same months. ${Math.abs(devHuntChange - uneedSameMonths) >= 20 ? 'The two sites disagree, so the rise may belong to Uneed rather than to software launches in general.' : 'The two sites roughly agree.'} Later DevHunt months are left out because a new submit form multiplied its submissions.`;
+
+// Launches in the score: both sites against their first shared month, combined as a geometric mean,
+// so neither site's own growth outweighs the other. It stops where DevHunt stops being comparable.
+const launchIndexMonths = devHuntComparable.filter((month) => launches[month] !== undefined);
+const launchIndexStart = launchIndexMonths[0];
+const launchIndex: Series = Object.fromEntries(launchIndexMonths.map((month) => [
+	month,
+	Math.sqrt((launches[month] / launches[launchIndexStart]) * (devHuntSubmitted[month] / devHuntSubmitted[launchIndexStart])),
+]));
+const launchIndexLatest = launchIndexMonths.at(-1)!;
+const launchTimes = (site: Series) => (site[launchIndexLatest] / site[launchIndexStart]).toFixed(1);
+
+await writeJson('data/index/devhunt.json', {
+	asOf: devHuntNewest.month,
+	chart: { name: 'Developer tools submitted to DevHunt per month', trend: series(devHuntMonths, devHuntMonths.map((month) => devHuntSubmitted[month])) },
+	stats: [
+		{ label: `Submitted, ${devHuntLatest}`, value: devHuntSubmitted[devHuntLatest] },
+		{ label: 'Year over year', value: signed(devHuntChange) },
+		{ label: `Submitted, ${devHuntNewest.month}`, value: devHuntNewest.submitted },
+		{ label: `Since ${devHuntMonths[0]}`, value: devHuntMonths.reduce((sum, month) => sum + devHuntSubmitted[month], 0) },
+	],
+	findings: [
+		`${number(devHuntSubmitted[devHuntLatest])} developer tools were submitted in ${devHuntLatest}, against ${number(devHuntSubmitted[devHuntYearAgo])} in ${devHuntYearAgo}: ${signed(devHuntChange)}.${uneedSameMonths === undefined ? '' : ` Uneed launches changed ${signed(uneedSameMonths)} over the same months.`}`,
+		...(devHuntForm ? [`On ${devHuntForm.date}, DevHunt's new submit form started filling itself from a website URL. ${number(devHuntNewest.submitted)} tools were submitted in ${devHuntNewest.month}. DevHunt says to read this jump as a change to the form, not to demand, so we compare only months before ${devHuntForm.date.slice(0, 7)}.`] : []),
+		`Share of submissions tagged ${DEVHUNT_AI.map((category) => `${category}: ${devHuntShare(devHuntLatest, category)}% in ${devHuntLatest}, against ${devHuntShare(devHuntYearAgo, category)}% a year before`).join('; ')}. DevHunt added these categories in 2026 and tagged older tools once, so the history is its classifier's reading.`,
+		'Launch counts follow DevHunt\'s free queue and pricing more than demand. 2025-01 and 2026-01 hold large batches of queued free tools, so we use submissions.',
+		`DevHunt logs ${devHunt.changes.length} changes to its pricing, launch queue, moderation and categories since ${devHunt.changes[0].date}. The paywall of ${devHunt.changes.find(({ summary }) => /paywall/i.test(summary))?.date ?? 'late 2024'} cut submissions, which shows how much the site's own rules move these counts.`,
+		'Tools later deleted or blocked are left out of every month, so past months can go down slightly. This is one site for developer tools, and its growth may reflect the site itself.',
+	],
+	tables: [
+		{
+			title: 'Tools per month (complete months, UTC)',
+			columns: ['Month', 'Submitted', 'Launched', 'Removed later', ...DEVHUNT_AI.map((category) => `${category} share`)],
+			rows: devHuntMonths.map((month, i) => [month, devHuntSubmitted[month], devHunt.tools[i].launched, devHunt.tools[i].removed, ...DEVHUNT_AI.map((category) => `${devHuntShare(month, category)}%`)]),
+		},
+		{
+			title: 'Changes DevHunt logged',
+			columns: ['Date', 'Kind', 'Change'],
+			rows: devHunt.changes.map(({ date, kind, summary }) => [date, kind, summary]),
+		},
+	],
+});
+
 // Innovation Graph: worldwide activity by quarter.
 const quarterTotals = async (file: string, column: string) => {
 	const totals: Series = {};
@@ -1203,8 +1269,24 @@ await updateSignal('token-prices', {
 		text: 'with current token prices i wouldn\'t really say "cost of software is going to zero". our token cost is double our payroll which means even though we\'re 25 it\'s like we\'re 75. and i feel like our output is similar to a team of 75 pre-ai. we\'re just able to do it without all the downsides of a larger team. this is still a good thing. we couldn\'t hire 50 more people. so much overhead and impossible to retain a high bar',
 	},
 });
+const devHuntOnChart = devHuntComparable.filter((month) => launchMonths.includes(month));
 await updateSignal('product-launches', {
 	monthlyActivity: launchActivity,
+	comparison: { name: `DevHunt tools submitted, to ${devHuntLatest}`, trend: series(devHuntOnChart, devHuntOnChart.map((month) => devHuntSubmitted[month])) },
+	caution: [
+		...((await readJson<Signal>('src/content/signals/product-launches.json')).caution ?? []).filter((line) => !line.includes('DevHunt')),
+		...(devHuntCrossCheck ? [devHuntCrossCheck] : []),
+	],
+	analysis: {
+		title: 'How launches count in the score',
+		intro: `The score combines both launch sites, so neither one's own growth decides it. Each site is set against ${launchIndexStart}, and the two multiples are averaged as a geometric mean. The combined index stands at ${launchIndex[launchIndexLatest].toFixed(1)} times in ${launchIndexLatest}.`,
+		points: [
+			`Uneed launches: ${launchTimes(launches)} times their ${launchIndexStart} level by ${launchIndexLatest}.`,
+			`DevHunt submissions: ${launchTimes(devHuntSubmitted)} times their ${launchIndexStart} level by ${launchIndexLatest}.`,
+			`The index stops at ${launchIndexLatest}, the last month before DevHunt's new submit form, and the score keeps that reading for up to a year. It does not use Uneed alone after that, because one site's growth would decide it.`,
+			'Growing 1,000 times scores 100%, as for the other growth signals, and launches count a quarter as much as other signals in their question, because both sites can grow through their own popularity and pricing.',
+		],
+	},
 	value: number(launches[launchLatest]),
 	change: signed(launchChange),
 	trend: series(launchMonths, launchTrend),
@@ -2339,6 +2421,10 @@ const SCORE_AREAS: ScoreArea[] = [
 				const value = readingAt(builderByMonth, month, 3);
 				return value === undefined ? undefined : toGoal((Math.log10(value / builderTrend[0]) / 3) * 100);
 			}, reason: (month) => `${(readingAt(builderByMonth, month, 3)! / builderTrend[0]).toFixed(1)} times the sites of ${monthName(builderStart)}. ${LOG_GOAL} Counts a quarter as much as other signals here.` },
+			{ id: 'product-launches', weight: 0.25, at: (month) => {
+				const value = readingAt(launchIndex, month);
+				return value === undefined ? undefined : toGoal((Math.log10(value) / 3) * 100);
+			}, reason: (month) => `Uneed launches and DevHunt submissions combined: ${readingAt(launchIndex, month)!.toFixed(1)} times their ${monthName(launchIndexStart)} level by ${monthName(launchIndexLatest)}. ${LOG_GOAL} Counts a quarter as much as other signals here.` },
 		],
 	},
 	{

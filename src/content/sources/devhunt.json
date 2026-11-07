@@ -1,0 +1,21 @@
+{
+	"name": "DevHunt",
+	"url": "https://devhunt.org/",
+	"signal": "product-launches",
+	"measures": "Developer tools submitted and launched per month, by category",
+	"about": "DevHunt is a launch site for developer tools. Its open data API publishes monthly counts of tools submitted and launched, the share in each category, and a dated log of changes to its pricing, launch queue, moderation and categories. We use it to check whether the rise in Uneed launches shows up on a second launch site, and combine the two in the score.",
+	"license": "CC BY 4.0",
+	"licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+	"attribution": "Data: DevHunt (devhunt.org), CC BY 4.0. Monthly counts from https://devhunt.org/open-data, displayed as complete-month trends and year-over-year changes.",
+	"limitations": [
+		"It is one site, mostly indie makers of developer tools, so its growth can reflect its own popularity rather than more software being built.",
+		"A new submit form on 27 September 2026 multiplied submissions, so later months can't be compared with earlier ones.",
+		"Pricing, the paywall and the free launch queue changed several times. Launches follow the queue more than demand, and submissions moved with the paywall.",
+		"Counts are recomputed daily. Tools removed later leave every month, and makers can edit pricing, GitHub links and categories, so history can change.",
+		"Categories overlap and were tagged onto older tools once, in 2026, so their history is a classifier's reading, not what makers chose at the time.",
+		"Incomplete months are excluded."
+	],
+	"checked": "2026-11",
+	"role": "headline",
+	"dataPolicy": "full-copy"
+}

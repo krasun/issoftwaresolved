@@ -4,6 +4,7 @@ import { fetchBenchmarks } from './benchmarks.ts';
 import { fetchBlsPrices } from './bls-prices.ts';
 import { fetchBls } from './bls.ts';
 import { fetchCisaKev } from './cisa-kev.ts';
+import { fetchDevHunt } from './devhunt.ts';
 import { fetchEconomy } from './economy.ts';
 import { fetchExploitDb } from './exploit-db.ts';
 import { fetchFedFunds } from './fed-funds.ts';
@@ -51,6 +52,7 @@ export const sources: Record<string, Source> = {
 	'innovation-graph': fetchInnovationGraph,
 	'fed-funds': fetchFedFunds,
 	uneed: fetchUneed,
+	devhunt: fetchDevHunt,
 	outsourcing: fetchOutsourcing,
 	economy: fetchEconomy,
 	openrouter: fetchOpenRouter,
